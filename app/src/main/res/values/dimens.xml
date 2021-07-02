@@ -3,7 +3,7 @@
     <dimen name="title_font">32sp</dimen>
     <dimen name="subtitle_font">24sp</dimen>
     <dimen name="large_font">20sp</dimen>
-    <dimen name="normal_font">18sp</dimen>
-    <dimen name="small_font">16dp</dimen>
-    <dimen name="extra_small_font">12dp</dimen>
+    <dimen name="medium_font">18sp</dimen>
+    <dimen name="regular_font">16dp</dimen>
+    <dimen name="small_font">12dp</dimen>
 </resources>

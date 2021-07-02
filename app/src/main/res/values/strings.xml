@@ -1,4 +1,5 @@
 <resources>
+    <!-- Static String Resources in Portuguese    -->
     <string name="app_name">PickPlay</string>
     <string name="system_failed">O sistema falhou</string>
     <string name="system_failed_long_desc">
