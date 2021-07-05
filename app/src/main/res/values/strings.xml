@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">VICProjetoIntegrador</string>
+    <!-- Static String Resources in Portuguese    -->
+    <string name="app_name">PickPlay</string>
+    <string name="system_failed">O sistema falhou</string>
+    <string name="system_failed_long_desc">
+        Por algum motivo,
+        não foi possível processar com essa solicitação.
+        Por favor, tente novamente.
+    </string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="not_found">Esse filme não existe</string>
+    <string name="not_found_long_desc">
+        Não conseguimos encontrar o filme que voce procura.
+        Por favor, refaça sua busca.
+    </string>
+    <string name="search_mode">Modo pesquisa</string>
+    <string name="back_home">Voltar ao início</string>
+    <string name="all_movies">Todos os filmes</string>
+    <string name="favorite">Favoritos</string>
+    <string name="search_for_movie">Pesquisar por um filme...</string>
+    <string name="user_rating">Avaliação dos usuários</string>
+    <string name="synopsis">Sinopse</string>
+    <string name="cast">Elenco</string>
 </resources>
