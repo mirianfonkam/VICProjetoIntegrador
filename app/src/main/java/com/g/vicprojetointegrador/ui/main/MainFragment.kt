@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.g.vicprojetointegrador.Movie
+import com.g.vicprojetointegrador.MovieAdapter
 import com.g.vicprojetointegrador.R
 
 class MainFragment : Fragment() {
@@ -20,13 +23,21 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
+        val data : MutableList<Movie> = ArrayList()
+        for (i in 1..10){
+            data.add(Movie("Title $i"))
+        }
+        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
+
+        recyclerView.adapter = MovieAdapter(data)
+        recyclerView.layoutManager = layoutManager
     }
 
 }
