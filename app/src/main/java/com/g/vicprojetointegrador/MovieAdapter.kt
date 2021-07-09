@@ -3,8 +3,10 @@ package com.g.vicprojetointegrador
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.google.android.material.card.MaterialCardView
 
 class MovieAdapter(
@@ -20,6 +22,7 @@ class MovieAdapter(
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
         val tvTitle : TextView = itemView.findViewById(R.id.tvTitle)
         val cardMovie : MaterialCardView = itemView.findViewById(R.id.cardMovie)
+        val ivMovie : ImageView = itemView.findViewById(R.id.itemMoviePoster)
     }
 
 
@@ -32,6 +35,7 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
         holder.tvTitle.text = data[position].title
+        holder.ivMovie.load(data[position].posterUrl)
 
         items.add(holder.cardMovie)
     }

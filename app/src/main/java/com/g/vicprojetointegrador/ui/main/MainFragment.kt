@@ -29,10 +29,12 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //https://www.themoviedb.org/t/p/w600_and_h900_bestv2/2MSGZEE6XZd2r4ODNziwAw7Hpw0.jpg
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
         val data : MutableList<Movie> = ArrayList()
         for (i in 1..10){
-            data.add(Movie("Title $i"))
+            data.add(Movie("Title $i", "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/2MSGZEE6XZd2r4ODNziwAw7Hpw0.jpg"))
         }
         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
 

@@ -1,3 +1,3 @@
 package com.g.vicprojetointegrador
 
-data class Movie(var title : String, var imageUrl : String = "", var rating: Int = 0)
+data class Movie(val title : String, val posterUrl : String = "", var averageRating: Int = 0)
