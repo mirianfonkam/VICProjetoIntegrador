@@ -34,8 +34,9 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
-        holder.tvTitle.text = data[position].title
-        holder.ivMovie.load(data[position].posterUrl)
+        val movie = data[position]
+        holder.tvTitle.text = movie.title
+        holder.ivMovie.load(movie.posterUrl)
 
         items.add(holder.cardMovie)
     }
