@@ -13,11 +13,7 @@ class MovieAdapter(
     private val data: List<Movie>
 ): RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    private val items: MutableList<MaterialCardView>
-
-    init {
-        this.items = ArrayList()
-    }
+    private val items = mutableListOf<MaterialCardView>()
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
         val tvTitle : TextView = itemView.findViewById(R.id.tvTitle)
