@@ -36,10 +36,7 @@ class MainFragment : Fragment() {
         for (i in 1..10){
             data.add(Movie("Title $i", "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/2MSGZEE6XZd2r4ODNziwAw7Hpw0.jpg"))
         }
-        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
-
         recyclerView.adapter = MovieAdapter(data)
-        recyclerView.layoutManager = layoutManager
     }
 
 }
