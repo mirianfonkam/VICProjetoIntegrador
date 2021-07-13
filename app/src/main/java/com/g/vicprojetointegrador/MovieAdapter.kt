@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.g.vicprojetointegrador.data.model.Movie
 import com.google.android.material.card.MaterialCardView
 
 class MovieAdapter(
@@ -32,7 +33,7 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
         val movie = data[position]
         holder.tvTitle.text = movie.title
-        holder.ivMovie.load(movie.posterUrl)
+        holder.ivMovie.load(movie.posterPath)
 
         items.add(holder.cardMovie)
     }
