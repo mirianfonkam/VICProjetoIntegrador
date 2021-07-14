@@ -49,5 +49,5 @@ dependencies {
     implementation("io.coil-kt:coil:1.2.2")
 
     //Like/Favorite Button Animation
-    //implementation 'com.github.jd-alexander:LikeButton:0.2.3' //Issue Duplicate class android.support.v4.app.INotificationSideChannel found
+    implementation("com.github.jd-alexander:LikeButton:0.2.3")
 }
