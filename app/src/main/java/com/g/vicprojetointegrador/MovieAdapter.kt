@@ -20,6 +20,7 @@ class MovieAdapter(
         val tvTitle : TextView = itemView.findViewById(R.id.tvTitle)
         val cardMovie : MaterialCardView = itemView.findViewById(R.id.cardMovie)
         val ivMovie : ImageView = itemView.findViewById(R.id.itemMoviePoster)
+        val tvVoteAverage : TextView = itemView.findViewById(R.id.tvVoteAverage)
     }
 
 
@@ -34,6 +35,7 @@ class MovieAdapter(
         val movie = data[position]
         holder.tvTitle.text = movie.title
         holder.ivMovie.load(movie.posterPath)
+        holder.tvVoteAverage.text = movie.voteAverage.toString() + "%"
 
         items.add(holder.cardMovie)
     }

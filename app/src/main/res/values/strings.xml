@@ -21,4 +21,5 @@
     <string name="user_rating">Avaliação dos usuários</string>
     <string name="synopsis">Sinopse</string>
     <string name="cast">Elenco</string>
+    <string name="star_icon_desc">Estrela</string>
 </resources>

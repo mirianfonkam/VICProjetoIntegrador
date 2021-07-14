@@ -4,7 +4,7 @@ data class Movie(
     val id: Int,
     val title : String,
     val posterPath : String = "",
-    val voteAverage: Double = 0.0,
+    val voteAverage: Int = 0,
     val maturityRating: String = "",
     val releaseDate: String = "",
     val duration: String = "",
