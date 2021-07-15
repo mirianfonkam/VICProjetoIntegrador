@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.g.vicprojetointegrador.data.model.Movie
 import com.google.android.material.card.MaterialCardView
 
 class MovieAdapter(
@@ -19,6 +20,7 @@ class MovieAdapter(
         val tvTitle : TextView = itemView.findViewById(R.id.tvTitle)
         val cardMovie : MaterialCardView = itemView.findViewById(R.id.cardMovie)
         val ivMovie : ImageView = itemView.findViewById(R.id.itemMoviePoster)
+        val tvVoteAverage : TextView = itemView.findViewById(R.id.tvVoteAverage)
     }
 
 
@@ -32,7 +34,8 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
         val movie = data[position]
         holder.tvTitle.text = movie.title
-        holder.ivMovie.load(movie.posterUrl)
+        holder.ivMovie.load(movie.posterPath)
+        holder.tvVoteAverage.text = movie.voteAverage.toString() + "%"
 
         items.add(holder.cardMovie)
     }

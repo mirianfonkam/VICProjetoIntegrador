@@ -47,4 +47,7 @@ dependencies {
 
     //Coil
     implementation("io.coil-kt:coil:1.2.2")
+
+    //Like/Favorite Button Animation
+    implementation("com.github.jd-alexander:LikeButton:0.2.3")
 }

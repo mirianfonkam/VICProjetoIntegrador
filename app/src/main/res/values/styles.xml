@@ -3,13 +3,14 @@
     <style name="TextAppearance.MovieApp.Headline1" parent="Theme.MovieApp">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/title_font</item>
-        <item name="android:fontWeight">700</item>
+        <item name="android:textStyle">bold</item>
+
     </style>
 
     <style name="TextAppearance.MovieApp.Headline2" parent="Theme.MovieApp">
         <item name="android:textColor">@color/green</item>
         <item name="android:textSize">@dimen/title_font</item>
-        <item name="android:fontWeight">700</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.MovieApp.Subtitle1" parent="Theme.MovieApp">
@@ -21,7 +22,7 @@
     <style name="TextAppearance.MovieApp.Subtitle2" parent="Theme.MovieApp">
         <item name="android:textColor">@color/green</item>
         <item name="android:textSize">@dimen/medium_font</item>
-        <item name="android:fontWeight">700</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextAppearance.MovieApp.Body1" parent="Theme.MovieApp">
