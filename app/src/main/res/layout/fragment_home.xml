@@ -7,6 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cgGenreList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true"
+            app:chipSpacingHorizontal="5dp"
+            app:singleSelection="true">
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovieList"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
