@@ -49,6 +49,12 @@
         <item name="android:fontWeight">400</item>
     </style>
 
-    <!-- TODO: Styles for MDC Chips, Tabs, Movie Tags -->
+    <style name="MovieApp.MaterialComponents.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <!-- Chip background color selector -->
+        <item name="chipBackgroundColor">@color/background_color_chip_state_list</item>
+        <!-- Chip text color selector -->
+        <item name="android:textColor">@color/text_color_chip_state_list</item>
+    </style>
 
+    <!-- TODO: Styles for Tabs, Movie Tags -->
 </resources>
