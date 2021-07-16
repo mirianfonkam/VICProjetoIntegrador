@@ -9,5 +9,11 @@ class GenreListingRepository {
         Genre(3, "Biografia"),
         Genre(4, "Comédia"),
         Genre(5, "Drama"),
+        Genre(6, "Animação"),
+        Genre(7, "Família"),
     )
+
+    fun getGenres() : List<Genre>{
+        return allGenres
+    }
 }
