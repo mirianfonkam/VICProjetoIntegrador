@@ -7,29 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
-    <ImageButton
-        android:id="@+id/btnSearch"
-        android:src="@drawable/ic_search_icon"
-        android:backgroundTint="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/large_font"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/etSearchQuery"
-        app:layout_constraintBottom_toBottomOf="@id/etSearchQuery"
-        app:layout_constraintEnd_toStartOf="@id/etSearchQuery"
-        app:layout_constraintHorizontal_chainStyle="packed"/>
-
-    <EditText
-        android:id="@+id/etSearchQuery"
+    <SearchView
+        android:id="@+id/svSearchQuery"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginHorizontal="15dp"
         android:inputType="text"
-        android:hint="@string/hint_search_for_movie"
-        app:layout_constraintStart_toEndOf="@id/btnSearch"
+        android:queryHint="@string/hint_search_for_movie"
+        android:iconifiedByDefault="false"
+        android:searchIcon="@drawable/ic_search_icon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
