@@ -17,6 +17,7 @@
         android:queryHint="@string/hint_search_for_movie"
         android:iconifiedByDefault="false"
         android:searchIcon="@drawable/ic_search_icon"
+        android:queryBackground="@drawable/bg_searchview_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
