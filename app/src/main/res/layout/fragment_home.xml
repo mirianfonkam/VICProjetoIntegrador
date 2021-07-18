@@ -7,6 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
+    <SearchView
+        android:id="@+id/svSearchQuery"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="15dp"
+        android:inputType="text"
+        android:queryHint="@string/hint_search_for_movie"
+        android:iconifiedByDefault="false"
+        android:searchIcon="@drawable/ic_search_icon"
+        android:queryBackground="@drawable/bg_searchview_selector"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <HorizontalScrollView
         android:id="@+id/hsvGenreList"
         android:layout_width="wrap_content"

@@ -3,7 +3,7 @@
     <style name="Theme.MovieApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/grey_dark</item>
+        <item name="colorPrimaryVariant">@color/grey_light</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/grey_main</item>
         <item name="colorSecondaryVariant">@color/grey_light</item>
@@ -14,8 +14,8 @@
         <!-- Application background color-->
         <item name="android:colorBackground">@color/white</item>
 
-        <!-- Status bar color. -->
-<!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+        <!--         Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorAccent</item>
     <!-- Customize your theme here. -->
 
     </style>

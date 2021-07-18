@@ -13,10 +13,7 @@ import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.repository.GenreListingRepository
 import com.g.vicprojetointegrador.data.repository.MoviesRepository
 import com.google.android.material.chip.Chip
-
 import com.google.android.material.chip.ChipGroup
-
-
 
 
 class MainFragment : Fragment() {
@@ -37,7 +34,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
         val data : List<Movie> = MoviesRepository().getMovies()
         recyclerView.adapter = MovieAdapter(data)
@@ -53,7 +49,6 @@ class MainFragment : Fragment() {
             chipGroup.addView(chip as View)
         }
     }
-
     //getCheckedChipId()
     //setOnCheckedChangeListener()
     //onCheckedChanged
