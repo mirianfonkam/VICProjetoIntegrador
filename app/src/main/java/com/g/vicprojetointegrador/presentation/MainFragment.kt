@@ -1,4 +1,4 @@
-package com.g.vicprojetointegrador.ui.main
+package com.g.vicprojetointegrador.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.g.vicprojetointegrador.MovieAdapter
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.repository.GenreListingRepository
 import com.g.vicprojetointegrador.data.repository.MoviesRepository
 import com.google.android.material.chip.Chip
-
 import com.google.android.material.chip.ChipGroup
 
 
