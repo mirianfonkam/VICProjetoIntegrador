@@ -14,8 +14,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
 
-
-
 class MainFragment : Fragment() {
 
     companion object {
@@ -33,7 +31,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
@@ -56,7 +53,6 @@ class MainFragment : Fragment() {
             chipGroup.addView(chip as View)
         }
     }
-
     //getCheckedChipId()
     //setOnCheckedChangeListener()
     //onCheckedChanged
