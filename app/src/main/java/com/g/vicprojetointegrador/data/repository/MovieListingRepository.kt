@@ -4,7 +4,7 @@ import com.g.vicprojetointegrador.data.model.Movie
 
 //const val IMG_PATH =
 
-class MoviesRepository {
+class MovieListingRepository {
     private val allMovies = listOf(
         Movie(1,"Ford v Ferrari",
             "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/dR1Ju50iudrOh3YgfwkAU1g2HZe.jpg",

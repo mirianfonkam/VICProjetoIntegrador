@@ -1,4 +1,4 @@
-package com.g.vicprojetointegrador
+package com.g.vicprojetointegrador.presentation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
 import com.google.android.material.card.MaterialCardView
 
@@ -24,14 +25,14 @@ class MovieAdapter(
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_movie, parent, false)
 
         return ViewHolder(adapterLayout)
     }
 
-    override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = data[position]
         holder.tvTitle.text = movie.title
         holder.ivMovie.load(movie.posterPath)

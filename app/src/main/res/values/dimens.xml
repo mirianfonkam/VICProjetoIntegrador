@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="title_font">32sp</dimen>
+    <dimen name="title_font">30sp</dimen>
     <dimen name="subtitle_font">24sp</dimen>
     <dimen name="large_font">20sp</dimen>
     <dimen name="medium_font">18sp</dimen>
