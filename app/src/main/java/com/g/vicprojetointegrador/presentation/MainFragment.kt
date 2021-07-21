@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Genre
-import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.repository.GenreListingRepository
-import com.g.vicprojetointegrador.data.repository.MoviesRepository
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
@@ -37,8 +36,14 @@ class MainFragment : Fragment() {
 
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
-        val data : List<Movie> = MoviesRepository().getMovies()
-        recyclerView.adapter = MovieAdapter(data)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
+            recyclerView.adapter = MovieAdapter(it)
+        }
+
+        //val data : List<Movie> = MovieListingRepository().getMovies()
+        //recyclerView.adapter = MovieAdapter(data)
 
         //Add chip to chipGroup dynamically
         val genres : List<Genre> = GenreListingRepository().getGenres()
