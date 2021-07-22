@@ -1,14 +1,24 @@
 package com.g.vicprojetointegrador.data.model
 
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Movie(
-    val id: Int,
-    val title : String,
-    val posterPath : String = "",
-    val voteAverage: Int = 0,
-    val maturityRating: String = "",
-    val releaseDate: String = "",
-    val duration: String = "",
+    val id: Int = 0,
+    val title : String = "",
     val overview: String = "",
+    @SerializedName("poster_path")
+    val posterPath : String = "",
+    @SerializedName("vote_average")
+    val voteAverage: Double = 0.0,
+    @SerializedName("release_date")
+    val releaseDate: String = "",
+    @SerializedName("runtime")
+    val runtimeMinutes: Int = 0,
+    @SerializedName("genre_ids")
     val genreIds: List<Int> = emptyList(),
-    val castIds: List<Int> = emptyList()
-)
+) : Parcelable
+
+//MaturityRating (certification) is in releaseDate https://developers.themoviedb.org/3/movies/get-movie-release-dates

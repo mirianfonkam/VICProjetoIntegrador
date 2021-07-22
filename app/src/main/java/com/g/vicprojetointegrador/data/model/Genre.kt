@@ -1,4 +1,10 @@
 package com.g.vicprojetointegrador.data.model
 
-data class Genre(val id : Int, val name : String)
-//possibly enum
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Genre(
+    val id : Int = 0,
+    val name : String = ""
+) : Parcelable
