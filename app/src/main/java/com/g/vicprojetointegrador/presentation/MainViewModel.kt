@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.repository.MovieListingRepository
+import com.g.vicprojetointegrador.domain.GetMoviesUseCase
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 /*
  * ViewModel: responsible for holding and processing data required by the User Interface
@@ -22,14 +26,48 @@ class MainViewModel(private val movieListingRepository: MovieListingRepository =
     val progressBar : LiveData<Boolean> = _progressBar
     val errorLiveData : LiveData<String> = _errorLiveData
 
+    private var disposable = CompositeDisposable()
+
+    private val getMoviesUseCase = GetMoviesUseCase()
+
+//
     init {
-        fetchPopularMovies()
+        getPopularMovies()
     }
 
-    fun fetchPopularMovies() {
-        _popularMoviesLiveData.value = movieListingRepository.getMovies()
+//    fun fetchPopularMovies() {
+//        _popularMoviesLiveData.value = movieListingRepository.getMovies()
+//    }
+
+    //ISSUE HERE
+    fun getPopularMovies() {
+        disposable.add(movieListingRepository.getMovies()
+            .subscribeOn(Schedulers.io())
+            .map { it.results }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _popularMoviesLiveData.postValue(it)
+            }, { error ->
+                _errorLiveData.postValue("An error occurred: ${error.message}")
+            })
+        )
+
+        //        getMoviesUseCase.execute()
+//            .subscribeOn(Schedulers.io())
+//            .map { it.results }
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                _popularMoviesLiveData.postValue(it)
+//            }, { error ->
+//                _errorLiveData.postValue("An error occurred: ${error.message}")
+//            })
     }
 
-    //Substituir o acesso ao repository da activity/fragment pelo ViewModel;
-    //A tela já poderá exibir os estados de "loading" (que aguarda o retorno da API), "erro genérico" e "sucesso" (trazendo a lista de filmes);
+    //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
+    }
+
+
 }

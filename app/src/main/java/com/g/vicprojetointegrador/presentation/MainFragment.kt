@@ -34,13 +34,13 @@ class MainFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
+        //val movieListingRepository = NetworkInstance.movieListingRepository
+
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
             recyclerView.adapter = MovieAdapter(it)
         }
-
-        //val data : List<Movie> = MovieListingRepository().getMovies()
-        //recyclerView.adapter = MovieAdapter(data)
 
         //Add chip to chipGroup dynamically
         val genres : List<Genre> = GenreListingRepository().getGenres()
@@ -53,6 +53,25 @@ class MainFragment : Fragment() {
             chipGroup.addView(chip as View)
         }
     }
+
+//    private fun getMovies() {
+//        val movieListingRepository = NetworkInstance.getService().
+//
+//        val movieViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return MainViewModel(movieListingRepository) as T
+//            }
+//        }).get(MainViewModel::class.java)
+//
+//        movieViewModel.getPopularMovies()
+//        movieViewModel.popularMovies
+//            .observe(this, { popularMovies ->
+//                movieAdapter.addMovies(popularMovies)
+//            })
+//        movieViewModel.error.observe(this, { error ->
+//            Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+//        })
+//    }
     //getCheckedChipId()
     //setOnCheckedChangeListener()
     //onCheckedChanged
