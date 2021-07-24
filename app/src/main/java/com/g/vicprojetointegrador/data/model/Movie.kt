@@ -14,6 +14,10 @@ data class Movie(
     @SerializedName("release_date") val releaseDate: String = "",
     @SerializedName("runtime") val runtimeMinutes: Int = 0,
     @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
+
+    //Movie has a been liked
+    var isFavorite: Boolean = false
+
 ) : Parcelable
 
 //MaturityRating (certification) is in releaseDate https://developers.themoviedb.org/3/movies/get-movie-release-dates

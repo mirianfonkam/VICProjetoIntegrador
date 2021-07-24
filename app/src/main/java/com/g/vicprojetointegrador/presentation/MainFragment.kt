@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -33,11 +35,24 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
             recyclerView.adapter = MovieAdapter(it)
+        }
+
+        viewModel.errorLiveData.observe(viewLifecycleOwner, { error ->
+            Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+        })
+
+        viewModel.progressBar.observe(viewLifecycleOwner){  isLoading ->
+            if (isLoading) {
+                progressBar.visibility = View.VISIBLE
+            } else {
+                progressBar.visibility = View.GONE
+            }
         }
 
         //Add chip to chipGroup dynamically
@@ -51,6 +66,8 @@ class MainFragment : Fragment() {
             chipGroup.addView(chip as View)
         }
     }
+
+
 
 //    private fun getMovies() {
 //        val movieListingRepository = NetworkInstance.getService().

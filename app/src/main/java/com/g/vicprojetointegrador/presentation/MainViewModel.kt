@@ -39,29 +39,24 @@ class MainViewModel(private val movieListingRepository: MovieListingRepository =
 //        _popularMoviesLiveData.value = movieListingRepository.getMovies()
 //    }
 
-    //ISSUE HERE
     fun getPopularMovies() {
         disposable.add(getMoviesUseCase.execute()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
+            .doOnSubscribe {
+                _progressBar.setValue(true)
+            }  //do something (update the UI) before the task started
             .map { it.results }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
             .subscribe({
+                _progressBar.postValue(false)
                 _popularMoviesLiveData.postValue(it)
             }, { error ->
                 _errorLiveData.postValue("An error occurred: ${error.message}")
             })
         )
-
-        //        getMoviesUseCase.execute()
-//            .subscribeOn(Schedulers.io())
-//            .map { it.results }
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({
-//                _popularMoviesLiveData.postValue(it)
-//            }, { error ->
-//                _errorLiveData.postValue("An error occurred: ${error.message}")
-//            })
     }
+    //setValue: sets the value instantly
+    //postValue: Asynchronous updating
 
     //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
     override fun onCleared() {
