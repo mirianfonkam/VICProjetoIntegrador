@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="title_font">30sp</dimen>
-    <dimen name="subtitle_font">24sp</dimen>
-    <dimen name="large_font">20sp</dimen>
-    <dimen name="medium_font">18sp</dimen>
-    <dimen name="regular_font">16dp</dimen>
-    <dimen name="small_font">12dp</dimen>
+    <dimen name="title_font">26sp</dimen>
+    <dimen name="subtitle_font">22sp</dimen>
+    <dimen name="large_font">18sp</dimen>
+    <dimen name="medium_font">16sp</dimen>
+    <dimen name="regular_font">14dp</dimen>
+    <dimen name="small_font">10dp</dimen>
 </resources>

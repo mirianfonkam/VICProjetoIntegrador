@@ -41,7 +41,7 @@ class MainViewModel(private val movieListingRepository: MovieListingRepository =
 
     //ISSUE HERE
     fun getPopularMovies() {
-        disposable.add(movieListingRepository.getMovies()
+        disposable.add(getMoviesUseCase.execute()
             .subscribeOn(Schedulers.io())
             .map { it.results }
             .observeOn(AndroidSchedulers.mainThread())

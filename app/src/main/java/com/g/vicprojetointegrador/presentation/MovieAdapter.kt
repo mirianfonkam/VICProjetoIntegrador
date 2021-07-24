@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
+import com.g.vicprojetointegrador.data.model.TMDBConstants
 import com.google.android.material.card.MaterialCardView
 
 class MovieAdapter(
@@ -35,8 +36,8 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = data[position]
         holder.tvTitle.text = movie.title
-        holder.ivMovie.load(movie.posterPath)
-        holder.tvVoteAverage.text = movie.voteAverage.toString() + "%"
+        holder.ivMovie.load("${TMDBConstants.IMAGE_URL}${movie.posterPath}")
+        holder.tvVoteAverage.text = "${(movie.voteAverage*10).toInt()}%" //Move calc to util
 
         items.add(holder.cardMovie)
     }

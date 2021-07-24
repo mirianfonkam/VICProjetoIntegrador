@@ -17,13 +17,13 @@ interface MovieApiService {
     //Get a list of the current popular movies on TMDB. This list updates daily.
     @GET("movie/popular")
     fun getPopularMovies(
-        @Query("api_key") apiKey: String = TMDBConstants.API_KEY
+        @Query("api_key") apiKey: String
     ): Observable<MoviesResponse>
 
     //Get the list of official genres for movies.
     @GET("genre/movie/list")
     fun getGenres(
-        @Query("api_key") apiKey: String = TMDBConstants.API_KEY
+        @Query("api_key") apiKey: String
     ): Observable<GenresResponse>
 
     //Discover movies by genres.

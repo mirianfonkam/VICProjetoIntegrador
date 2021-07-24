@@ -7,7 +7,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardMovie"
-        android:layout_width="240dp"
+        android:layout_width="250dp"
         android:layout_height="370dp"
         android:layout_gravity="center"
         android:layout_marginVertical="40dp"
@@ -23,45 +23,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic"/>
 
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tvTitle"
         style="@style/TextAppearance.MovieApp.Headline1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="24dp"
+        android:lines="2"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/cardMovie"
         app:layout_constraintEnd_toEndOf="@+id/cardMovie"
         app:layout_constraintStart_toStartOf="@+id/cardMovie"
-        tools:text="Movie Title"
-        app:layout_constraintHorizontal_chainStyle="packed"/>
-
-    <TextView
-        android:id="@+id/tvVoteAverage"
-        style="TextAppearance.MovieApp.Caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="34dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/cardMovie"
-        tools:text="100%"
-        app:layout_constraintStart_toEndOf="@+id/ivStarIcon" />
-
-    <ImageView
-        android:id="@+id/ivStarIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvVoteAverage"
-        app:layout_constraintStart_toStartOf="@+id/cardMovie"
-        app:srcCompat="@drawable/ic_round_star"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        android:contentDescription="@string/star_icon_desc"/>
+        tools:text="Movie Title Very Long"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"/>
 
     <com.like.LikeButton
         android:id="@+id/btnFavorite"
@@ -72,11 +53,40 @@
         app:dots_primary_color="@color/green"
         app:dots_secondary_color="@color/yellow"
         app:icon_size="24dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toEndOf="@+id/tvTitle"
         app:layout_constraintTop_toTopOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="@id/cardMovie"
         app:like_drawable="@drawable/ic_favorite_filled"
         app:unlike_drawable="@drawable/ic_favorite_unfilled"
-        app:layout_constraintHorizontal_chainStyle="packed"/>
+        app:layout_constraintHorizontal_chainStyle="spread" />
+
+<!--    -->
+
+    <TextView
+        android:id="@+id/tvVoteAverage"
+        style="TextAppearance.MovieApp.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintEnd_toEndOf="@+id/cardMovie"
+        tools:text="100%"
+        app:layout_constraintStart_toEndOf="@+id/ivStarIcon" />
+
+    <ImageView
+        android:id="@+id/ivStarIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tvVoteAverage"
+        app:layout_constraintBottom_toBottomOf="@id/tvVoteAverage"
+        app:layout_constraintEnd_toStartOf="@+id/tvVoteAverage"
+        app:layout_constraintStart_toStartOf="@+id/cardMovie"
+        app:srcCompat="@drawable/ic_round_star"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:contentDescription="@string/star_icon_desc"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

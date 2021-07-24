@@ -34,8 +34,6 @@ class MainFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
-        //val movieListingRepository = NetworkInstance.movieListingRepository
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
