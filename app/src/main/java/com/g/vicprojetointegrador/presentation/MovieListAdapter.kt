@@ -12,9 +12,9 @@ import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.model.TMDBConstants
 import com.google.android.material.card.MaterialCardView
 
-class MovieAdapter(
+class MovieListAdapter(
     private val data: List<Movie>
-): RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+): RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
     private val items = mutableListOf<MaterialCardView>()
 

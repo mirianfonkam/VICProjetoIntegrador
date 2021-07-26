@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginRight="25dp"
         android:lines="2"
         android:ellipsize="end"
         app:layout_constraintTop_toBottomOf="@id/cardMovie"
@@ -52,6 +52,7 @@
         app:circle_start_color="@color/yellow"
         app:dots_primary_color="@color/green"
         app:dots_secondary_color="@color/yellow"
+        android:clickable="true"
         app:icon_size="24dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="@id/tvTitle"
@@ -61,8 +62,6 @@
         app:like_drawable="@drawable/ic_favorite_filled"
         app:unlike_drawable="@drawable/ic_favorite_unfilled"
         app:layout_constraintHorizontal_chainStyle="spread" />
-
-<!--    -->
 
     <TextView
         android:id="@+id/tvVoteAverage"

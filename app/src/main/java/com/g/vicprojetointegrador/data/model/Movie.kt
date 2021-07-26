@@ -16,7 +16,7 @@ data class Movie(
     @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
 
     //Movie has a been liked
-    var isFavorite: Boolean = false
+    var isFavorited: Boolean = false
 
 ) : Parcelable
 

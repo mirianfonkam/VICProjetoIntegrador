@@ -8,13 +8,14 @@
     android:padding="30dp">
 
     <ImageButton
-        android:id="@+id/ibClose"
+        android:id="@+id/btnClose"
         android:layout_width="32dp"
         android:layout_height="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/ic_close"
-        android:backgroundTint="@color/white"/>
+        android:backgroundTint="@color/white"
+        android:onClick="buttonClicked"/>
 
     <ImageView
         android:id="@+id/ivGenericError"
@@ -58,6 +59,8 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="@string/try_again"
+        android:clickable="true"
+        android:onClick="buttonClicked"
         android:layout_marginBottom="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

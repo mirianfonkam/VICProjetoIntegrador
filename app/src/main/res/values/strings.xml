@@ -22,4 +22,6 @@
     <string name="synopsis">Sinopse</string>
     <string name="cast">Elenco</string>
     <string name="star_icon_desc">Estrela</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -20,11 +20,13 @@ class MainViewModel(private val movieListingRepository: MovieListingRepository =
     private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _errorLiveData = MutableLiveData<String>()
+    private val _searchQuery = MutableLiveData<String>()
 
     //Exposed to the Activity/Fragment, not mutable
     val popularMoviesLiveData : LiveData<List<Movie>> = _popularMoviesLiveData
     val progressBar : LiveData<Boolean> = _progressBar
     val errorLiveData : LiveData<String> = _errorLiveData
+    val searchQuery : LiveData<String> = _searchQuery
 
     private var disposable = CompositeDisposable()
 

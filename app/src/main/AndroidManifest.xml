@@ -14,7 +14,7 @@
         android:theme="@style/Theme.MovieApp">
         <activity android:name=".presentation.GenericErrorActivity"></activity>
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.HomeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 
