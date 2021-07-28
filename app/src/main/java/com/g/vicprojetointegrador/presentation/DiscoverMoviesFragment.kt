@@ -1,5 +1,6 @@
 package com.g.vicprojetointegrador.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.g.vicprojetointegrador.R
+import com.g.vicprojetointegrador.data.model.Movie
+import com.g.vicprojetointegrador.data.model.TMDBConstants
+import com.g.vicprojetointegrador.presentation.adapter.MovieListAdapter
 
-
-class DiscoverMoviesFragment : Fragment() {
+/*
+ * List the popular movies
+ * this is the default tab pager
+ */
+class DiscoverMoviesFragment : Fragment(), MovieListAdapter.MovieClickListener {
     lateinit var viewModel: MainViewModel
 
     companion object {
@@ -26,14 +33,36 @@ class DiscoverMoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
+
+        val movieListAdapter = MovieListAdapter(this)
+        recyclerView.adapter = movieListAdapter
+
         viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
-            recyclerView.adapter = MovieListAdapter(it)
+           movieListAdapter.submitList(it)
         }
 
     }
+
+    override fun onMovieClick(movie: Movie) {
+        openMovieDetails(movie)
+    }
+
+    override fun favoriteClicked(movie: Movie) {
+        viewModel.favoriteClicked(movie)
+    }
+
+    private fun openMovieDetails(movie: Movie) {
+        val intent = Intent(activity, MovieDetailsActivity::class.java).apply {
+            putExtra(TMDBConstants.EXTRA_MOVIE, movie)
+        }
+        startActivity(intent)
+    }
+
+
 
     //getCheckedChipId()
     //setOnCheckedChangeListener()

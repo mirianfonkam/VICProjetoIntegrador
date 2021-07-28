@@ -54,6 +54,14 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
 
+    // Room Local Database
+    def room_version = "2.3.0"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+
     // Gson
     implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

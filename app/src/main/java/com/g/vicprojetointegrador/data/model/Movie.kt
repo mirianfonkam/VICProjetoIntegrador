@@ -1,13 +1,16 @@
 package com.g.vicprojetointegrador.data.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+@Entity(tableName = "movies")
 data class Movie(
-    val id: Int = 0,
-    @SerializedName("title") val title : String = "",
+    @PrimaryKey val id: Int,
+    @SerializedName("title") val title : String = "", //column SQL snake case
     @SerializedName("overview") val overview: String = "",
     @SerializedName("poster_path") val posterPath : String = "",
     @SerializedName("vote_average") val voteAverage: Double = 0.0,
@@ -15,7 +18,7 @@ data class Movie(
     @SerializedName("runtime") val runtimeMinutes: Int = 0,
     @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
 
-    //Movie has a been liked
+    //Movie has been liked
     var isFavorited: Boolean = false
 
 ) : Parcelable

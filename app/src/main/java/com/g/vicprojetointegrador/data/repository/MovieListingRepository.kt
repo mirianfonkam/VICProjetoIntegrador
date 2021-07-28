@@ -1,14 +1,17 @@
 package com.g.vicprojetointegrador.data.repository
 
 import com.g.vicprojetointegrador.data.model.MoviesResponse
-import com.g.vicprojetointegrador.data.model.TMDBConstants
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
-
+//Repository -> controls remote source (NetworkInstance) and local database (MovieDatabase)
 class MovieListingRepository() {
-    fun getMovies() : Observable<MoviesResponse> {
-        return NetworkInstance.getService().getPopularMovies(TMDBConstants.API_KEY)
+    fun getMovies() : Single<MoviesResponse> {
+        return NetworkInstance.getService().getPopularMovies()
     }
+
+//    fun getFavoriteMovies() : Observable<List<Movie>> {
+//        return MovieDatabase.movieDao().getFavoriteMovies()
+//    }
 }
 
         //return allMovies

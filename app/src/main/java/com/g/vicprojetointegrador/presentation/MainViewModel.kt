@@ -4,45 +4,44 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.g.vicprojetointegrador.data.model.Movie
-import com.g.vicprojetointegrador.data.repository.MovieListingRepository
-import com.g.vicprojetointegrador.domain.GetMoviesUseCase
+import com.g.vicprojetointegrador.domain.GetPopularMoviesUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 /*
  * ViewModel: responsible for holding and processing data required by the User Interface
- * Used to separate your logic from your Views.
+ * Used to separate the logic from the Views.
  */
-class MainViewModel(private val movieListingRepository: MovieListingRepository = MovieListingRepository()) : ViewModel() {
+class MainViewModel : ViewModel() {
 
     //Visible only by the ViewModel
     private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
+    private val _favoriteMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _errorLiveData = MutableLiveData<String>()
     private val _searchQuery = MutableLiveData<String>()
 
+
     //Exposed to the Activity/Fragment, not mutable
-    val popularMoviesLiveData : LiveData<List<Movie>> = _popularMoviesLiveData
+    val popularMoviesLiveData  : LiveData<List<Movie>> = _popularMoviesLiveData
+    val favoriteMoviesLiveData : LiveData<List<Movie>> = _favoriteMoviesLiveData
     val progressBar : LiveData<Boolean> = _progressBar
     val errorLiveData : LiveData<String> = _errorLiveData
     val searchQuery : LiveData<String> = _searchQuery
 
-    private var disposable = CompositeDisposable()
+    private var disposables = CompositeDisposable()
 
-    private val getMoviesUseCase = GetMoviesUseCase()
+    private val getMoviesUseCase = GetPopularMoviesUseCase()
 
-//
+
     init {
         getPopularMovies()
     }
 
-//    fun fetchPopularMovies() {
-//        _popularMoviesLiveData.value = movieListingRepository.getMovies()
-//    }
 
-    fun getPopularMovies() {
-        disposable.add(getMoviesUseCase.execute()
+    private fun getPopularMovies() {
+        disposables.add(getMoviesUseCase.execute()
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
                 _progressBar.setValue(true)
@@ -60,10 +59,27 @@ class MainViewModel(private val movieListingRepository: MovieListingRepository =
     //setValue: sets the value instantly
     //postValue: Asynchronous updating
 
+    fun favoriteClicked(movie: Movie) {
+
+        movie.isFavorited = !movie.isFavorited //Sets a switch on click
+
+        if (movie.isFavorited) {
+            //SaveFavoriteMovieUseCase
+        } else {
+            //DeleteFavoriteMovieUseCase
+        }
+//        database
+//        .movieDao() .insertMovie(movie)
+//
+//            .subscribeOn(Schedulers.io())
+//            .subscribe()
+//            .addTo(disposables)
+    }
+
     //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
     override fun onCleared() {
         super.onCleared()
-        disposable.dispose()
+        disposables.dispose()
     }
 
 

@@ -56,5 +56,5 @@
         <item name="android:textColor">@color/text_color_chip_state_list</item>
     </style>
 
-    <!-- TODO: Styles for Tabs, Movie Tags -->
+    <!-- TODO: Styles for Movie Tags -->
 </resources>

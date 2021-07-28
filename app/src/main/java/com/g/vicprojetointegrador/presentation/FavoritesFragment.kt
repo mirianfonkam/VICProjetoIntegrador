@@ -8,10 +8,9 @@ import androidx.fragment.app.Fragment
 import com.g.vicprojetointegrador.R
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FavoritesFragment.newInstance] factory method to
- * create an instance of this fragment.
+/*
+ * Favorite movies tab pager
+ * movies that the user has tapped the like button
  */
 class FavoritesFragment : Fragment() {
 

@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.repository.GenreListingRepository
+import com.g.vicprojetointegrador.presentation.adapter.PagerSectionAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
@@ -36,12 +37,11 @@ class HomeActivity : AppCompatActivity() {
         tabPagerSection.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 pagerMovieList.currentItem = tab.position
-
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 //Change Text Color to light grey
-                //change fontweight to normal
+                //change font weight to normal
             }
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
@@ -56,7 +56,6 @@ class HomeActivity : AppCompatActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
 
         viewModel.errorLiveData.observe(this, { error ->
             val intent = Intent(this, GenericErrorActivity::class.java)
@@ -83,6 +82,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
     }
+
+
 }
 
 

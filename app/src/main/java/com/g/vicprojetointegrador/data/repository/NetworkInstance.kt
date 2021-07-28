@@ -15,6 +15,15 @@ object NetworkInstance {
 
         val httpClient = OkHttpClient.Builder()
             .addInterceptor(logging)
+            .addInterceptor{ chain ->
+                val original = chain.request()
+                val originalHttpUrl = original.url()
+                val tmdbUrl = originalHttpUrl.newBuilder()
+                    .addQueryParameter("api_key", TMDBConstants.API_KEY)
+                    .build()
+
+                chain.proceed(original.newBuilder().url(tmdbUrl).build())
+            }
             .build()
 
         val retrofit = Retrofit.Builder()
