@@ -1,20 +1,42 @@
 package com.g.vicprojetointegrador.data.repository
 
+import android.content.Context
+import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.model.MoviesResponse
+import com.g.vicprojetointegrador.data.repository.database.MovieRoomDatabase
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 //Repository -> controls remote source (NetworkInstance) and local database (MovieDatabase)
 class MovieListingRepository() {
+
     fun getMovies() : Single<MoviesResponse> {
         return NetworkInstance.getService().getPopularMovies()
     }
 
-//    fun getFavoriteMovies() : Observable<List<Movie>> {
-//        return MovieDatabase.movieDao().getFavoriteMovies()
-//    }
+    fun getFavoriteMovies(context: Context) : Observable<List<Movie>> {
+        return MovieRoomDatabase.getInstance(context).movieDao().getFavoriteMovies()
+    }
 }
 
-        //return allMovies
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // MOVE IT TO TEST

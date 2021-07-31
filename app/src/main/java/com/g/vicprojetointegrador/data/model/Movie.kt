@@ -13,9 +13,10 @@ data class Movie(
     @SerializedName("title") val title : String = "", //column SQL snake case
     @SerializedName("overview") val overview: String = "",
     @SerializedName("poster_path") val posterPath : String = "",
+    @SerializedName("backdrop_path") val backdropPath : String = "",
     @SerializedName("vote_average") val voteAverage: Double = 0.0,
     @SerializedName("release_date") val releaseDate: String = "",
-    @SerializedName("runtime") val runtimeMinutes: Int = 0,
+    @SerializedName("runtime") val runtime: Int = 0,
     @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
 
     //Movie has been liked

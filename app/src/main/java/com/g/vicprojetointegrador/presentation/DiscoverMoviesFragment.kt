@@ -12,6 +12,7 @@ import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.model.TMDBConstants
 import com.g.vicprojetointegrador.presentation.adapter.MovieListAdapter
+import com.g.vicprojetointegrador.presentation.viewmodel.MainViewModel
 
 /*
  * List the popular movies

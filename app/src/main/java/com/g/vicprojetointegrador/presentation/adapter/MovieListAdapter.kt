@@ -12,18 +12,10 @@ import coil.load
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.model.TMDBConstants
+import com.g.vicprojetointegrador.utils.formatPercentage
 import com.google.android.material.card.MaterialCardView
 
-class MovieDiffUtil :
-    DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        return oldItem == newItem
-    }
 
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        return oldItem.id == newItem.id
-    }
-}
 
 class MovieListAdapter(
     private val clickListener: MovieClickListener
@@ -35,6 +27,17 @@ class MovieListAdapter(
         val ivMovie : ImageView = itemView.findViewById(R.id.itemMoviePoster)
         val tvVoteAverage : TextView = itemView.findViewById(R.id.tvVoteAverage)
         val btnFavorite : View = itemView.findViewById(R.id.btnFavorite)
+    }
+
+    class MovieDiffUtil :
+        DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
     }
 
 
@@ -49,7 +52,7 @@ class MovieListAdapter(
         val movie = getItem(position)
         holder.tvTitle.text = movie.title
         holder.ivMovie.load("${TMDBConstants.IMAGE_URL}${movie.posterPath}")
-        holder.tvVoteAverage.text = "${(movie.voteAverage*10).toInt()}%" //Move calc to util
+        holder.tvVoteAverage.text = movie.voteAverage.formatPercentage()
         holder.btnFavorite.setOnClickListener { clickListener.favoriteClicked(movie) }
         holder.cardMovie.setOnClickListener { clickListener.onMovieClick(movie) }
     }

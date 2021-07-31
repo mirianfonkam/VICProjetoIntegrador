@@ -14,7 +14,7 @@ interface FavoriteMovieDao {
     fun insertMovie(movie: Movie): Completable //no return
 
     @Delete()
-    fun deleteMovie(movie: Movie): Completable //Delete at id?
+    fun deleteMovie(movie: Movie): Completable
 
     @Query("SELECT * from movies")
     fun getFavoriteMovies() : Observable<List<Movie>>

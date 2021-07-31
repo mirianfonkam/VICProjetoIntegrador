@@ -1,9 +1,11 @@
-package com.g.vicprojetointegrador.presentation
+package com.g.vicprojetointegrador.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
+import com.g.vicprojetointegrador.domain.GetGenresUseCase
 import com.g.vicprojetointegrador.domain.GetPopularMoviesUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -18,6 +20,7 @@ class MainViewModel : ViewModel() {
     //Visible only by the ViewModel
     private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _favoriteMoviesLiveData = MutableLiveData<List<Movie>>()
+    private val _genresLiveData = MutableLiveData<List<Genre>>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _errorLiveData = MutableLiveData<String>()
     private val _searchQuery = MutableLiveData<String>()
@@ -26,6 +29,7 @@ class MainViewModel : ViewModel() {
     //Exposed to the Activity/Fragment, not mutable
     val popularMoviesLiveData  : LiveData<List<Movie>> = _popularMoviesLiveData
     val favoriteMoviesLiveData : LiveData<List<Movie>> = _favoriteMoviesLiveData
+    val genresLiveData : LiveData<List<Genre>> = _genresLiveData
     val progressBar : LiveData<Boolean> = _progressBar
     val errorLiveData : LiveData<String> = _errorLiveData
     val searchQuery : LiveData<String> = _searchQuery
@@ -33,14 +37,16 @@ class MainViewModel : ViewModel() {
     private var disposables = CompositeDisposable()
 
     private val getMoviesUseCase = GetPopularMoviesUseCase()
+    private val getGenresUseCase = GetGenresUseCase()
 
 
     init {
         getPopularMovies()
+        getGenres()
     }
 
 
-    private fun getPopularMovies() {
+    private fun getPopularMovies(){
         disposables.add(getMoviesUseCase.execute()
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
@@ -59,14 +65,27 @@ class MainViewModel : ViewModel() {
     //setValue: sets the value instantly
     //postValue: Asynchronous updating
 
+    private fun getGenres(){
+        disposables.add(getGenresUseCase.execute()
+            .subscribeOn(Schedulers.io())
+            .map { it.genres }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _genresLiveData.postValue(it)
+            }, { error ->
+                _errorLiveData.postValue("${error.message}")
+            })
+        )
+    }
+
     fun favoriteClicked(movie: Movie) {
 
         movie.isFavorited = !movie.isFavorited //Sets a switch on click
 
         if (movie.isFavorited) {
-            //SaveFavoriteMovieUseCase
+            //SaveFavoriteMovieUseCase(movie)
         } else {
-            //DeleteFavoriteMovieUseCase
+            //DeleteFavoriteMovieUseCase(movie)
         }
 //        database
 //        .movieDao() .insertMovie(movie)

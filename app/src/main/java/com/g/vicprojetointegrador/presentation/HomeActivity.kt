@@ -10,9 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.g.vicprojetointegrador.R
-import com.g.vicprojetointegrador.data.model.Genre
-import com.g.vicprojetointegrador.data.repository.GenreListingRepository
 import com.g.vicprojetointegrador.presentation.adapter.PagerSectionAdapter
+import com.g.vicprojetointegrador.presentation.viewmodel.MainViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
@@ -28,6 +27,8 @@ class HomeActivity : AppCompatActivity() {
 
         val pagerMovieList = findViewById<ViewPager2>(R.id.pagerMovieList)
         val tabPagerSection = findViewById<TabLayout>(R.id.tabPageSection)
+        val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
         pagerMovieList.adapter = PagerSectionAdapter(supportFragmentManager,lifecycle)
 
@@ -53,8 +54,6 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.errorLiveData.observe(this, { error ->
@@ -70,16 +69,21 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        //Add chip to chipGroup dynamically
-        val genres : List<Genre> = GenreListingRepository().getGenres()
-        val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
+        //Add chips to chipGroup dynamically
+        viewModel.genresLiveData.observe(this){ genres ->
+            for (genre in genres) {
+                val chip = layoutInflater.inflate(R.layout.list_item_genre, chipGroup, false) as Chip
+                chip.text = genre.name
+                chipGroup.addView(chip as View)
+            }
 
-
-        for (genre in genres) {
-            val chip = layoutInflater.inflate(R.layout.list_item_genre, chipGroup, false) as Chip
-            chip.text = genre.name
-            chipGroup.addView(chip as View)
         }
+
+
+
+
+
+
 
     }
 

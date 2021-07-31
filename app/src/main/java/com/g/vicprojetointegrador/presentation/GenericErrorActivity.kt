@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.g.vicprojetointegrador.R
+import com.g.vicprojetointegrador.presentation.viewmodel.MainViewModel
 
 class GenericErrorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

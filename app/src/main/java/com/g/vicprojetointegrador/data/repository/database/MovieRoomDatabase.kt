@@ -13,7 +13,7 @@ object MovieRoomDatabase {
             localDatabase
         } else synchronized(this) {
             // If database does not exist...
-            buildDatabase(context.applicationContext).also { database = it }
+            buildDatabase(context).also { database = it }
         }
     }
 
