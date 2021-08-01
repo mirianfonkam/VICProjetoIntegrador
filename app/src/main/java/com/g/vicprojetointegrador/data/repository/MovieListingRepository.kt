@@ -2,6 +2,7 @@ package com.g.vicprojetointegrador.data.repository
 
 import android.content.Context
 import com.g.vicprojetointegrador.data.model.Movie
+import com.g.vicprojetointegrador.data.model.MovieDetails
 import com.g.vicprojetointegrador.data.model.MoviesResponse
 import com.g.vicprojetointegrador.data.repository.database.MovieRoomDatabase
 import io.reactivex.rxjava3.core.Observable
@@ -12,6 +13,10 @@ class MovieListingRepository() {
 
     fun getMovies() : Single<MoviesResponse> {
         return NetworkInstance.getService().getPopularMovies()
+    }
+
+    fun getMovie(movieId: Int): Single<MovieDetails>{
+        return NetworkInstance.getService().getMovieDetails(movieId)
     }
 
     fun getFavoriteMovies(context: Context) : Observable<List<Movie>> {

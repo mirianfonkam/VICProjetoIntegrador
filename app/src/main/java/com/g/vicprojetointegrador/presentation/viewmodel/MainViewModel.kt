@@ -78,22 +78,22 @@ class MainViewModel : ViewModel() {
         )
     }
 
-    fun favoriteClicked(movie: Movie) {
-
-        movie.isFavorited = !movie.isFavorited //Sets a switch on click
-
-        if (movie.isFavorited) {
-            //SaveFavoriteMovieUseCase(movie)
-        } else {
-            //DeleteFavoriteMovieUseCase(movie)
-        }
-//        database
-//        .movieDao() .insertMovie(movie)
+//    fun favoriteClicked(movie: Movie) {
 //
-//            .subscribeOn(Schedulers.io())
-//            .subscribe()
-//            .addTo(disposables)
-    }
+//        movie.isFavorited = !movie.isFavorited //Sets a switch on click
+//
+//        if (movie.isFavorited) {
+//            //SaveFavoriteMovieUseCase(movie)
+//        } else {
+//            //DeleteFavoriteMovieUseCase(movie)
+//        }
+////        database
+////        .movieDao() .insertMovie(movie)
+////
+////            .subscribeOn(Schedulers.io())
+////            .subscribe()
+////            .addTo(disposables)
+//    }
 
     //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
     override fun onCleared() {

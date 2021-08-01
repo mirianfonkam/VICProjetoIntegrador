@@ -1,4 +1,4 @@
-package com.g.vicprojetointegrador.data.model
+package com.g.vicprojetointegrador.utils
 
 object TMDBConstants {
     const val BASE_URL = "https://api.themoviedb.org/3/"

@@ -1,6 +1,6 @@
 package com.g.vicprojetointegrador.data.repository
 
-import com.g.vicprojetointegrador.data.model.TMDBConstants
+import com.g.vicprojetointegrador.utils.TMDBConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

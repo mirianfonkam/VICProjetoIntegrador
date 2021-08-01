@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
-import com.g.vicprojetointegrador.data.model.TMDBConstants
+import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.g.vicprojetointegrador.utils.formatPercentage
 import com.google.android.material.card.MaterialCardView
-
+import com.like.LikeButton
 
 
 class MovieListAdapter(
@@ -26,7 +26,7 @@ class MovieListAdapter(
         val cardMovie : MaterialCardView = itemView.findViewById(R.id.cardMovie)
         val ivMovie : ImageView = itemView.findViewById(R.id.itemMoviePoster)
         val tvVoteAverage : TextView = itemView.findViewById(R.id.tvVoteAverage)
-        val btnFavorite : View = itemView.findViewById(R.id.btnFavorite)
+        val btnFavorite : LikeButton = itemView.findViewById(R.id.btnFavorite)
     }
 
     class MovieDiffUtil :
@@ -53,7 +53,7 @@ class MovieListAdapter(
         holder.tvTitle.text = movie.title
         holder.ivMovie.load("${TMDBConstants.IMAGE_URL}${movie.posterPath}")
         holder.tvVoteAverage.text = movie.voteAverage.formatPercentage()
-        holder.btnFavorite.setOnClickListener { clickListener.favoriteClicked(movie) }
+        holder.btnFavorite.setOnClickListener { clickListener.favoriteClicked(movie) } //Issue Here: .setOnLikeListener
         holder.cardMovie.setOnClickListener { clickListener.onMovieClick(movie) }
     }
 
