@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.g.vicprojetointegrador.R
@@ -13,6 +14,7 @@ import com.g.vicprojetointegrador.presentation.viewmodel.MovieDetailsViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.g.vicprojetointegrador.utils.formatHourMinutes
 import com.g.vicprojetointegrador.utils.formatPercentage
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MovieDetailsActivity : AppCompatActivity() {
@@ -20,7 +22,6 @@ class MovieDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
-
 
         val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
         fabBack.setOnClickListener { this.finish() }
@@ -31,9 +32,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         val tvMovieOverview = findViewById<TextView>(R.id.tvMovieOverview)
         val tvMovieVoteAverage = findViewById<TextView>(R.id.tvMovieVoteAverage)
         val tvMovieRuntime = findViewById<TextView>(R.id.tvMovieRuntime)
+        val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
 
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
-
+        // Null pointer exception detected for Fast & Furious 10
         //Pre-loaded data from the GetPopularMovies() request made in previous activity
         movie?.run {
             ivBackdrop.load("${TMDBConstants.IMAGE_HD_URL}${movie.backdropPath}")
@@ -43,23 +45,36 @@ class MovieDetailsActivity : AppCompatActivity() {
             tvMovieVoteAverage.text = voteAverage.formatPercentage()
         }
 
-        // val id : Int = movie?.id!!
-        // val id : Int = movie!!.id
+        val movieId : Int = movie?.id!!
 
-        val id : Int = movie?.id!!
+        val detailsViewModel : MovieDetailsViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return MovieDetailsViewModel(movieId) as T
+            }
+        }).get(MovieDetailsViewModel::class.java)
 
-        val detailsViewModel : MovieDetailsViewModel = ViewModelProvider(this).get(MovieDetailsViewModel(id)::class.java)
 
         //New network request for additional movie data
-        detailsViewModel.movieLiveData.observe(this) { movieDetails ->
-            movieDetails?.run {
+        detailsViewModel.extraMovieDetailsLiveData.observe(this) { movieDetails ->
+            movieDetails.run {
                 tvMovieRuntime.text = runtime.formatHourMinutes()
+
             }
         }
 
         detailsViewModel.errorLiveData.observe(this, { error ->
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
+
+        // "genres":[{"id":28,"name":"Action"},{"id":80,"name":"Crime"},{"id":53,"name":"Thriller"}]
+        //Add chips to chipGroup dynamically
+//        { genres ->
+    //        for (genre in genres) {
+    //            val chip = layoutInflater.inflate(R.layout.item_genre_movie_tags, chipGroup, false) as Chip
+    //            chip.text = genre.name
+    //            chipGroup.addView(chip as View)
+    //        }
+//        }
 
 
         //favoriteIcon if isFa

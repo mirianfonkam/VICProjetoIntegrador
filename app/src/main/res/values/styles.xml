@@ -56,6 +56,15 @@
         <item name="android:textColor">@color/text_color_chip_state_list</item>
     </style>
 
+    <!-- Outlined action chip
+   -->
+    <style name="MovieApp.MaterialComponents.Chip.Action" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipStrokeColor">@color/grey_light</item>
+        <item name="android:textColor">@color/grey_dark</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.SelectedCornerRadius" parent="Theme.MovieApp">
         <item name="cornerSizeBottomLeft">40dp</item>
         <item name="cornerFamilyTopRight">rounded</item>
@@ -68,5 +77,4 @@
         <item name="cornerFamilyBottomLeft">rounded</item>
     </style>
 
-    <!-- TODO: Styles for Movie Tags -->
 </resources>

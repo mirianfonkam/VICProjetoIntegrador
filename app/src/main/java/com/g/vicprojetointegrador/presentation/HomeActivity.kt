@@ -72,18 +72,13 @@ class HomeActivity : AppCompatActivity() {
         //Add chips to chipGroup dynamically
         viewModel.genresLiveData.observe(this){ genres ->
             for (genre in genres) {
-                val chip = layoutInflater.inflate(R.layout.list_item_genre, chipGroup, false) as Chip
+                val chip = layoutInflater.inflate(R.layout.item_genre_home, chipGroup, false) as Chip
                 chip.text = genre.name
                 chipGroup.addView(chip as View)
             }
-
         }
 
-
-
-
-
-
+        //chip.text to get text
 
     }
 

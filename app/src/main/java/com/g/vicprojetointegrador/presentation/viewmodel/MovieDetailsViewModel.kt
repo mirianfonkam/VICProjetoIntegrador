@@ -13,7 +13,7 @@ class MovieDetailsViewModel(private val movieId: Int = -1) : ViewModel() {
     private val _extraMovieDetailsLiveData = MutableLiveData<MovieDetails>()
     private val _errorLiveData = MutableLiveData<String>()
 
-    val movieLiveData  : LiveData<MovieDetails> = _extraMovieDetailsLiveData
+    val extraMovieDetailsLiveData : LiveData<MovieDetails> = _extraMovieDetailsLiveData
     val errorLiveData : LiveData<String> = _errorLiveData
 
     private var disposables = CompositeDisposable()
@@ -31,8 +31,14 @@ class MovieDetailsViewModel(private val movieId: Int = -1) : ViewModel() {
             .subscribe({
                 _extraMovieDetailsLiveData.setValue(it)
             }, { error ->
-                _errorLiveData.setValue("Error on extra movie detail: ${error.message}")
+                _errorLiveData.postValue("Error on extra movie detail: ${error.message}")
             })
         )
+    }
+
+    //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
+    override fun onCleared() {
+        super.onCleared()
+        disposables.dispose()
     }
 }

@@ -134,6 +134,28 @@
         android:layout_marginStart="8dp"
         tools:text="2h 32min" />
 
+    <HorizontalScrollView
+        android:id="@+id/hsvGenreList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMovieYear"
+        android:layout_marginTop="20dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cgGenreList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            app:chipSpacingHorizontal="15dp"
+            android:clickable="false">
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
     <TextView
         android:id="@+id/tvSynopsis"
         style="@style/TextAppearance.MovieApp.Subtitle1"
@@ -144,7 +166,7 @@
         android:layout_marginEnd="30dp"
         android:text="@string/synopsis"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/hsvGenreList" />
 
     <TextView
         android:id="@+id/tvMovieOverview"
@@ -170,13 +192,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tvMovieOverview" />
 
 
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/rvGenresMovieDetail"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-    <!--        tools:listitem="@layout/item_movie_genre" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
