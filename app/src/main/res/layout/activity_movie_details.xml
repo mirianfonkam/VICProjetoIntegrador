@@ -136,23 +136,21 @@
 
     <HorizontalScrollView
         android:id="@+id/hsvGenreList"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvMovieYear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvMovieYear"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:scrollbars="none">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/cgGenreList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingEnd="16dp"
             app:singleLine="true"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            app:chipSpacingHorizontal="15dp"
-            android:clickable="false">
+            tools:ignore="RtlSymmetry">
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
@@ -162,7 +160,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:text="@string/synopsis"
         app:layout_constraintStart_toStartOf="parent"

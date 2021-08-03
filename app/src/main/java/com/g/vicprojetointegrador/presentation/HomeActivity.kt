@@ -39,7 +39,6 @@ class HomeActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 pagerMovieList.currentItem = tab.position
             }
-
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 //Change Text Color to light grey
                 //change font weight to normal
@@ -61,7 +60,7 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
-        viewModel.progressBar.observe(this){  isLoading ->
+        viewModel.progressBar.observe(this){ isLoading ->
             if (isLoading) {
                 progressBar.visibility = View.VISIBLE
             } else {
@@ -73,12 +72,23 @@ class HomeActivity : AppCompatActivity() {
         viewModel.genresLiveData.observe(this){ genres ->
             for (genre in genres) {
                 val chip = layoutInflater.inflate(R.layout.item_genre_home, chipGroup, false) as Chip
+                chip.id = genre.id
                 chip.text = genre.name
                 chipGroup.addView(chip as View)
             }
         }
 
-        //chip.text to get text
+        // set chip group checked change listener
+        chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            val chip: Chip? = group.findViewById(checkedId)
+            // Responds to child chip checked/unchecked
+            chip?.let {chipView ->
+                if (chipView.isChecked) {
+                    viewModel.getMoviesByGenre(checkedId.toString()) //request is workinf
+                }
+            }
+        }
+
 
     }
 

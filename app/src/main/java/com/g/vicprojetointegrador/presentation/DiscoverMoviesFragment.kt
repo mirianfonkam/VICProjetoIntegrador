@@ -42,6 +42,8 @@ class DiscoverMoviesFragment : Fragment(), MovieListAdapter.MovieClickListener {
         val movieListAdapter = MovieListAdapter(this)
         recyclerView.adapter = movieListAdapter
 
+        //val chipGroup = view.findViewById<ChipGroup>(R.id.cgGenreList)
+
         viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
            movieListAdapter.submitList(it)
         }
@@ -65,9 +67,7 @@ class DiscoverMoviesFragment : Fragment(), MovieListAdapter.MovieClickListener {
 
 
 
-    //getCheckedChipId()
-    //setOnCheckedChangeListener()
-    //onCheckedChanged
+
 
 
 }

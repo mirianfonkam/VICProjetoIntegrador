@@ -5,6 +5,7 @@ import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.model.MovieDetails
 import com.g.vicprojetointegrador.data.model.MoviesResponse
 import com.g.vicprojetointegrador.data.repository.database.MovieRoomDatabase
+import com.g.vicprojetointegrador.data.repository.network.NetworkInstance
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
@@ -13,6 +14,10 @@ class MovieListingRepository() {
 
     fun getMovies() : Single<MoviesResponse> {
         return NetworkInstance.getService().getPopularMovies()
+    }
+
+    fun getMoviesByGenre(genreId : String) : Single<MoviesResponse> {
+        return NetworkInstance.getService().getMoviesByGenre(genreId)
     }
 
     fun getMovie(movieId: Int): Single<MovieDetails>{

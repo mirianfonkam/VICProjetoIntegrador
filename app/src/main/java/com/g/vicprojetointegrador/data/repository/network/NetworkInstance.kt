@@ -1,4 +1,4 @@
-package com.g.vicprojetointegrador.data.repository
+package com.g.vicprojetointegrador.data.repository.network
 
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import okhttp3.OkHttpClient

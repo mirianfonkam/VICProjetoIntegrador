@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.domain.GetGenresUseCase
+import com.g.vicprojetointegrador.domain.GetMoviesByGenreUseCase
 import com.g.vicprojetointegrador.domain.GetPopularMoviesUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -19,16 +20,22 @@ class MainViewModel : ViewModel() {
 
     //Visible only by the ViewModel
     private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
-    private val _favoriteMoviesLiveData = MutableLiveData<List<Movie>>()
+
+    private val _moviesByGenreLiveData = MutableLiveData<List<Movie>>()
     private val _genresLiveData = MutableLiveData<List<Genre>>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _errorLiveData = MutableLiveData<String>()
+
+
+
+    private val _favoriteMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _searchQuery = MutableLiveData<String>()
 
 
     //Exposed to the Activity/Fragment, not mutable
     val popularMoviesLiveData  : LiveData<List<Movie>> = _popularMoviesLiveData
     val favoriteMoviesLiveData : LiveData<List<Movie>> = _favoriteMoviesLiveData
+    val movieByGenreLiveData : LiveData<List<Movie>> = _moviesByGenreLiveData
     val genresLiveData : LiveData<List<Genre>> = _genresLiveData
     val progressBar : LiveData<Boolean> = _progressBar
     val errorLiveData : LiveData<String> = _errorLiveData
@@ -37,6 +44,7 @@ class MainViewModel : ViewModel() {
     private var disposables = CompositeDisposable()
 
     private val getMoviesUseCase = GetPopularMoviesUseCase()
+    private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val getGenresUseCase = GetGenresUseCase()
 
 
@@ -64,6 +72,23 @@ class MainViewModel : ViewModel() {
     }
     //setValue: sets the value instantly
     //postValue: Asynchronous updating
+
+    fun getMoviesByGenre(genreId : String){
+        disposables.add(getMoviesByGenreUseCase.execute(genreId)
+            .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
+            .doOnSubscribe {
+                _progressBar.setValue(true)
+            }  //do something (update the UI) before the task started
+            .map { it.results }
+            .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
+            .subscribe({
+                _progressBar.postValue(false)
+                _moviesByGenreLiveData.postValue(it)
+            }, { error ->
+                _errorLiveData.postValue("An error occurred: ${error.message}")
+            })
+        )
+    }
 
     private fun getGenres(){
         disposables.add(getGenresUseCase.execute()

@@ -86,5 +86,4 @@
         android:contentDescription="@string/star_icon_desc"/>
 
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.g.vicprojetointegrador.data.repository
+package com.g.vicprojetointegrador.data.repository.network
 
 import com.g.vicprojetointegrador.data.model.GenresResponse
 import com.g.vicprojetointegrador.data.model.MovieDetails
@@ -16,7 +16,7 @@ import retrofit2.http.Query
  */
 
 interface MovieApiService {
-    //Get a list of the current popular movies on TMDB. This list updates daily.
+    //Get a list of the current popular movies on TMDB.
     @GET("movie/popular")
     fun getPopularMovies(
     ): Single<MoviesResponse>
@@ -29,8 +29,7 @@ interface MovieApiService {
     //Discover movies by genres.
     @GET("discover/movie")
     fun getMoviesByGenre(
-        @Query("with_genres") genreId: Int?,
-        @Query("page") pageNumber: Int,
+        @Query("with_genres") genreId: String
     ): Single<MoviesResponse>
 
     //Search for movies
@@ -39,30 +38,12 @@ interface MovieApiService {
         @Query("query") query: String
     ): Single<MoviesResponse>
 
+    // Get extra movie details - append_to_response makes it possible to make sub requests within the same namespace
     @GET("movie/{movie_id}?append_to_response=credits,release_dates")
     fun getMovieDetails(
          @Path("movie_id") movieId: Int
     ): Single<MovieDetails>
-
-//    //Get the primary information about a movie.
-//    @GET("movie/{movie_id}")
-//    fun getMovieDetails(
-//        @Path("movie_id") movieId: Int
-//    ): Single<Movie>
-//    //append_to_response This makes it possible to make sub requests within the same namespace
-//    //these requests only count as one request against the rate limits to speed up the experience
-//
-//    //Get the cast and crew for a movie.
-//    @GET("movie/{movie_id}/credits")
-//    fun getMovieCredits(
-//        @Path("movie_id") movieId: Int
-//    ): Single<Credits>
-//
-//    //Get the release date along with the certification (maturityRating) for a movie
-//    @GET("/movie/{movie_id}/release_dates")
-//    fun getMovieCertification(
-//        @Path("movie_id") movieId: Int,
-//    ): Single<ReleaseInfo>
+    //these requests only count as one request against the rate limits to speed up the experience
 
 
     //https://api.themoviedb.org/3/movie/157336?api_key=2770152fe1a0bbfa51de4dc91d640b1c&append_to_response=credits,release_dates

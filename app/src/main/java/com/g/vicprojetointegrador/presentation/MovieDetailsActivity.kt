@@ -1,6 +1,7 @@
 package com.g.vicprojetointegrador.presentation
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.g.vicprojetointegrador.presentation.viewmodel.MovieDetailsViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.g.vicprojetointegrador.utils.formatHourMinutes
 import com.g.vicprojetointegrador.utils.formatPercentage
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -60,6 +62,15 @@ class MovieDetailsActivity : AppCompatActivity() {
                 tvMovieRuntime.text = runtime.formatHourMinutes()
 
             }
+
+            movieDetails.genres.let { genres ->
+                for (genre in genres) {
+                    val chip = layoutInflater.inflate(R.layout.item_genre_movie_tags, chipGroup, false) as Chip
+                    chip.text = genre.name
+                    chipGroup.addView(chip as View)
+                }
+            }
+
         }
 
         detailsViewModel.errorLiveData.observe(this, { error ->
