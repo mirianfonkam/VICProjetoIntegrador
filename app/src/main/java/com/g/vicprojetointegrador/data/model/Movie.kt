@@ -16,6 +16,9 @@ data class Movie(
     @SerializedName("backdrop_path") val backdropPath : String = "",
     @SerializedName("vote_average") val voteAverage: Double = 0.0,
     @SerializedName("release_date") val releaseDate: String = "",
+
+    //Movie has been liked
+    var isFavorited: Boolean = false
 ) : Parcelable
 
 //MaturityRating (certification) is in releaseDate https://developers.themoviedb.org/3/movies/get-movie-release-dates

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -61,11 +62,7 @@ class HomeActivity : AppCompatActivity() {
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
         viewModel.progressBar.observe(this){ isLoading ->
-            if (isLoading) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
+                progressBar.isVisible = isLoading
         }
 
         //Add chips to chipGroup dynamically
@@ -84,7 +81,7 @@ class HomeActivity : AppCompatActivity() {
             // Responds to child chip checked/unchecked
             chip?.let {chipView ->
                 if (chipView.isChecked) {
-                    viewModel.getMoviesByGenre(checkedId.toString()) //request is workinf
+                    viewModel.getMoviesByGenre(checkedId.toString())
                 }
             }
         }

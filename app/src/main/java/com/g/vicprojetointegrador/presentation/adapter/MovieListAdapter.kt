@@ -11,32 +11,36 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
+import com.g.vicprojetointegrador.presentation.MovieClickListener
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.g.vicprojetointegrador.utils.formatPercentage
 import com.google.android.material.card.MaterialCardView
 import com.like.LikeButton
+import com.like.OnLikeListener
 
 
 class MovieListAdapter(
-    private val clickListener: MovieClickListener
-): ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDiffUtil()) {
+    private val clickListener: MovieClickListener,
+) : ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDiffUtil()) {
 
-    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val tvTitle : TextView = itemView.findViewById(R.id.tvTitle)
-        val cardMovie : MaterialCardView = itemView.findViewById(R.id.cardMovie)
-        val ivMovie : ImageView = itemView.findViewById(R.id.itemMoviePoster)
-        val tvVoteAverage : TextView = itemView.findViewById(R.id.tvVoteAverage)
-        val btnFavorite : LikeButton = itemView.findViewById(R.id.btnFavorite)
+    inner class ViewHolder internal constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
+        val cardMovie: MaterialCardView = itemView.findViewById(R.id.cardMovie)
+        val ivMovie: ImageView = itemView.findViewById(R.id.itemMoviePoster)
+        val tvVoteAverage: TextView = itemView.findViewById(R.id.tvVoteAverage)
+        val btnFavorite: LikeButton = itemView.findViewById(R.id.btnFavorite)
     }
 
     class MovieDiffUtil :
         DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
+            //return oldItem.title == newItem.title
         }
     }
 
@@ -53,16 +57,20 @@ class MovieListAdapter(
         holder.tvTitle.text = movie.title
         holder.ivMovie.load("${TMDBConstants.IMAGE_URL}${movie.posterPath}")
         holder.tvVoteAverage.text = movie.voteAverage.formatPercentage()
-        holder.btnFavorite.setOnClickListener { clickListener.favoriteClicked(movie) } //Issue Here: .setOnLikeListener
-        holder.cardMovie.setOnClickListener { clickListener.onMovieClick(movie) }
-    }
+        holder.cardMovie.setOnClickListener { clickListener.onMovieClick(movie) } //Issue Here: .setOnLikeListener
+        holder.btnFavorite.isLiked = movie.isFavorited //set the state (filled/unfilled) of the button
+        holder.btnFavorite.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton?) {
+               clickListener.favoriteClicked(movie)
+            }
 
-    //This interface is used when clicking on a movie poster
-    interface MovieClickListener {
-        //This is for when when clicking on a movie to view details
-        fun onMovieClick(movie: Movie)
-        //This is for when when clicking on the heart icon to favorite a movie
-        fun favoriteClicked(movie: Movie)
+            override fun unLiked(likeButton: LikeButton?) {
+                clickListener.favoriteClicked(movie)
+            }
+
+        })
+
+
     }
 
 

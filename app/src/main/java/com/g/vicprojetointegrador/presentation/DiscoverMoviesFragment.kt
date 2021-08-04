@@ -2,6 +2,7 @@ package com.g.vicprojetointegrador.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ import com.g.vicprojetointegrador.utils.TMDBConstants
  * List the popular movies
  * this is the default tab pager
  */
-class DiscoverMoviesFragment : Fragment(), MovieListAdapter.MovieClickListener {
+class DiscoverMoviesFragment : Fragment(), MovieClickListener {
     lateinit var viewModel: MainViewModel
 
     companion object {
@@ -42,10 +43,10 @@ class DiscoverMoviesFragment : Fragment(), MovieListAdapter.MovieClickListener {
         val movieListAdapter = MovieListAdapter(this)
         recyclerView.adapter = movieListAdapter
 
-        //val chipGroup = view.findViewById<ChipGroup>(R.id.cgGenreList)
-
         viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
-           movieListAdapter.submitList(it)
+            val objList = (it.toMutableList())
+            movieListAdapter.submitList(objList)
+            Log.i("debug", "observing list in rvAdapter" + objList.toString())
         }
 
     }
@@ -55,7 +56,7 @@ class DiscoverMoviesFragment : Fragment(), MovieListAdapter.MovieClickListener {
     }
 
     override fun favoriteClicked(movie: Movie) {
-        //viewModel.favoriteClicked(movie)
+        viewModel.favoriteClicked(movie)
     }
 
     private fun openMovieDetails(movie: Movie) {

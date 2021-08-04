@@ -15,8 +15,7 @@ class MovieDetails (
     @SerializedName("genres") val genres: List<Genre>,
     @SerializedName("credits") val credits: Credits,
 
-    //Movie has been liked
-    var isFavorited: Boolean = false
+
 )
 
 //Movie details inherits Movie?

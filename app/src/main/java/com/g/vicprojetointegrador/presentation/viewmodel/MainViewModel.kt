@@ -19,15 +19,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class MainViewModel : ViewModel() {
 
     //Visible only by the ViewModel
-    private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
-
-    private val _moviesByGenreLiveData = MutableLiveData<List<Movie>>()
+    val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _genresLiveData = MutableLiveData<List<Genre>>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _errorLiveData = MutableLiveData<String>()
-
-
-
     private val _favoriteMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _searchQuery = MutableLiveData<String>()
 
@@ -35,11 +30,11 @@ class MainViewModel : ViewModel() {
     //Exposed to the Activity/Fragment, not mutable
     val popularMoviesLiveData  : LiveData<List<Movie>> = _popularMoviesLiveData
     val favoriteMoviesLiveData : LiveData<List<Movie>> = _favoriteMoviesLiveData
-    val movieByGenreLiveData : LiveData<List<Movie>> = _moviesByGenreLiveData
     val genresLiveData : LiveData<List<Genre>> = _genresLiveData
     val progressBar : LiveData<Boolean> = _progressBar
     val errorLiveData : LiveData<String> = _errorLiveData
     val searchQuery : LiveData<String> = _searchQuery
+
 
     private var disposables = CompositeDisposable()
 
@@ -54,17 +49,17 @@ class MainViewModel : ViewModel() {
     }
 
 
-    private fun getPopularMovies(){
+    fun getPopularMovies(){
         disposables.add(getMoviesUseCase.execute()
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
-                _progressBar.setValue(true)
+                _progressBar.postValue(true)
             }  //do something (update the UI) before the task started
             .map { it.results }
             .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
             .subscribe({
                 _progressBar.postValue(false)
-                _popularMoviesLiveData.postValue(it)
+                _popularMoviesLiveData.setValue(it)
             }, { error ->
                 _errorLiveData.postValue("An error occurred: ${error.message}")
             })
@@ -77,13 +72,13 @@ class MainViewModel : ViewModel() {
         disposables.add(getMoviesByGenreUseCase.execute(genreId)
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
-                _progressBar.setValue(true)
+                _progressBar.postValue(true)
             }  //do something (update the UI) before the task started
             .map { it.results }
             .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
             .subscribe({
                 _progressBar.postValue(false)
-                _moviesByGenreLiveData.postValue(it)
+                _popularMoviesLiveData.setValue(it)
             }, { error ->
                 _errorLiveData.postValue("An error occurred: ${error.message}")
             })
@@ -103,22 +98,30 @@ class MainViewModel : ViewModel() {
         )
     }
 
-//    fun favoriteClicked(movie: Movie) {
-//
-//        movie.isFavorited = !movie.isFavorited //Sets a switch on click
-//
-//        if (movie.isFavorited) {
-//            //SaveFavoriteMovieUseCase(movie)
-//        } else {
-//            //DeleteFavoriteMovieUseCase(movie)
-//        }
-////        database
-////        .movieDao() .insertMovie(movie)
-////
-////            .subscribeOn(Schedulers.io())
-////            .subscribe()
-////            .addTo(disposables)
+//    fun favoriteClicked(book: Book) {
+//        database.bookDao()
+//            .updateBook(book.copy(isFavorited = !book.isFavorited))
+//            .toV3Single()
+//            .subscribeOn(Schedulers.io())
+//            .subscribe()
+//            .addTo(disposables)
 //    }
+
+    fun favoriteClicked(movie: Movie) {
+        movie.isFavorited = !movie.isFavorited //Sets a switch on click
+
+        if (movie.isFavorited) {
+            //SaveFavoriteMovieUseCase(movie)
+        } else {
+            //DeleteFavoriteMovieUseCase(movie)
+        }
+//        database
+//        .movieDao() .insertMovie(movie)
+//
+//            .subscribeOn(Schedulers.io())
+//            .subscribe()
+//            .addTo(disposables)
+    }
 
     //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
     override fun onCleared() {

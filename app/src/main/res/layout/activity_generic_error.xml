@@ -14,8 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/ic_close"
-        android:backgroundTint="@color/white"
-        android:onClick="buttonClicked"/>
+        android:backgroundTint="@color/white" />
 
     <ImageView
         android:id="@+id/ivGenericError"
@@ -60,7 +59,6 @@
         android:textAlignment="center"
         android:text="@string/try_again"
         android:clickable="true"
-        android:onClick="buttonClicked"
         android:layout_marginBottom="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

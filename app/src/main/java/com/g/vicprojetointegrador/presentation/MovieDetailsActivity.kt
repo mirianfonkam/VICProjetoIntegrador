@@ -77,15 +77,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
 
-        // "genres":[{"id":28,"name":"Action"},{"id":80,"name":"Crime"},{"id":53,"name":"Thriller"}]
-        //Add chips to chipGroup dynamically
-//        { genres ->
-    //        for (genre in genres) {
-    //            val chip = layoutInflater.inflate(R.layout.item_genre_movie_tags, chipGroup, false) as Chip
-    //            chip.text = genre.name
-    //            chipGroup.addView(chip as View)
-    //        }
-//        }
 
 
         //favoriteIcon if isFa
