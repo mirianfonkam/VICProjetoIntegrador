@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class MainViewModel : ViewModel() {
 
     //Visible only by the ViewModel
-    val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
+    private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _genresLiveData = MutableLiveData<List<Genre>>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _errorLiveData = MutableLiveData<String>()

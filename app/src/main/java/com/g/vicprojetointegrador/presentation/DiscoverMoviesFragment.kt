@@ -36,7 +36,7 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
@@ -44,9 +44,8 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
         recyclerView.adapter = movieListAdapter
 
         viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
-            val objList = (it.toMutableList())
-            movieListAdapter.submitList(objList)
-            Log.i("debug", "observing list in rvAdapter" + objList.toString())
+            movieListAdapter.submitList(it)
+            Log.i("debug", "observing list in rvAdapter" + it.toString())
         }
 
     }
@@ -65,10 +64,5 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
         }
         startActivity(intent)
     }
-
-
-
-
-
 
 }

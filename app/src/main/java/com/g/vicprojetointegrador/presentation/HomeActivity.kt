@@ -78,17 +78,20 @@ class HomeActivity : AppCompatActivity() {
         // set chip group checked change listener
         chipGroup.setOnCheckedChangeListener { group, checkedId ->
             val chip: Chip? = group.findViewById(checkedId)
-            // Responds to child chip checked/unchecked
+            // Responds to child chip checked
             chip?.let {chipView ->
                 if (chipView.isChecked) {
                     viewModel.getMoviesByGenre(checkedId.toString())
                 }
             }
+            //All chips are unchecked
+            if (checkedId == -1) {
+                viewModel.getPopularMovies()
+            }
         }
 
 
     }
-
 
 }
 
