@@ -18,7 +18,7 @@ object MovieRoomDatabase {
     }
 
     private fun buildDatabase(context: Context): MovieDatabase {
-        return Room.databaseBuilder(context, MovieDatabase::class.java, "movie-db")
+        return Room.databaseBuilder(context, MovieDatabase::class.java, "movie_db")
             .build()
     }
 }

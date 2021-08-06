@@ -25,6 +25,8 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
+
+
         val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
         fabBack.setOnClickListener { this.finish() }
 
@@ -34,6 +36,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         val tvMovieOverview = findViewById<TextView>(R.id.tvMovieOverview)
         val tvMovieVoteAverage = findViewById<TextView>(R.id.tvMovieVoteAverage)
         val tvMovieRuntime = findViewById<TextView>(R.id.tvMovieRuntime)
+        val tvMovieMaturityRating = findViewById<TextView>(R.id.tvMovieMaturityRating)
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
 
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
@@ -60,8 +63,16 @@ class MovieDetailsActivity : AppCompatActivity() {
         detailsViewModel.extraMovieDetailsLiveData.observe(this) { movieDetails ->
             movieDetails.run {
                 tvMovieRuntime.text = runtime.formatHourMinutes()
-
             }
+
+            //movieDetails.credits.cast
+            //movieDetails.credits.crew
+
+            // Hacky solution to filter certification
+            // use flatMap?
+            val data =  movieDetails.releaseInfoResponse.results.mapNotNull { releaseInfo -> releaseInfo.takeIf { it.countryCode == "US"}?.releaseDates?.mapNotNull{ it.maturityRating }}.firstOrNull()
+            tvMovieMaturityRating.text = data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }.toString()
+
 
             movieDetails.genres.let { genres ->
                 for (genre in genres) {

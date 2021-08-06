@@ -12,8 +12,8 @@ data class Movie(
     @PrimaryKey val id: Int,
     @SerializedName("title") val title : String = "",
     @SerializedName("overview") val overview: String = "",
-    @SerializedName("poster_path") val posterPath : String = "",
-    @SerializedName("backdrop_path") val backdropPath : String = "",
+    @SerializedName("poster_path") val posterPath : String? = null,
+    @SerializedName("backdrop_path") val backdropPath : String? = null,
     @SerializedName("vote_average") val voteAverage: Double = 0.0,
     @SerializedName("release_date") val releaseDate: String = "",
 

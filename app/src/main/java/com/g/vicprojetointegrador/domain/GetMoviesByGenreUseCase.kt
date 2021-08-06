@@ -1,7 +1,7 @@
 package com.g.vicprojetointegrador.domain
 
-import com.g.vicprojetointegrador.data.repository.MovieListingRepository
+import com.g.vicprojetointegrador.data.repository.MovieListingRemoteRepository
 
-class GetMoviesByGenreUseCase(private val repository: MovieListingRepository = MovieListingRepository()) {
-    fun execute(genreId: String) = repository.getMoviesByGenre(genreId)
+class GetMoviesByGenreUseCase(private val remoteRepository: MovieListingRemoteRepository = MovieListingRemoteRepository()) {
+    fun execute(genreId: String) = remoteRepository.getMoviesByGenre(genreId)
 }

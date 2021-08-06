@@ -57,7 +57,7 @@ class MovieListAdapter(
         holder.ivMovie.load("${TMDBConstants.IMAGE_URL}${movie.posterPath}")
         holder.tvVoteAverage.text = movie.voteAverage.formatPercentage()
         holder.cardMovie.setOnClickListener { clickListener.onMovieClick(movie) } //Issue Here: .setOnLikeListener
-        holder.btnFavorite.isLiked = movie.isFavorited //set the state (filled/unfilled) of the button
+        holder.btnFavorite.isLiked = movie.isFavorited //set the initial state (filled/unfilled) of the button
         holder.btnFavorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                clickListener.favoriteClicked(movie)
@@ -66,7 +66,6 @@ class MovieListAdapter(
             override fun unLiked(likeButton: LikeButton?) {
                 clickListener.favoriteClicked(movie)
             }
-
         })
 
 

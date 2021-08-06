@@ -1,13 +1,12 @@
 package com.g.vicprojetointegrador.presentation.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
-import com.g.vicprojetointegrador.domain.GetGenresUseCase
-import com.g.vicprojetointegrador.domain.GetMoviesByGenreUseCase
-import com.g.vicprojetointegrador.domain.GetPopularMoviesUseCase
+import com.g.vicprojetointegrador.domain.*
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -16,9 +15,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * ViewModel: responsible for holding and processing data required by the User Interface
  * Used to separate the logic from the Views.
  */
-class MainViewModel : ViewModel() {
+class MovieSharedViewModel(application: Application) : AndroidViewModel(application) {
 
-    //Visible only by the ViewModel
+    val context = getApplication<Application>().applicationContext
+
+    // Visible only by the ViewModel
     private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _genresLiveData = MutableLiveData<List<Genre>>()
     private val _progressBar = MutableLiveData<Boolean>()
@@ -26,8 +27,7 @@ class MainViewModel : ViewModel() {
     private val _favoriteMoviesLiveData = MutableLiveData<List<Movie>>()
     private val _searchQuery = MutableLiveData<String>()
 
-
-    //Exposed to the Activity/Fragment, not mutable
+    // Exposed to the Activity/Fragment, not mutable
     val popularMoviesLiveData  : LiveData<List<Movie>> = _popularMoviesLiveData
     val favoriteMoviesLiveData : LiveData<List<Movie>> = _favoriteMoviesLiveData
     val genresLiveData : LiveData<List<Genre>> = _genresLiveData
@@ -38,9 +38,15 @@ class MainViewModel : ViewModel() {
 
     private var disposables = CompositeDisposable()
 
+    // UseCase Instances
     private val getMoviesUseCase = GetPopularMoviesUseCase()
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val getGenresUseCase = GetGenresUseCase()
+    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
+    private val getFavoriteMovieUseCase = GetFavoriteMoviesUseCase(context)
+    private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
+
+
 
 
     init {
@@ -85,6 +91,23 @@ class MainViewModel : ViewModel() {
         )
     }
 
+    fun favoriteClicked(movie: Movie) {
+        movie.isFavorited = !movie.isFavorited //Sets a switch on click
+
+        if (movie.isFavorited) {
+            disposables.add(saveFavoriteMovieUseCase.execute(movie)
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+            )
+
+        } else {
+            disposables.add(deleteFavoriteMovieUseCase.execute(movie)
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+            )
+        }
+    }
+
     private fun getGenres(){
         disposables.add(getGenresUseCase.execute()
             .subscribeOn(Schedulers.io())
@@ -98,6 +121,7 @@ class MainViewModel : ViewModel() {
         )
     }
 
+
 //    fun favoriteClicked(book: Book) {
 //        database.bookDao()
 //            .updateBook(book.copy(isFavorited = !book.isFavorited))
@@ -107,21 +131,7 @@ class MainViewModel : ViewModel() {
 //            .addTo(disposables)
 //    }
 
-    fun favoriteClicked(movie: Movie) {
-        movie.isFavorited = !movie.isFavorited //Sets a switch on click
 
-        if (movie.isFavorited) {
-            //SaveFavoriteMovieUseCase(movie)
-        } else {
-            //DeleteFavoriteMovieUseCase(movie)
-        }
-//        database
-//        .movieDao() .insertMovie(movie)
-//
-//            .subscribeOn(Schedulers.io())
-//            .subscribe()
-//            .addTo(disposables)
-    }
 
     //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
     override fun onCleared() {

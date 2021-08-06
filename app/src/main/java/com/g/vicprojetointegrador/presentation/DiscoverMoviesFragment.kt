@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.presentation.adapter.MovieListAdapter
-import com.g.vicprojetointegrador.presentation.viewmodel.MainViewModel
+import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 
 /*
@@ -20,7 +20,7 @@ import com.g.vicprojetointegrador.utils.TMDBConstants
  * this is the default tab pager
  */
 class DiscoverMoviesFragment : Fragment(), MovieClickListener {
-    lateinit var viewModel: MainViewModel
+    lateinit var moviesViewModel: MovieSharedViewModel
 
     companion object {
         fun newInstance() = DiscoverMoviesFragment()
@@ -36,16 +36,16 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        moviesViewModel = ViewModelProvider(requireActivity()).get(MovieSharedViewModel::class.java)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
         val movieListAdapter = MovieListAdapter(this)
         recyclerView.adapter = movieListAdapter
 
-        viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
+        moviesViewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
             movieListAdapter.submitList(it)
-            Log.i("debug", "observing list in rvAdapter" + it.toString())
+            Log.i("debug", "observing list in rvAdapter $it")
         }
 
     }
@@ -55,7 +55,7 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
     }
 
     override fun favoriteClicked(movie: Movie) {
-        viewModel.favoriteClicked(movie)
+        moviesViewModel.favoriteClicked(movie)
     }
 
     private fun openMovieDetails(movie: Movie) {

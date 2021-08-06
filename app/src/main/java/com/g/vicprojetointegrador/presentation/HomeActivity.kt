@@ -11,8 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.g.vicprojetointegrador.R
+import com.g.vicprojetointegrador.data.repository.database.MovieRoomDatabase
 import com.g.vicprojetointegrador.presentation.adapter.PagerSectionAdapter
-import com.g.vicprojetointegrador.presentation.viewmodel.MainViewModel
+import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
@@ -20,16 +21,22 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+    var db: MovieRoomDatabase? = null
+    private lateinit var moviesViewModel: MovieSharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        var db = MovieRoomDatabase.getInstance(this)
+
         val pagerMovieList = findViewById<ViewPager2>(R.id.pagerMovieList)
         val tabPagerSection = findViewById<TabLayout>(R.id.tabPageSection)
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+
+        // Issue here - create factory
+        moviesViewModel = ViewModelProvider(this).get(MovieSharedViewModel::class.java)
 
         pagerMovieList.adapter = PagerSectionAdapter(supportFragmentManager,lifecycle)
 
@@ -54,19 +61,19 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        viewModel.errorLiveData.observe(this, { error ->
+
+        moviesViewModel.errorLiveData.observe(this, { error ->
             val intent = Intent(this, GenericErrorActivity::class.java)
             startActivity(intent)
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
-        viewModel.progressBar.observe(this){ isLoading ->
+        moviesViewModel.progressBar.observe(this){ isLoading ->
                 progressBar.isVisible = isLoading
         }
 
         //Add chips to chipGroup dynamically
-        viewModel.genresLiveData.observe(this){ genres ->
+        moviesViewModel.genresLiveData.observe(this){ genres ->
             for (genre in genres) {
                 val chip = layoutInflater.inflate(R.layout.item_genre_home, chipGroup, false) as Chip
                 chip.id = genre.id
@@ -81,12 +88,12 @@ class HomeActivity : AppCompatActivity() {
             // Responds to child chip checked
             chip?.let {chipView ->
                 if (chipView.isChecked) {
-                    viewModel.getMoviesByGenre(checkedId.toString())
+                    moviesViewModel.getMoviesByGenre(checkedId.toString())
                 }
             }
-            //All chips are unchecked
+            // All chips are unchecked
             if (checkedId == -1) {
-                viewModel.getPopularMovies()
+                moviesViewModel.getPopularMovies()
             }
         }
 

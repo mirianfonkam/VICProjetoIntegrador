@@ -27,4 +27,10 @@ class FavoritesFragment : Fragment() {
         fun newInstance() = FavoritesFragment()
 
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }
 }
