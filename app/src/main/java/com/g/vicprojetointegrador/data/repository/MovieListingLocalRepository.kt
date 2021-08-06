@@ -8,15 +8,17 @@ import io.reactivex.rxjava3.core.Observable
 
 // Repository -> controls local database (MovieDatabase)
 class MovieListingLocalRepository() {
+
+
     fun getFavoriteMovies(context: Context) : Observable<List<Movie>> {
-        return MovieRoomDatabase.getInstance(context).movieDao().getFavoriteMovies()
+        return MovieRoomDatabase.getDatabase(context).movieDao().getFavoriteMovies()
     }
 
     fun saveFavoriteMovies(movie: Movie, context: Context) : Completable {
-        return MovieRoomDatabase.getInstance(context).movieDao().insertMovie(movie)
+        return MovieRoomDatabase.getDatabase(context).movieDao().insertMovie(movie)
     }
 
     fun deleteFavoriteMovies(movie: Movie, context: Context) : Completable {
-        return MovieRoomDatabase.getInstance(context).movieDao().deleteMovie(movie)
+        return MovieRoomDatabase.getDatabase(context).movieDao().deleteMovie(movie)
     }
 }

@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.g.vicprojetointegrador.R
-import com.g.vicprojetointegrador.data.repository.database.MovieRoomDatabase
 import com.g.vicprojetointegrador.presentation.adapter.PagerSectionAdapter
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 import com.google.android.material.chip.Chip
@@ -21,14 +20,11 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 class HomeActivity : AppCompatActivity() {
 
-    var db: MovieRoomDatabase? = null
     private lateinit var moviesViewModel: MovieSharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
-        var db = MovieRoomDatabase.getInstance(this)
 
         val pagerMovieList = findViewById<ViewPager2>(R.id.pagerMovieList)
         val tabPagerSection = findViewById<TabLayout>(R.id.tabPageSection)

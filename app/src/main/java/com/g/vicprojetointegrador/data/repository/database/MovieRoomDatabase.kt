@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Room
 
 object MovieRoomDatabase {
+    // Singleton prevents multiple instances of database opening at the
+    // same time.
+    @Volatile
     private var database: MovieDatabase? = null
 
-    fun getInstance(context: Context): MovieDatabase {
+    fun getDatabase(context: Context): MovieDatabase {
         val localDatabase = database
             // If database exists...
         return if (localDatabase != null) {

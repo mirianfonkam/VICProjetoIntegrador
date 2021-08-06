@@ -6,7 +6,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.g.vicprojetointegrador.R
-import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 
 class GenericErrorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +27,7 @@ class GenericErrorActivity : AppCompatActivity() {
 
     //Function attached to tvTryAgain and btnClose in the layout
     fun buttonClicked() {
-        val intent = Intent(this,MovieSharedViewModel::class.java)
+        val intent = Intent(this,HomeActivity::class.java)
         startActivity(intent)
     }
 

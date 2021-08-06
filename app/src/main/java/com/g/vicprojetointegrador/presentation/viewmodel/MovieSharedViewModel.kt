@@ -16,8 +16,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * Used to separate the logic from the Views.
  */
 class MovieSharedViewModel(application: Application) : AndroidViewModel(application) {
-
-    val context = getApplication<Application>().applicationContext
+    val context = application
 
     // Visible only by the ViewModel
     private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
@@ -47,11 +46,10 @@ class MovieSharedViewModel(application: Application) : AndroidViewModel(applicat
     private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
 
 
-
-
     init {
         getPopularMovies()
         getGenres()
+        getFavoriteMovies()
     }
 
 
@@ -91,6 +89,17 @@ class MovieSharedViewModel(application: Application) : AndroidViewModel(applicat
         )
     }
 
+    private fun getFavoriteMovies() {
+        disposables.add(getFavoriteMovieUseCase.execute()
+            .subscribeOn(Schedulers.io())
+            .subscribe ({
+                _favoriteMoviesLiveData.postValue(it)
+            } , { error ->
+                _errorLiveData.postValue("An error occurred: ${error.message}")
+            })
+        )
+    }
+
     fun favoriteClicked(movie: Movie) {
         movie.isFavorited = !movie.isFavorited //Sets a switch on click
 
@@ -120,18 +129,6 @@ class MovieSharedViewModel(application: Application) : AndroidViewModel(applicat
             })
         )
     }
-
-
-//    fun favoriteClicked(book: Book) {
-//        database.bookDao()
-//            .updateBook(book.copy(isFavorited = !book.isFavorited))
-//            .toV3Single()
-//            .subscribeOn(Schedulers.io())
-//            .subscribe()
-//            .addTo(disposables)
-//    }
-
-
 
     //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
     override fun onCleared() {

@@ -61,10 +61,14 @@ dependencies {
     // Room Local Database
     def room_version = "2.3.0"
 
+    // To use Kotlin annotation processing tool (kapt)
+
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt("androidx.room:room-compiler:$room_version")
     // RxJava3 support for Room
     implementation "androidx.room:room-rxjava3:$room_version"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.7'

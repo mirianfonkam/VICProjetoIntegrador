@@ -22,10 +22,6 @@ import com.g.vicprojetointegrador.utils.TMDBConstants
 class DiscoverMoviesFragment : Fragment(), MovieClickListener {
     lateinit var moviesViewModel: MovieSharedViewModel
 
-    companion object {
-        fun newInstance() = DiscoverMoviesFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
