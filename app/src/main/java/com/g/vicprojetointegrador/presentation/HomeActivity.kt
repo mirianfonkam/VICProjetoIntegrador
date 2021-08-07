@@ -31,7 +31,6 @@ class HomeActivity : AppCompatActivity() {
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
-        // Issue here - create factory
         moviesViewModel = ViewModelProvider(this).get(MovieSharedViewModel::class.java)
 
         pagerMovieList.adapter = PagerSectionAdapter(supportFragmentManager,lifecycle)
@@ -50,20 +49,18 @@ class HomeActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
-
         pagerMovieList.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 tabPagerSection.selectTab(tabPagerSection.getTabAt(position))
             }
         })
 
-
-
         moviesViewModel.errorLiveData.observe(this, { error ->
             val intent = Intent(this, GenericErrorActivity::class.java)
             startActivity(intent)
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
+
         moviesViewModel.progressBar.observe(this){ isLoading ->
                 progressBar.isVisible = isLoading
         }

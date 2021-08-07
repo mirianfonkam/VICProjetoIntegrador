@@ -5,7 +5,7 @@ import com.g.vicprojetointegrador.data.model.MoviesResponse
 import com.g.vicprojetointegrador.data.repository.network.NetworkInstance
 import io.reactivex.rxjava3.core.Single
 
-//Repository -> controls remote source (NetworkInstance)
+//Repository -> controls remote source [NetworkInstance]
 class MovieListingRemoteRepository() {
 
     fun getMovies() : Single<MoviesResponse> {

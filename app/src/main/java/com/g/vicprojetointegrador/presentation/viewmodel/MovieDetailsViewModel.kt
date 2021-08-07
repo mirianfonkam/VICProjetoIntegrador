@@ -1,27 +1,40 @@
 package com.g.vicprojetointegrador.presentation.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.model.MovieDetails
+import com.g.vicprojetointegrador.domain.CheckFavoriteStatusUseCase
+import com.g.vicprojetointegrador.domain.DeleteFavoriteMovieUseCase
 import com.g.vicprojetointegrador.domain.GetMovieDetailsUseCase
+import com.g.vicprojetointegrador.domain.SaveFavoriteMovieUseCase
+import com.g.vicprojetointegrador.utils.toBoolean
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MovieDetailsViewModel(private val movieId: Int = -1) : ViewModel() {
+class MovieDetailsViewModel(private val movieId: Int = -1, context: Application) : AndroidViewModel(context) {
     private val _extraMovieDetailsLiveData = MutableLiveData<MovieDetails>()
     private val _errorLiveData = MutableLiveData<String>()
+    private val _isFavorited = MutableLiveData<Boolean>()
+
 
     val extraMovieDetailsLiveData : LiveData<MovieDetails> = _extraMovieDetailsLiveData
     val errorLiveData : LiveData<String> = _errorLiveData
+    val isFavorited : MutableLiveData<Boolean> = _isFavorited
 
     private var disposables = CompositeDisposable()
 
     private val getMovieDetailsUseCase = GetMovieDetailsUseCase()
+    private val getFavoriteStatusUseCase = CheckFavoriteStatusUseCase(context)
+    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
+    private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
 
     init {
         getMovieDetails()
+        checkFavoriteStatus()
     }
 
     private fun getMovieDetails() {
@@ -34,6 +47,33 @@ class MovieDetailsViewModel(private val movieId: Int = -1) : ViewModel() {
                 _errorLiveData.postValue("Error on extra movie detail: ${error.message}")
             })
         )
+    }
+
+    private fun checkFavoriteStatus() {
+        disposables.add(getFavoriteStatusUseCase.execute(movieId)
+            .subscribeOn(Schedulers.io())
+            .subscribe ({
+                _isFavorited.postValue(it.toBoolean())
+            } , { error ->
+                _errorLiveData.postValue("An error on db load: ${error.message}")
+            })
+        )
+    }
+
+    fun favoriteClicked(movie: Movie) {
+        movie.isFavorited = !movie.isFavorited //Sets a switch on click
+
+        if (movie.isFavorited) {
+            disposables.add(saveFavoriteMovieUseCase.execute(movie)
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+            )
+        } else {
+            disposables.add(deleteFavoriteMovieUseCase.execute(movie)
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+            )
+        }
     }
 
     //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.

@@ -29,7 +29,7 @@ class MovieListAdapter(
         val cardMovie: MaterialCardView = itemView.findViewById(R.id.cardMovie)
         val ivMovie: ImageView = itemView.findViewById(R.id.itemMoviePoster)
         val tvVoteAverage: TextView = itemView.findViewById(R.id.tvVoteAverage)
-        val btnFavorite: LikeButton = itemView.findViewById(R.id.btnFavorite)
+        val btnFavorite: LikeButton = itemView.findViewById(R.id.btnLike)
     }
 
     class MovieDiffUtil :

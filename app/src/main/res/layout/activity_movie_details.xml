@@ -93,13 +93,13 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toStartOf="@id/btnFavorite"
+        app:layout_constraintEnd_toStartOf="@id/btnLike"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivMovieBackdrop"
         tools:text="Movie Title" />
 
     <com.like.LikeButton
-        android:id="@+id/btnFavorite"
+        android:id="@+id/btnLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"

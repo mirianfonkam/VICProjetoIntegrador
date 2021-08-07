@@ -41,8 +41,8 @@ class MovieSharedViewModel(application: Application) : AndroidViewModel(applicat
     private val getMoviesUseCase = GetPopularMoviesUseCase()
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val getGenresUseCase = GetGenresUseCase()
-    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
     private val getFavoriteMovieUseCase = GetFavoriteMoviesUseCase(context)
+    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
     private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
 
 

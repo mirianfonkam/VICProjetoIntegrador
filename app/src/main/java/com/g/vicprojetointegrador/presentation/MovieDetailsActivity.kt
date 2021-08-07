@@ -18,6 +18,8 @@ import com.g.vicprojetointegrador.utils.formatPercentage
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.like.LikeButton
+import com.like.OnLikeListener
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -25,10 +27,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-
-
-        val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
-        fabBack.setOnClickListener { this.finish() }
+        val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
 
         val ivBackdrop = findViewById<ImageView>(R.id.ivMovieBackdrop)
         val tvMovieTitle = findViewById<TextView>(R.id.tvMovieTitle)
@@ -38,8 +37,8 @@ class MovieDetailsActivity : AppCompatActivity() {
         val tvMovieRuntime = findViewById<TextView>(R.id.tvMovieRuntime)
         val tvMovieMaturityRating = findViewById<TextView>(R.id.tvMovieMaturityRating)
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
+        val btnLike = findViewById<LikeButton>(R.id.btnLike)
 
-        val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
         // Null pointer exception detected for Fast & Furious 10
         //Pre-loaded data from the GetPopularMovies() request made in previous activity
         movie?.run {
@@ -54,7 +53,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         val detailsViewModel : MovieDetailsViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MovieDetailsViewModel(movieId) as T
+                return MovieDetailsViewModel(movieId, this@MovieDetailsActivity.application) as T
             }
         }).get(MovieDetailsViewModel::class.java)
 
@@ -73,7 +72,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             val data =  movieDetails.releaseInfoResponse.results.mapNotNull { releaseInfo -> releaseInfo.takeIf { it.countryCode == "US"}?.releaseDates?.mapNotNull{ it.maturityRating }}.firstOrNull()
             tvMovieMaturityRating.text = data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }.toString()
 
-
             movieDetails.genres.let { genres ->
                 for (genre in genres) {
                     val chip = layoutInflater.inflate(R.layout.item_genre_movie_tags, chipGroup, false) as Chip
@@ -81,16 +79,37 @@ class MovieDetailsActivity : AppCompatActivity() {
                     chipGroup.addView(chip as View)
                 }
             }
-
         }
 
         detailsViewModel.errorLiveData.observe(this, { error ->
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
 
+        //Sets the initial state of the like btn when page is opened
+        detailsViewModel.isFavorited.observe(this) { btnFavoriteState ->
+            btnLike.isLiked = btnFavoriteState
+            movie.isFavorited = btnFavoriteState
+        }
+
+        //If user clicks on the return button, return to previous activity
+        val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
+        fabBack.setOnClickListener { this.finish() }
+
+        btnLike.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton?) {
+                detailsViewModel.favoriteClicked(movie)
+            }
+            //ISSUE: Unknown issue for movie unlike in the details page, when intent comes from All Movies fragment page
+            override fun unLiked(likeButton: LikeButton?) {
+                detailsViewModel.favoriteClicked(movie)
+            }
+        })
 
 
-        //favoriteIcon if isFa
+
+
+
+
 
         //transformations(CircleCropTransformation())
     }

@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.room.Room
 
 object MovieRoomDatabase {
-    // Singleton prevents multiple instances of database opening at the
-    // same time.
+    // Singleton prevents multiple instances of database opening at the same time.
     @Volatile
     private var database: MovieDatabase? = null
 
