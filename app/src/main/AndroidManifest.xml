@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApp">
+        <activity android:name=".presentation.SearchMoviesActivity"></activity>
         <activity android:name=".presentation.MovieDetailsActivity" />
         <activity android:name=".presentation.GenericErrorActivity" />
         <activity

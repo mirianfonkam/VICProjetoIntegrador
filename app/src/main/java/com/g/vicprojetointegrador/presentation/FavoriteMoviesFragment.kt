@@ -17,9 +17,10 @@ import com.g.vicprojetointegrador.utils.TMDBConstants
 
 /*
  * Favorite movies tab pager
- * movies that the user has tapped the like button
+ * movies that the user has liked button
+ * store in room DB
  */
-class FavoritesFragment : Fragment(), MovieClickListener {
+class FavoriteMoviesFragment : Fragment(), MovieClickListener {
     lateinit var moviesViewModel: MovieSharedViewModel
 
     override fun onCreateView(

@@ -21,4 +21,3 @@ data class Movie(
     var isFavorited: Boolean = false
 ) : Parcelable
 
-//MaturityRating (certification) is in releaseDate https://developers.themoviedb.org/3/movies/get-movie-release-dates

@@ -91,26 +91,18 @@ class MovieDetailsActivity : AppCompatActivity() {
             movie.isFavorited = btnFavoriteState
         }
 
-        //If user clicks on the return button, return to previous activity
-        val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
-        fabBack.setOnClickListener { this.finish() }
-
         btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 detailsViewModel.favoriteClicked(movie)
             }
-            //ISSUE: Unknown issue for movie unlike in the details page, when intent comes from All Movies fragment page
             override fun unLiked(likeButton: LikeButton?) {
                 detailsViewModel.favoriteClicked(movie)
             }
         })
 
-
-
-
-
-
-
+        //If user clicks on the return button, return to previous activity
+        val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
+        fabBack.setOnClickListener { this.finish() }
         //transformations(CircleCropTransformation())
     }
 }

@@ -8,6 +8,10 @@ import io.reactivex.rxjava3.core.Single
 //Repository -> controls remote source [NetworkInstance]
 class MovieListingRemoteRepository() {
 
+    fun searchMovies(query: String) : Single<MoviesResponse> {
+        return NetworkInstance.getService().getSearchResults(query)
+    }
+
     fun getMovies() : Single<MoviesResponse> {
         return NetworkInstance.getService().getPopularMovies()
     }

@@ -23,4 +23,5 @@
     <string name="cast">Elenco</string>
     <string name="star_icon_desc">Estrela</string>
     <string name="fab_desc">Retornar para página principal</string>
+    <string name="not_found_icon_desc">Lupa de pesquisa não encontrada</string>
 </resources>

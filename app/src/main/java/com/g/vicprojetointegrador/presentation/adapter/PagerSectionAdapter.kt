@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.g.vicprojetointegrador.presentation.DiscoverMoviesFragment
-import com.g.vicprojetointegrador.presentation.FavoritesFragment
+import com.g.vicprojetointegrador.presentation.FavoriteMoviesFragment
 
 // A simple ViewPager adapter class for paging through fragments
 class PagerSectionAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle)
@@ -16,7 +16,7 @@ class PagerSectionAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> DiscoverMoviesFragment()
-            else -> FavoritesFragment()
+            else -> FavoriteMoviesFragment()
         }
     }
 

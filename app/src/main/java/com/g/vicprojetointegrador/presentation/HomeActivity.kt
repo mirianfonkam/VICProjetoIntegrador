@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -26,10 +27,11 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val pagerMovieList = findViewById<ViewPager2>(R.id.pagerMovieList)
-        val tabPagerSection = findViewById<TabLayout>(R.id.tabPageSection)
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        val pagerMovieList = findViewById<ViewPager2>(R.id.pagerMovieList)
+        val tabPagerSection = findViewById<TabLayout>(R.id.tabPageSection)
+        val searchView = findViewById<SearchView>(R.id.svSearchQuery)
 
         moviesViewModel = ViewModelProvider(this).get(MovieSharedViewModel::class.java)
 
@@ -89,6 +91,13 @@ class HomeActivity : AppCompatActivity() {
                 moviesViewModel.getPopularMovies()
             }
         }
+
+        searchView.setOnQueryTextFocusChangeListener { thisView , _ ->
+            thisView.clearFocus() // when user returns to HomeActivity searchView will not be on focus
+            val intent = Intent(this, SearchMoviesActivity::class.java)
+            startActivity(intent)
+        }
+
 
 
     }

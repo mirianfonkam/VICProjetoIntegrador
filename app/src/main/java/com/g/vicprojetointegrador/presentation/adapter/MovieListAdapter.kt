@@ -20,8 +20,9 @@ import com.like.OnLikeListener
 
 
 class MovieListAdapter(
-    private val clickListener: MovieClickListener,
+    private val clickListener: MovieClickListener
 ) : ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDiffUtil()) {
+    //, private val moviesViewModel: MovieSharedViewModel
 
     inner class ViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -39,10 +40,9 @@ class MovieListAdapter(
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem == newItem && oldItem.isFavorited == newItem.isFavorited
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
@@ -57,6 +57,8 @@ class MovieListAdapter(
         holder.ivMovie.load("${TMDBConstants.IMAGE_URL}${movie.posterPath}")
         holder.tvVoteAverage.text = movie.voteAverage.formatPercentage()
         holder.cardMovie.setOnClickListener { clickListener.onMovieClick(movie) }
+        //moviesViewModel.checkFavoriteStatus(movie).isFavorited     // initialize the check if movie is favorited
+//        movie.isFavorited = moviesViewModel.checkFavoriteStatus(movie).isFavorited
         holder.btnFavorite.isLiked = movie.isFavorited //set the initial state (filled/unfilled) of the button
         holder.btnFavorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
@@ -67,9 +69,6 @@ class MovieListAdapter(
                 clickListener.favoriteClicked(movie)
             }
         })
-
-
     }
-
 
 }

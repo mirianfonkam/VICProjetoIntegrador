@@ -32,7 +32,7 @@ interface MovieApiService {
         @Query("with_genres") genreId: String
     ): Single<MoviesResponse>
 
-    //Search for movies
+    //Search for movies. Pass a text query to search (required). This value should be URI encoded.
     @GET("search/movie")
     fun getSearchResults(
         @Query("query") query: String
