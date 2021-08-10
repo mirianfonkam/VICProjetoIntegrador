@@ -27,6 +27,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
+        //If user clicks on the return button, return to previous activity
+        val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
+        fabBack.setOnClickListener { this.finish() }
+
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
 
         val ivBackdrop = findViewById<ImageView>(R.id.ivMovieBackdrop)
@@ -100,9 +104,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             }
         })
 
-        //If user clicks on the return button, return to previous activity
-        val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
-        fabBack.setOnClickListener { this.finish() }
+
         //transformations(CircleCropTransformation())
     }
 }

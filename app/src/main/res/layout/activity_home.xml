@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="28dp"
-        android:inputType="text"
+        android:inputType="none"
         android:queryHint="@string/hint_search_for_movie"
         android:iconifiedByDefault="false"
         android:searchIcon="@drawable/ic_search_icon"

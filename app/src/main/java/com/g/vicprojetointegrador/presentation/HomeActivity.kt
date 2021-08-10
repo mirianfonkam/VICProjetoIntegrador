@@ -92,14 +92,17 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        searchView.setOnQueryTextFocusChangeListener { thisView , _ ->
-            thisView.clearFocus() // when user returns to HomeActivity searchView will not be on focus
-            val intent = Intent(this, SearchMoviesActivity::class.java)
-            startActivity(intent)
+        searchView.setOnQueryTextFocusChangeListener { thisView , hasFocus ->
+            if (hasFocus) {
+                thisView.clearFocus()
+                val intent = Intent(this, SearchMoviesActivity::class.java)
+                startActivity(intent)
+            }
         }
+    }
 
-
-
+    override fun onResume() {
+        super.onResume()
     }
 
 }

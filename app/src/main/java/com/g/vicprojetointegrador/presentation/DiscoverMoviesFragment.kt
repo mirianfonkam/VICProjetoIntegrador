@@ -16,6 +16,7 @@ import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 
 /*
+ * All movies tab pager
  * List the popular movies
  * this is the default tab pager
  */
@@ -59,6 +60,10 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
             putExtra(TMDBConstants.EXTRA_MOVIE, movie)
         }
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }

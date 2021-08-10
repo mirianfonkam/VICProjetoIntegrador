@@ -1,9 +1,11 @@
 package com.g.vicprojetointegrador.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.ViewModelProvider
@@ -12,10 +14,12 @@ import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.presentation.adapter.MovieListAdapter
 import com.g.vicprojetointegrador.presentation.viewmodel.SearchViewModel
+import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
 class SearchMoviesActivity : AppCompatActivity(){
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movies)
@@ -23,10 +27,37 @@ class SearchMoviesActivity : AppCompatActivity(){
         val svSearchQuery = findViewById<SearchView>(R.id.svSearchQuery)
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
         val grpSearchNotFound = findViewById<Group>(R.id.grpSearchNotFound)
-
-
         val recyclerView = findViewById<RecyclerView>(R.id.rvMovieList)
         val searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        val tvBackHome = findViewById<TextView>(R.id.tvBackHome)
+
+        tvBackHome.setOnClickListener {
+           this.finish()
+        }
+
+        svSearchQuery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                svSearchQuery.setIconified(true)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+
+
+
+//        svSearchQuery.setOnCloseListener(SearchView.OnCloseListener {
+//            returnToHomeActivity()
+//            true
+//        })
+
+        //        object OnCloseListener {
+//            fun onClose(): Boolean
+//        }
+
+
 
         // Refactor code in Home Activity
         // Add chips to chipGroup dynamically
@@ -72,32 +103,14 @@ class SearchMoviesActivity : AppCompatActivity(){
             Log.i("debug", "observing list in rvAdapter $it")
         }
 
-//        svSearchQuery.setOnCloseListener(SearchView.OnCloseListener {
-//            val intent = Intent(this, HomeActivity::class.java)
-//            startActivity(intent)
-//            true
-//        })
-
-//        svSearchQuery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String): Boolean {
-//                svSearchQuery.setIconified(true)
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(newText: String): Boolean {
-//                return false
-//            }
-//        })
-
-
-
         //getQuery()
 
-//        object OnCloseListener {
-//            fun onClose(): Boolean
-//        }
+    }
 
-
-
+    private fun openMovieDetails(movie: Movie) {
+        val intent = Intent(this, MovieDetailsActivity::class.java).apply {
+            putExtra(TMDBConstants.EXTRA_MOVIE, movie)
+        }
+        startActivity(intent)
     }
 }
