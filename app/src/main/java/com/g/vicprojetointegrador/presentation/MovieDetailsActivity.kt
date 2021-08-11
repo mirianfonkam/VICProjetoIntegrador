@@ -21,18 +21,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.like.LikeButton
 import com.like.OnLikeListener
 
+/*
+ * MovieDetailsActivity opened on MovieClick
+ * Movie object is parsed with intent
+ */
 class MovieDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-        //If user clicks on the return button, return to previous activity
+        // If user clicks on the return button, return to previous activity
         val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
         fabBack.setOnClickListener { this.finish() }
 
-        val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
-
+        // Binds views
         val ivBackdrop = findViewById<ImageView>(R.id.ivMovieBackdrop)
         val tvMovieTitle = findViewById<TextView>(R.id.tvMovieTitle)
         val tvMovieYear = findViewById<TextView>(R.id.tvMovieYear)
@@ -43,26 +46,28 @@ class MovieDetailsActivity : AppCompatActivity() {
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
         val btnLike = findViewById<LikeButton>(R.id.btnLike)
 
-        // Null pointer exception detected for Fast & Furious 10
-        //Pre-loaded data from the GetPopularMovies() request made in previous activity
-        movie?.run {
-            ivBackdrop.load("${TMDBConstants.IMAGE_HD_URL}${movie.backdropPath}")
-            tvMovieTitle.text = title
-            tvMovieYear.text = releaseDate.take(4)
-            tvMovieOverview.text = overview
-            tvMovieVoteAverage.text = voteAverage.formatPercentage()
-        }
-
+        // Gets parsed movie object properties
+        val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
         val movieId : Int = movie?.id!!
-
         val detailsViewModel : MovieDetailsViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return MovieDetailsViewModel(movieId, this@MovieDetailsActivity.application) as T
             }
         }).get(MovieDetailsViewModel::class.java)
 
+        // Pre-loaded data from the GetPopularMovies() request made in previous activity
+        movie.backdropPath?.let {
+            ivBackdrop.load("${TMDBConstants.IMAGE_HD_URL}${it}")
+        }
 
-        //New network request for additional movie data
+        movie.run {
+            tvMovieTitle.text = title
+            tvMovieYear.text = releaseDate.take(4)
+            tvMovieOverview.text = overview
+            tvMovieVoteAverage.text = voteAverage.formatPercentage()
+        }
+
+        // New network request for additional movie data
         detailsViewModel.extraMovieDetailsLiveData.observe(this) { movieDetails ->
             movieDetails.run {
                 tvMovieRuntime.text = runtime.formatHourMinutes()
@@ -73,9 +78,12 @@ class MovieDetailsActivity : AppCompatActivity() {
 
             // Hacky solution to filter certification
             // use flatMap?
-            val data =  movieDetails.releaseInfoResponse.results.mapNotNull { releaseInfo -> releaseInfo.takeIf { it.countryCode == "US"}?.releaseDates?.mapNotNull{ it.maturityRating }}.firstOrNull()
-            tvMovieMaturityRating.text = data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }.toString()
+            val data =  movieDetails.releaseInfoResponse.results.mapNotNull {
+                    releaseInfo -> releaseInfo.takeIf { it.countryCode == "US"}?.releaseDates?.mapNotNull{ it.maturityRating }}.firstOrNull()
+            tvMovieMaturityRating.text = data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }?.toString()
 
+
+            // Adds chips of movie genre to chipGroup dynamically
             movieDetails.genres.let { genres ->
                 for (genre in genres) {
                     val chip = layoutInflater.inflate(R.layout.item_genre_movie_tags, chipGroup, false) as Chip
@@ -89,12 +97,13 @@ class MovieDetailsActivity : AppCompatActivity() {
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
 
-        //Sets the initial state of the like btn when page is opened
+        // Sets the initial state of the like btn when page is opened
         detailsViewModel.isFavorited.observe(this) { btnFavoriteState ->
             btnLike.isLiked = btnFavoriteState
             movie.isFavorited = btnFavoriteState
         }
 
+        // Listener to insert or delete movie from DB
         btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 detailsViewModel.favoriteClicked(movie)
@@ -103,8 +112,5 @@ class MovieDetailsActivity : AppCompatActivity() {
                 detailsViewModel.favoriteClicked(movie)
             }
         })
-
-
-        //transformations(CircleCropTransformation())
     }
 }

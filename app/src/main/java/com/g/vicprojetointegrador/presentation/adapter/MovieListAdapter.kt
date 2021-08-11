@@ -40,7 +40,7 @@ class MovieListAdapter(
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem && oldItem.isFavorited == newItem.isFavorited
+            return oldItem == newItem
         }
     }
 
@@ -57,8 +57,6 @@ class MovieListAdapter(
         holder.ivMovie.load("${TMDBConstants.IMAGE_URL}${movie.posterPath}")
         holder.tvVoteAverage.text = movie.voteAverage.formatPercentage()
         holder.cardMovie.setOnClickListener { clickListener.onMovieClick(movie) }
-        //moviesViewModel.checkFavoriteStatus(movie).isFavorited     // initialize the check if movie is favorited
-//        movie.isFavorited = moviesViewModel.checkFavoriteStatus(movie).isFavorited
         holder.btnFavorite.isLiked = movie.isFavorited //set the initial state (filled/unfilled) of the button
         holder.btnFavorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {

@@ -18,12 +18,14 @@ import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
+
 class SearchMoviesActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movies)
 
+        // binds views
         val svSearchQuery = findViewById<SearchView>(R.id.svSearchQuery)
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
         val grpSearchNotFound = findViewById<Group>(R.id.grpSearchNotFound)
@@ -35,23 +37,31 @@ class SearchMoviesActivity : AppCompatActivity(){
            this.finish()
         }
 
+        svSearchQuery.requestFocus() //searchview will have the cursor on when activity starts
+
+
         svSearchQuery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            // It returns the result when you type the complete search query and hit the search button on the keyboard.
             override fun onQueryTextSubmit(query: String): Boolean {
-                svSearchQuery.setIconified(true)
-                return false
+                  svSearchQuery.query.toString() //pass this data to SearchVM
+                  //    observe live data
+                  //    submit the data from VM to the adapter
+
+                return true //the query has been handled by the listener
             }
 
+            // It starts filtering the list values as soon as you start entering the characters in the searchview.
             override fun onQueryTextChange(newText: String): Boolean {
-                return false
+                return false // default search widget action
             }
         })
 
 
 
-//        svSearchQuery.setOnCloseListener(SearchView.OnCloseListener {
-//            returnToHomeActivity()
-//            true
-//        })
+        svSearchQuery.setOnCloseListener {
+            finish()
+            true
+        }
 
         //        object OnCloseListener {
 //            fun onClose(): Boolean

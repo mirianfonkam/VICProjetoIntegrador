@@ -2,18 +2,29 @@ package com.g.vicprojetointegrador.data.repository
 
 import com.g.vicprojetointegrador.data.model.MovieDetails
 import com.g.vicprojetointegrador.data.model.MoviesResponse
+import com.g.vicprojetointegrador.data.repository.database.MovieRoomDatabase
 import com.g.vicprojetointegrador.data.repository.network.NetworkInstance
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 //Repository -> controls remote source [NetworkInstance]
 class MovieListingRemoteRepository() {
+    private val movieDao by lazy { MovieRoomDatabase.getDatabase().movieDao() }
 
     fun searchMovies(query: String) : Single<MoviesResponse> {
         return NetworkInstance.getService().getSearchResults(query)
     }
 
-    fun getMovies() : Single<MoviesResponse> {
-        return NetworkInstance.getService().getPopularMovies()
+    fun getMovies() : Observable<MoviesResponse> {
+        return NetworkInstance.getService().getPopularMovies().toObservable().flatMap { response ->
+            movieDao.getFavoriteMovies().map { movies ->
+                response.copy(results = response.results.map { movie ->
+                    movie.copy(isFavorited = movies.any{
+                        it.id == movie.id
+                    })
+                })
+            }
+        }
     }
 
     fun getMoviesByGenre(genreId : String) : Single<MoviesResponse> {

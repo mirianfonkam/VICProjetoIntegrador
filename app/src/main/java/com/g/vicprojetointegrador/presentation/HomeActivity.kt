@@ -19,6 +19,10 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
+/*
+ * Activity on application launch
+ * It holds two fragments/tabs: 1. DiscoverMovies 2. FavoriteMovies
+ */
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var moviesViewModel: MovieSharedViewModel
@@ -67,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
                 progressBar.isVisible = isLoading
         }
 
-        //Add chips to chipGroup dynamically
+        // Adds chips to chipGroup dynamically
         moviesViewModel.genresLiveData.observe(this){ genres ->
             for (genre in genres) {
                 val chip = layoutInflater.inflate(R.layout.item_genre_home, chipGroup, false) as Chip
@@ -86,7 +90,7 @@ class HomeActivity : AppCompatActivity() {
                     moviesViewModel.getMoviesByGenre(checkedId.toString())
                 }
             }
-            // All chips are unchecked
+            // All chips are unchecked returns to displaying popular movies
             if (checkedId == -1) {
                 moviesViewModel.getPopularMovies()
             }
@@ -94,7 +98,7 @@ class HomeActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextFocusChangeListener { thisView , hasFocus ->
             if (hasFocus) {
-                thisView.clearFocus()
+                thisView.clearFocus() // onResume the focus will be cleared
                 val intent = Intent(this, SearchMoviesActivity::class.java)
                 startActivity(intent)
             }

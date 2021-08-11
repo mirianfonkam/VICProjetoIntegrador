@@ -72,7 +72,7 @@ class MovieSharedViewModel(application: Application) : AndroidViewModel(applicat
             .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
             .subscribe({
                 _progressBar.postValue(false)
-                _popularMoviesLiveData.postValue(it.toList())
+                _popularMoviesLiveData.postValue(it)
             }, { error ->
                 _errorLiveData.postValue("An error occurred: ${error.message}")
             })

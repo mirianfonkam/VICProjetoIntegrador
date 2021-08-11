@@ -40,9 +40,14 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     private val checkFavoriteStatusUseCase = CheckFavoriteStatusUseCase(context)
     private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
     private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
+    private val searchMoviesByQueryUseCase = SearchMoviesByQueryUseCase()
 
     init {
         getGenres()
+    }
+
+    fun searchMoviesByQuery(){
+
     }
 
     private fun getGenres(){

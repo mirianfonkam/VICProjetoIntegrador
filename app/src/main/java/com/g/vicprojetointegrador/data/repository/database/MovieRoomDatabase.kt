@@ -8,14 +8,14 @@ object MovieRoomDatabase {
     @Volatile
     private var database: MovieDatabase? = null
 
-    fun getDatabase(context: Context): MovieDatabase {
+    fun getDatabase(context: Context? = null): MovieDatabase {
         val localDatabase = database
             // If database exists...
         return if (localDatabase != null) {
             localDatabase
         } else synchronized(this) {
             // If database does not exist...
-            buildDatabase(context).also { database = it }
+            buildDatabase(context!!).also { database = it }
         }
     }
 
