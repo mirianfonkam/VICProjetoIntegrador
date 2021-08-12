@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.domain.*
-import com.g.vicprojetointegrador.utils.toBoolean
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -54,10 +53,8 @@ class SearchViewModel(context: Application) : AndroidViewModel(context) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 _progressBar.postValue(false)
-                _movieListingLiveData.postValue(it)
-                if (it.isNotEmpty()) _isSearchResultsEmpty.postValue(false) else {
-                     _isSearchResultsEmpty.postValue(true)
-                }
+                _movieListingLiveData.value = it
+                _isSearchResultsEmpty.value = it.isEmpty()
 
             }, { error ->
                 _errorGenericLiveData.postValue("An error occurred: ${error.message}")
@@ -88,30 +85,12 @@ class SearchViewModel(context: Application) : AndroidViewModel(context) {
             .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
             .subscribe({
                 _progressBar.postValue(false)
-                _movieListingLiveData.postValue(it)
+                _movieListingLiveData.setValue(it)
             }, { error ->
                 _errorGenericLiveData.postValue("An error occurred: ${error.message}")
             })
         )
     }
-
-    fun checkFavoriteStatus(movie: Movie) : Movie {
-        disposables.add(checkFavoriteStatusUseCase.execute(movie.id)
-            .subscribeOn(Schedulers.io())
-            .subscribe ({
-                movie.isFavorited = it.toBoolean()
-            } , {
-                error ->
-                _errorGenericLiveData.postValue("An error on db load: ${error.message}")
-            })
-        )
-        return movie
-    }
-
-    //setValue: sets the value instantly
-    //postValue: Asynchronous updating
-
-
 
     fun favoriteClicked(movie: Movie) {
         movie.isFavorited = !movie.isFavorited //Sets a switch on click
@@ -130,13 +109,10 @@ class SearchViewModel(context: Application) : AndroidViewModel(context) {
         }
     }
 
-
-
     //This will dispose the disposable when the ViewModel has been cleared, like when the activity has been closed.
     override fun onCleared() {
         super.onCleared()
         disposables.dispose()
     }
-
 
 }

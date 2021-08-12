@@ -2,7 +2,6 @@ package com.g.vicprojetointegrador.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,14 +34,13 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
 
         moviesViewModel = ViewModelProvider(requireActivity()).get(MovieSharedViewModel::class.java)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
+        val rvMovieList = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
         val movieListAdapter = MovieListAdapter(this)
-        recyclerView.adapter = movieListAdapter
+        rvMovieList.adapter = movieListAdapter
 
         moviesViewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
             movieListAdapter.submitList(it)
-            Log.i("debug", "observing list in rvAdapter $it")
         }
 
     }
@@ -51,7 +49,7 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
         openMovieDetails(movie)
     }
 
-    override fun favoriteClicked(movie: Movie) {
+    override fun onFavoriteClicked(movie: Movie) {
         moviesViewModel.favoriteClicked(movie)
     }
 
@@ -60,10 +58,6 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
             putExtra(TMDBConstants.EXTRA_MOVIE, movie)
         }
         startActivity(intent)
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
 }

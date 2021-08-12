@@ -25,7 +25,6 @@ class GenericErrorActivity : AppCompatActivity() {
 
     }
 
-    //Function attached to tvTryAgain and btnClose in the layout
     private fun buttonClicked() {
         val intent = Intent(this,HomeActivity::class.java)
         startActivity(intent)

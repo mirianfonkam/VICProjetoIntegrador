@@ -27,7 +27,7 @@ class FavoriteMoviesFragment : Fragment(), MovieClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_favorite_movies, container, false)
     }
 
@@ -36,10 +36,10 @@ class FavoriteMoviesFragment : Fragment(), MovieClickListener {
 
         moviesViewModel = ViewModelProvider(requireActivity()).get(MovieSharedViewModel::class.java)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rvMovieList)
+        val rvMovieList = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
         val movieListAdapter = MovieListAdapter(this)
-        recyclerView.adapter = movieListAdapter
+        rvMovieList.adapter = movieListAdapter
 
         moviesViewModel.favoriteMoviesLiveData.observe(viewLifecycleOwner) {
             movieListAdapter.submitList(it)
@@ -51,7 +51,7 @@ class FavoriteMoviesFragment : Fragment(), MovieClickListener {
         openMovieDetails(movie)
     }
 
-    override fun favoriteClicked(movie: Movie) {
+    override fun onFavoriteClicked(movie: Movie) {
         moviesViewModel.favoriteClicked(movie)
     }
 

@@ -20,6 +20,7 @@ object NetworkInstance {
                 val originalHttpUrl = original.url()
                 val tmdbUrl = originalHttpUrl.newBuilder()
                     .addQueryParameter("api_key", TMDBConstants.API_KEY)
+                    .addQueryParameter("language", TMDBConstants.PT_BR_LANG)
                     .build()
 
                 chain.proceed(original.newBuilder().url(tmdbUrl).build())

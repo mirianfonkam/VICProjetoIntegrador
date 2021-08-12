@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
+import com.g.vicprojetointegrador.presentation.adapter.PersonRVAdapter
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieDetailsViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.g.vicprojetointegrador.utils.formatHourMinutes
@@ -43,8 +45,9 @@ class MovieDetailsActivity : AppCompatActivity() {
         val tvMovieVoteAverage = findViewById<TextView>(R.id.tvMovieVoteAverage)
         val tvMovieRuntime = findViewById<TextView>(R.id.tvMovieRuntime)
         val tvMovieMaturityRating = findViewById<TextView>(R.id.tvMovieMaturityRating)
-        val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
+        val cgGenreList = findViewById<ChipGroup>(R.id.cgGenreList)
         val btnLike = findViewById<LikeButton>(R.id.btnLike)
+        val rvPeopleList  = findViewById<RecyclerView>(R.id.rvMovieActors)
 
         // Gets parsed movie object properties
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
@@ -67,17 +70,36 @@ class MovieDetailsActivity : AppCompatActivity() {
             tvMovieVoteAverage.text = voteAverage.formatPercentage()
         }
 
+
+
         // New network request for additional movie data
         detailsViewModel.extraMovieDetailsLiveData.observe(this) { movieDetails ->
             movieDetails.run {
                 tvMovieRuntime.text = runtime.formatHourMinutes()
             }
 
-            //movieDetails.credits.cast
+            rvPeopleList.adapter = PersonRVAdapter(movieDetails.credits.cast)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //movieDetails.credits.crew
 
-            // Hacky solution to filter certification
-            // use flatMap?
             val data =  movieDetails.releaseInfoResponse.results.mapNotNull {
                     releaseInfo -> releaseInfo.takeIf { it.countryCode == "US"}?.releaseDates?.mapNotNull{ it.maturityRating }}.firstOrNull()
             tvMovieMaturityRating.text = data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }?.toString()
@@ -86,9 +108,9 @@ class MovieDetailsActivity : AppCompatActivity() {
             // Adds chips of movie genre to chipGroup dynamically
             movieDetails.genres.let { genres ->
                 for (genre in genres) {
-                    val chip = layoutInflater.inflate(R.layout.item_genre_movie_tags, chipGroup, false) as Chip
+                    val chip = layoutInflater.inflate(R.layout.item_genre_movie_tags, cgGenreList, false) as Chip
                     chip.text = genre.name
-                    chipGroup.addView(chip as View)
+                    cgGenreList.addView(chip as View)
                 }
             }
         }

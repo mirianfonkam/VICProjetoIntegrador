@@ -26,7 +26,6 @@ class SearchMoviesActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movies)
 
-        // binds views
         val svSearchQuery = findViewById<SearchView>(R.id.svSearchQuery)
         val cgGenreList = findViewById<ChipGroup>(R.id.cgGenreList)
         val grpSearchNotFound = findViewById<Group>(R.id.grpSearchNotFound)
@@ -81,7 +80,7 @@ class SearchMoviesActivity : AppCompatActivity(){
         }
 
         val movieListAdapter = MovieListAdapter(object : MovieClickListener{
-            override fun favoriteClicked(movie: Movie) {
+            override fun onFavoriteClicked(movie: Movie) {
                searchViewModel.favoriteClicked(movie)
             }
 

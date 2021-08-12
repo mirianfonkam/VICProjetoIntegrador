@@ -22,7 +22,6 @@ import com.like.OnLikeListener
 class MovieListAdapter(
     private val clickListener: MovieClickListener
 ) : ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDiffUtil()) {
-    //, private val moviesViewModel: MovieSharedViewModel
 
     inner class ViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -60,11 +59,11 @@ class MovieListAdapter(
         holder.btnFavorite.isLiked = movie.isFavorited //set the initial state (filled/unfilled) of the button
         holder.btnFavorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-               clickListener.favoriteClicked(movie)
+               clickListener.onFavoriteClicked(movie)
             }
 
             override fun unLiked(likeButton: LikeButton?) {
-                clickListener.favoriteClicked(movie)
+                clickListener.onFavoriteClicked(movie)
             }
         })
     }
