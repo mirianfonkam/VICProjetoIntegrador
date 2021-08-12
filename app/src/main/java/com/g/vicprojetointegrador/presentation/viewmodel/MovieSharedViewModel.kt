@@ -16,8 +16,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * ViewModel: responsible for holding and processing data required by the User Interface
  * Used to separate the logic from the Views.
  */
-class MovieSharedViewModel(application: Application) : AndroidViewModel(application) {
-    val context = application
+class MovieSharedViewModel(context: Application) : AndroidViewModel(context) {
 
     // Visible only by the ViewModel
     private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()

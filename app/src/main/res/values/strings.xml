@@ -10,14 +10,14 @@
     <string name="try_again">Tentar novamente</string>
     <string name="not_found">Esse filme não existe</string>
     <string name="not_found_long_desc">
-        Não conseguimos encontrar o filme que voce procura.
+        Não conseguimos encontrar o filme que você procura.
         Por favor, refaça sua busca.
     </string>
     <string name="search_mode">Modo pesquisa</string>
     <string name="back_home">Voltar ao início</string>
     <string name="all_movies">Todos os filmes</string>
     <string name="favorite">Favoritos</string>
-    <string name="hint_search_for_movie">Pesquisar por um filme...</string>
+    <string name="hint_search_for_movie">Pesquisar por um filme…</string>
     <string name="user_rating">Avaliação\ndos usuários</string>
     <string name="synopsis">Sinopse</string>
     <string name="cast">Elenco</string>

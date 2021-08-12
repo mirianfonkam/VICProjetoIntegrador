@@ -8,6 +8,7 @@ import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.g.vicprojetointegrador.R
@@ -27,9 +28,9 @@ class SearchMoviesActivity : AppCompatActivity(){
 
         // binds views
         val svSearchQuery = findViewById<SearchView>(R.id.svSearchQuery)
-        val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
+        val cgGenreList = findViewById<ChipGroup>(R.id.cgGenreList)
         val grpSearchNotFound = findViewById<Group>(R.id.grpSearchNotFound)
-        val recyclerView = findViewById<RecyclerView>(R.id.rvMovieList)
+        val rvMovieList = findViewById<RecyclerView>(R.id.rvMovieList)
         val searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         val tvBackHome = findViewById<TextView>(R.id.tvBackHome)
 
@@ -37,83 +38,64 @@ class SearchMoviesActivity : AppCompatActivity(){
            this.finish()
         }
 
-        svSearchQuery.requestFocus() //searchview will have the cursor on when activity starts
-
-
-        svSearchQuery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            // It returns the result when you type the complete search query and hit the search button on the keyboard.
-            override fun onQueryTextSubmit(query: String): Boolean {
-                  svSearchQuery.query.toString() //pass this data to SearchVM
-                  //    observe live data
-                  //    submit the data from VM to the adapter
-
-                return true //the query has been handled by the listener
-            }
-
-            // It starts filtering the list values as soon as you start entering the characters in the searchview.
-            override fun onQueryTextChange(newText: String): Boolean {
-                return false // default search widget action
-            }
-        })
-
-
-
-        svSearchQuery.setOnCloseListener {
-            finish()
-            true
-        }
-
-        //        object OnCloseListener {
-//            fun onClose(): Boolean
-//        }
-
-
+        svSearchQuery.requestFocus() // search view will have the cursor on when activity starts
 
         // Refactor code in Home Activity
         // Add chips to chipGroup dynamically
         searchViewModel.genresLiveData.observe(this){ genres ->
             for (genre in genres) {
-                val chip = layoutInflater.inflate(R.layout.item_genre_home, chipGroup, false) as Chip
+                val chip = layoutInflater.inflate(R.layout.item_genre_home, cgGenreList, false) as Chip
                 chip.id = genre.id
                 chip.text = genre.name
-                chipGroup.addView(chip as View)
+                cgGenreList.addView(chip as View)
             }
         }
 
-        // set chip group checked change listener
-        chipGroup.setOnCheckedChangeListener { group, checkedId ->
-            val chip: Chip? = group.findViewById(checkedId)
-            // Responds to child chip checked
-            chip?.let {chipView ->
-                if (chipView.isChecked) {
-                    searchViewModel.getMoviesByGenre(checkedId.toString())
-                }
-            }
-//            // All chips are unchecked
-//            if (checkedId == -1) {
-//                //moviesViewModel.getSearchResultMovies()
-//            }
-        }
+        svSearchQuery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-
-        val movieListAdapter = MovieListAdapter(object : MovieClickListener{
-            override fun favoriteClicked(movie: Movie) {
-                TODO("Not yet implemented")
+            override fun onQueryTextSubmit(query: String): Boolean {
+                val textSubmitted: String =  svSearchQuery.query.toString()
+                svSearchQuery.clearFocus() // make keyboard disappear
+                searchViewModel.searchMoviesByQuery(textSubmitted)
+                return true // the query has been handled by the listener
             }
 
-            override fun onMovieClick(movie: Movie) {
-                TODO("Not yet implemented")
+            override fun onQueryTextChange(newText: String): Boolean {
+                cgGenreList.clearCheck()
+                return false // default search widget action
             }
         })
 
-        recyclerView.adapter = movieListAdapter
+        searchViewModel.isSearchResultsEmpty.observe(this){ emptyResult ->
+                grpSearchNotFound.isVisible = emptyResult
+        }
+
+        cgGenreList.setOnCheckedChangeListener { group, checkedId ->
+            val chip: Chip? = group.findViewById(checkedId)
+            chip?.let {chipView ->
+                if (chipView.isChecked) {
+                    searchViewModel.getMoviesByGenre(checkedId.toString())
+                    grpSearchNotFound.isVisible = false
+                }
+            }
+        }
+
+        val movieListAdapter = MovieListAdapter(object : MovieClickListener{
+            override fun favoriteClicked(movie: Movie) {
+               searchViewModel.favoriteClicked(movie)
+            }
+
+            override fun onMovieClick(movie: Movie) {
+                openMovieDetails(movie)
+            }
+        })
+
+        rvMovieList.adapter = movieListAdapter
 
         searchViewModel.movieListingLiveData.observe(this) {
             movieListAdapter.submitList(it)
             Log.i("debug", "observing list in rvAdapter $it")
         }
-
-        //getQuery()
 
     }
 

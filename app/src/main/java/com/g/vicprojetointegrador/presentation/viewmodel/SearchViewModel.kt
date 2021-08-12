@@ -14,22 +14,20 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 
 
-class SearchViewModel(application: Application) : AndroidViewModel(application) {
-    val context = application
+class SearchViewModel(context: Application) : AndroidViewModel(context) {
 
     // Visible only by the ViewModel
     private val _genresLiveData = MutableLiveData<List<Genre>>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _errorGenericLiveData = MutableLiveData<String>()
     private val _isSearchResultsEmpty = MutableLiveData<Boolean>()
-    private val _searchQuery = MutableLiveData<String>()
     private val _movieListingLiveData = MutableLiveData<List<Movie>>()
 
     // Exposed to the Activity/Fragment, not mutable
     val genresLiveData : LiveData<List<Genre>> = _genresLiveData
     val progressBar : LiveData<Boolean> = _progressBar
-    val errorLiveData : LiveData<String> = _errorGenericLiveData
-    val searchQuery : LiveData<String> = _searchQuery
+    val errorGenericLiveData : LiveData<String> = _errorGenericLiveData
+    val isSearchResultsEmpty : LiveData<Boolean> = _isSearchResultsEmpty
     val movieListingLiveData : LiveData<List<Movie>> = _movieListingLiveData
 
     private var disposables = CompositeDisposable()
@@ -46,8 +44,25 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         getGenres()
     }
 
-    fun searchMoviesByQuery(){
+    fun searchMoviesByQuery(query : String){
+        disposables.add(searchMoviesByQueryUseCase.execute(query)
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                _progressBar.postValue(true)
+            }
+            .map { it.results }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _progressBar.postValue(false)
+                _movieListingLiveData.postValue(it)
+                if (it.isNotEmpty()) _isSearchResultsEmpty.postValue(false) else {
+                     _isSearchResultsEmpty.postValue(true)
+                }
 
+            }, { error ->
+                _errorGenericLiveData.postValue("An error occurred: ${error.message}")
+            })
+        )
     }
 
     private fun getGenres(){
