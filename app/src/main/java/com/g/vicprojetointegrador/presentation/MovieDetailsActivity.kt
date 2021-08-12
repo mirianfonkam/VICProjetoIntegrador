@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.g.vicprojetointegrador.R
+import com.g.vicprojetointegrador.data.model.Crew
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.presentation.adapter.PersonRVAdapter
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieDetailsViewModel
@@ -70,8 +71,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             tvMovieVoteAverage.text = voteAverage.formatPercentage()
         }
 
-
-
         // New network request for additional movie data
         detailsViewModel.extraMovieDetailsLiveData.observe(this) { movieDetails ->
             movieDetails.run {
@@ -80,25 +79,8 @@ class MovieDetailsActivity : AppCompatActivity() {
 
             rvPeopleList.adapter = PersonRVAdapter(movieDetails.credits.cast)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //movieDetails.credits.crew
+            val director : Crew? = movieDetails.credits.crew.firstOrNull { crew -> crew.job == "Director" }
+            val name : String = director?.name ?: "--"
 
             val data =  movieDetails.releaseInfoResponse.results.mapNotNull {
                     releaseInfo -> releaseInfo.takeIf { it.countryCode == "US"}?.releaseDates?.mapNotNull{ it.maturityRating }}.firstOrNull()

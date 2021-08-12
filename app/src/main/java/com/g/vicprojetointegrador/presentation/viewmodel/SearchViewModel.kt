@@ -34,7 +34,6 @@ class SearchViewModel(context: Application) : AndroidViewModel(context) {
     // UseCase Instances
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val getGenresUseCase = GetGenresUseCase()
-    private val checkFavoriteStatusUseCase = CheckFavoriteStatusUseCase(context)
     private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
     private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
     private val searchMoviesByQueryUseCase = SearchMoviesByQueryUseCase()
@@ -114,5 +113,4 @@ class SearchViewModel(context: Application) : AndroidViewModel(context) {
         super.onCleared()
         disposables.dispose()
     }
-
 }

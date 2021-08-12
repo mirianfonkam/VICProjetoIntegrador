@@ -38,7 +38,7 @@ class FavoriteMoviesFragment : Fragment(), MovieClickListener {
 
         val rvMovieList = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
-        val movieListAdapter = MovieListAdapter(this)
+        val movieListAdapter: MovieListAdapter = MovieListAdapter(this)
         rvMovieList.adapter = movieListAdapter
 
         moviesViewModel.favoriteMoviesLiveData.observe(viewLifecycleOwner) {

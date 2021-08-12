@@ -1,5 +1,6 @@
 package com.g.vicprojetointegrador
 
+import com.g.vicprojetointegrador.utils.formatHourMinutes
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -13,6 +14,30 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    @Test
+    fun formatting_minutes_to_hours_minutes() {
+        assertEquals(
+            "0h 00min",
+            0.formatHourMinutes()
+        )
+
+        assertEquals(
+            "1h 30min",
+            90.formatHourMinutes()
+        )
+
+        assertEquals(
+            "0h 15min",
+            15.formatHourMinutes()
+        )
+
+        assertEquals(
+            "10h 10min",
+            610.formatHourMinutes()
+        )
+    }
+
 }
 
 

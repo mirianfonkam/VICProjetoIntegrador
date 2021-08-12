@@ -1,4 +1,4 @@
-package com.g.vicprojetointegrador.presentation
+package com.g.vicprojetointegrador.presentation.model
 
 //Director or Actors
 data class Person(

@@ -49,8 +49,6 @@ class HomeActivity : AppCompatActivity() {
                 pagerMovieList.currentItem = tab.position
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
-                //Change Text Color to light grey
-                //change font weight to normal
             }
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
