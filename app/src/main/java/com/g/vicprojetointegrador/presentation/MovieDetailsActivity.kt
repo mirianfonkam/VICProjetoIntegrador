@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.transform.CircleCropTransformation
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Crew
 import com.g.vicprojetointegrador.data.model.Movie
@@ -49,6 +50,9 @@ class MovieDetailsActivity : AppCompatActivity() {
         val cgGenreList = findViewById<ChipGroup>(R.id.cgGenreList)
         val btnLike = findViewById<LikeButton>(R.id.btnLike)
         val rvPeopleList  = findViewById<RecyclerView>(R.id.rvMovieActors)
+        val ivPersonProfile = findViewById<ImageView>(R.id.ivPersonProfile)
+        val tvPersonName = findViewById<TextView>(R.id.tvPersonName)
+        val tvPersonRole = findViewById<TextView>(R.id.tvPersonRole)
 
         // Gets parsed movie object properties
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
@@ -80,7 +84,14 @@ class MovieDetailsActivity : AppCompatActivity() {
             rvPeopleList.adapter = PersonRVAdapter(movieDetails.credits.cast)
 
             val director : Crew? = movieDetails.credits.crew.firstOrNull { crew -> crew.job == "Director" }
-            val name : String = director?.name ?: "--"
+
+            tvPersonName.text = director?.name ?: "--"
+            tvPersonRole.text = director?.job
+
+            ivPersonProfile.load("${TMDBConstants.IMAGE_URL}${director?.profilePath}"){
+                crossfade(true)
+                transformations(CircleCropTransformation())
+            }
 
             val data =  movieDetails.releaseInfoResponse.results.mapNotNull {
                     releaseInfo -> releaseInfo.takeIf { it.countryCode == "US"}?.releaseDates?.mapNotNull{ it.maturityRating }}.firstOrNull()

@@ -199,10 +199,49 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="30dp"
             android:text="@string/cast"
             app:layout_constraintStart_toStartOf="@id/tvSynopsis"
             app:layout_constraintTop_toBottomOf="@+id/tvMovieOverview" />
+
+        <ImageView
+            android:id="@+id/ivPersonProfile"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="@+id/tvSynopsis"
+            app:layout_constraintTop_toTopOf="@+id/rvMovieActors"
+            app:layout_constraintEnd_toStartOf="@+id/rvMovieActors"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/tvPersonName"
+            style="@style/TextAppearance.MovieApp.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/ivPersonProfile"
+            app:layout_constraintStart_toStartOf="@+id/ivPersonProfile"
+            app:layout_constraintTop_toBottomOf="@id/ivPersonProfile"
+            tools:text="Cristian Bale"/>
+
+        <TextView
+            android:id="@+id/tvPersonRole"
+            style="@style/TextAppearance.MovieApp.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/ivPersonProfile"
+            app:layout_constraintStart_toStartOf="@+id/ivPersonProfile"
+            app:layout_constraintTop_toBottomOf="@id/tvPersonName"
+            tools:text="Ken Miles" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMovieActors"
@@ -211,7 +250,7 @@
             android:orientation="horizontal"
             android:paddingHorizontal="6dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="@id/tvSynopsis"
+            app:layout_constraintStart_toEndOf="@id/ivPersonProfile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCredit" />
 
