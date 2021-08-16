@@ -38,13 +38,12 @@ class FavoriteMoviesFragment : Fragment(), MovieClickListener {
 
         val rvMovieList = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
-        val movieListAdapter: MovieListAdapter = MovieListAdapter(this)
+        val movieListAdapter = MovieListAdapter(this)
         rvMovieList.adapter = movieListAdapter
 
         moviesViewModel.favoriteMoviesLiveData.observe(viewLifecycleOwner) {
             movieListAdapter.submitList(it)
         }
-
     }
 
     override fun onMovieClick(movie: Movie) {

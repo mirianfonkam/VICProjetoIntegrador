@@ -12,6 +12,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    buildFeatures {
+
+    }
+
     defaultConfig {
         applicationId "com.g.vicprojetointegrador"
         minSdkVersion 26

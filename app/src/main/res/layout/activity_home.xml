@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    android:queryBackground="@drawable/bg_searchview_selector"-->
+    <!--    android:queryBackground="@drawable/bg_searchview_selector"-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabPageSection"
@@ -40,7 +40,8 @@
         app:tabMode="scrollable"
         app:tabPaddingEnd="30dp"
         app:tabPaddingStart="30dp"
-        app:tabTextAppearance="@style/TextAppearance.MovieApp.Headline1" />
+        app:tabTextAppearance="@style/TextAppearance.MovieApp.Headline1"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <HorizontalScrollView
         android:id="@+id/hsvGenreList"

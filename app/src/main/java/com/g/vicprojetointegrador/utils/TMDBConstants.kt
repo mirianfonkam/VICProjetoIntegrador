@@ -5,7 +5,7 @@ object TMDBConstants {
     const val API_KEY = "2770152fe1a0bbfa51de4dc91d640b1c"
     const val PT_BR_LANG = "pt-BR"
     const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
-    const val IMAGE_HD_URL = "https://image.tmdb.org/t/p/original"
+    const val IMAGE_HD_URL = "https://image.tmdb.org/t/p/w780"
     const val EXTRA_MOVIE = "movie"
 
 }
