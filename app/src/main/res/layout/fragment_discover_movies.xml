@@ -17,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -24,6 +25,7 @@
         android:indeterminate="true"
         android:indeterminateTint="@color/green"
         android:visibility="gone"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="@id/rvMovieList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

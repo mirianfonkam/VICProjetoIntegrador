@@ -3,16 +3,15 @@ package com.g.vicprojetointegrador.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.g.vicprojetointegrador.R
+import com.g.vicprojetointegrador.databinding.ActivityHomeBinding
 import com.g.vicprojetointegrador.presentation.adapter.PagerSectionAdapter
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
 
 /*
@@ -22,21 +21,19 @@ import com.google.android.material.tabs.TabLayout
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var moviesViewModel: MovieSharedViewModel
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
 
-        val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
-        val pagerMovieList = findViewById<ViewPager2>(R.id.pagerMovieList)
-        val tabPagerSection = findViewById<TabLayout>(R.id.tabPageSection)
-        val searchView = findViewById<SearchView>(R.id.svSearchQuery)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         moviesViewModel = ViewModelProvider(this).get(MovieSharedViewModel::class.java)
 
-        pagerMovieList.adapter = PagerSectionAdapter(supportFragmentManager, lifecycle)
+        binding.pagerMovieList.adapter = PagerSectionAdapter(supportFragmentManager, lifecycle)
 
-        initializeTabPager(tabPagerSection, pagerMovieList)
+        initializeTabPager(binding.tabPageSection,binding.pagerMovieList)
 
         handleGenericError()
 
@@ -44,15 +41,15 @@ class HomeActivity : AppCompatActivity() {
         moviesViewModel.genresLiveData.observe(this) { genres ->
             for (genre in genres) {
                 val chip =
-                    layoutInflater.inflate(R.layout.item_genre_home, chipGroup, false) as Chip
+                    layoutInflater.inflate(R.layout.item_genre_home, binding.cgGenreList, false) as Chip
                 chip.id = genre.id
                 chip.text = genre.name
-                chipGroup.addView(chip as View)
+                binding.cgGenreList.addView(chip as View)
             }
         }
 
         // set chip group checked change listener
-        chipGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.cgGenreList.setOnCheckedChangeListener { group, checkedId ->
             val chip: Chip? = group.findViewById(checkedId)
             // Responds to child chip checked
             chip?.let { chipView ->
@@ -66,7 +63,7 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        searchView.setOnQueryTextFocusChangeListener { thisView, hasFocus ->
+        binding.svSearchQuery.setOnQueryTextFocusChangeListener { thisView, hasFocus ->
             if (hasFocus) {
                 thisView.clearFocus() // onResume the focus will be cleared
                 openSearchActivity()

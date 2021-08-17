@@ -2,26 +2,23 @@ package com.g.vicprojetointegrador.presentation
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Crew
+import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
+import com.g.vicprojetointegrador.databinding.ActivityMovieDetailsBinding
 import com.g.vicprojetointegrador.presentation.adapter.PersonRVAdapter
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieDetailsViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.g.vicprojetointegrador.utils.formatHourMinutes
 import com.g.vicprojetointegrador.utils.formatPercentage
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.like.LikeButton
 import com.like.OnLikeListener
 
@@ -31,89 +28,89 @@ import com.like.OnLikeListener
  */
 class MovieDetailsActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMovieDetailsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_details)
 
-        // If user clicks on the return button, return to previous activity
-        val fabBack = findViewById<FloatingActionButton>(R.id.fabBack)
-        fabBack.setOnClickListener { this.finish() }
+        binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Binds views
-        val ivBackdrop = findViewById<ImageView>(R.id.ivMovieBackdrop)
-        val tvMovieTitle = findViewById<TextView>(R.id.tvMovieTitle)
-        val tvMovieYear = findViewById<TextView>(R.id.tvMovieYear)
-        val tvMovieOverview = findViewById<TextView>(R.id.tvMovieOverview)
-        val tvMovieVoteAverage = findViewById<TextView>(R.id.tvMovieVoteAverage)
-        val tvMovieRuntime = findViewById<TextView>(R.id.tvMovieRuntime)
-        val tvMovieMaturityRating = findViewById<TextView>(R.id.tvMovieMaturityRating)
-        val cgGenreList = findViewById<ChipGroup>(R.id.cgGenreList)
-        val btnLike = findViewById<LikeButton>(R.id.btnLike)
-        val rvPeopleList  = findViewById<RecyclerView>(R.id.rvMovieActors)
-        val ivPersonProfile = findViewById<ImageView>(R.id.ivPersonProfile)
-        val tvPersonName = findViewById<TextView>(R.id.tvPersonName)
-        val tvPersonRole = findViewById<TextView>(R.id.tvPersonRole)
+        binding.fabBack.setOnClickListener { this.finish() }
 
         // Gets parsed movie object properties
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
-        val movieId : Int = movie?.id!!
-        val detailsViewModel : MovieDetailsViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MovieDetailsViewModel(movieId, this@MovieDetailsActivity.application) as T
-            }
-        }).get(MovieDetailsViewModel::class.java)
+        val movieId: Int = movie?.id!!
+        val detailsViewModel: MovieDetailsViewModel =
+            ViewModelProvider(this, object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    return MovieDetailsViewModel(
+                        movieId,
+                        this@MovieDetailsActivity.application
+                    ) as T
+                }
+            }).get(MovieDetailsViewModel::class.java)
 
         // Pre-loaded data from the GetPopularMovies() request made in previous activity
         movie.backdropPath?.let {
-            ivBackdrop.load("${TMDBConstants.IMAGE_HD_URL}${it}")
+            binding.ivMovieBackdrop.load("${TMDBConstants.IMAGE_HD_URL}${it}")
         }
 
         movie.run {
-            tvMovieTitle.text = title
-            tvMovieYear.text = releaseDate?.take(4) ?: "--"
-            tvMovieOverview.text = overview
-            tvMovieVoteAverage.text = voteAverage.formatPercentage()
+            binding.tvMovieTitle.text = title
+            binding.tvMovieYear.text = releaseDate?.take(4) ?: "--"
+            binding.tvMovieOverview.text = overview
+            binding.tvMovieVoteAverage.text = voteAverage.formatPercentage()
         }
 
         // New network request for additional movie data
         detailsViewModel.extraMovieDetailsLiveData.observe(this) { movieDetails ->
             movieDetails.run {
-                tvMovieRuntime.text = runtime.formatHourMinutes()
+                binding.tvMovieRuntime.text = runtime.formatHourMinutes()
             }
 
-            rvPeopleList.adapter = PersonRVAdapter(movieDetails.credits.cast)
+            binding.rvMovieActors.adapter = PersonRVAdapter(movieDetails.credits.cast)
 
-            val director : Crew? = movieDetails.credits.crew.firstOrNull { crew -> crew.job == "Director" }
+            val director: Crew? =
+                movieDetails.credits.crew.firstOrNull { crew -> crew.job == "Director" }
 
-            tvPersonName.text = director?.name ?: "--"
-            tvPersonRole.text = director?.job
+            binding.tvPersonName.text = director?.name ?: "--"
+            binding.tvPersonRole.text = director?.job
 
-            ivPersonProfile.load("${TMDBConstants.IMAGE_URL}${director?.profilePath}"){
+            binding.ivPersonProfile.load("${TMDBConstants.IMAGE_URL}${director?.profilePath}") {
                 crossfade(true)
                 transformations(CircleCropTransformation())
             }
 
-            val data =  movieDetails.releaseInfoResponse.results.mapNotNull {
-                    releaseInfo -> releaseInfo.takeIf { it.countryCode == "US"}?.releaseDates?.mapNotNull{ it.maturityRating }}.firstOrNull()
-            tvMovieMaturityRating.text = data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }?.toString()
+            val data =
+                movieDetails.releaseInfoResponse.results.mapNotNull { releaseInfo -> releaseInfo.takeIf { it.countryCode == "US" }?.releaseDates?.mapNotNull { it.maturityRating } }
+                    .firstOrNull()
+            binding.tvMovieMaturityRating.text =
+                data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }?.toString()
 
 
             // Adds chips of movie genre to chipGroup dynamically
             movieDetails.genres.let { genres ->
                 for (genre in genres) {
-                    val chip = layoutInflater.inflate(R.layout.item_genre_movie_tags, cgGenreList, false) as Chip
-                    chip.text = genre.name
-                    cgGenreList.addView(chip as View)
+                    addChipsToGenreChipGroup(genre)
                 }
             }
         }
 
         handleErrorOnLoadingMovieDetails(detailsViewModel)
 
-        setFavoriteBtnInitialState(detailsViewModel, btnLike, movie)
+        setFavoriteBtnInitialState(detailsViewModel, movie)
 
-        handleFavoriteBtnClick(btnLike, detailsViewModel, movie)
+        handleFavoriteBtnClick(detailsViewModel, movie)
 
+    }
+
+    private fun addChipsToGenreChipGroup(genre: Genre) {
+        val chip = layoutInflater.inflate(
+            R.layout.item_genre_movie_tags, binding.cgGenreList, false
+        ) as Chip
+        chip.text = genre.name
+        binding.cgGenreList.addView(chip as View)
     }
 
     private fun handleErrorOnLoadingMovieDetails(detailsViewModel: MovieDetailsViewModel) {
@@ -123,11 +120,10 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun handleFavoriteBtnClick(
-        btnLike: LikeButton,
         detailsViewModel: MovieDetailsViewModel,
         movie: Movie
     ) {
-        btnLike.setOnLikeListener(object : OnLikeListener {
+        binding.btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 detailsViewModel.favoriteClicked(movie)
             }
@@ -140,11 +136,10 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun setFavoriteBtnInitialState(
         detailsViewModel: MovieDetailsViewModel,
-        btnLike: LikeButton,
         movie: Movie
     ) {
         detailsViewModel.isFavorited.observe(this) { btnFavoriteState ->
-            btnLike.isLiked = btnFavoriteState
+            binding.btnLike.isLiked = btnFavoriteState
             movie.isFavorited = btnFavoriteState
         }
     }
