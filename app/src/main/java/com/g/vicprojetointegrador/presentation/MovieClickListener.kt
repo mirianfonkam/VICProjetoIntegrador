@@ -6,6 +6,6 @@ interface MovieClickListener {
 
     fun onMovieClick(movie: Movie)
 
-    fun onFavoriteClicked(movie: Movie)
+    fun onFavoriteClick(movie: Movie)
 
 }

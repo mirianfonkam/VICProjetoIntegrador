@@ -15,7 +15,7 @@ data class Movie(
     @SerializedName("poster_path") val posterPath : String? = null,
     @SerializedName("backdrop_path") val backdropPath : String? = null,
     @SerializedName("vote_average") val voteAverage: Double = 0.0,
-    @SerializedName("release_date") val releaseDate: String = "",
+    @SerializedName("release_date") val releaseDate: String? = "",
 
     //Movie has been liked
     var isFavorited: Boolean = false

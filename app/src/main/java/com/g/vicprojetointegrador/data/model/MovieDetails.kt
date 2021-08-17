@@ -18,4 +18,3 @@ class MovieDetails (
 
 )
 
-//Movie details inherits Movie?

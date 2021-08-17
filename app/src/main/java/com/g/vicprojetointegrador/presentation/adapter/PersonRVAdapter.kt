@@ -36,8 +36,6 @@ class PersonRVAdapter(
             {
                 tvPersonName.text = cast.actorName
                 tvPersonRole.text = cast.characterName
-
-
                 ivPersonProfile.load("${TMDBConstants.IMAGE_URL}${cast.profilePath}"){
                     crossfade(true)
                     transformations(CircleCropTransformation())

@@ -39,7 +39,6 @@ class SearchMoviesActivity : AppCompatActivity(){
 
         svSearchQuery.requestFocus() // search view will have the cursor on when activity starts
 
-        // Refactor code in Home Activity
         // Add chips to chipGroup dynamically
         searchViewModel.genresLiveData.observe(this){ genres ->
             for (genre in genres) {
@@ -80,7 +79,7 @@ class SearchMoviesActivity : AppCompatActivity(){
         }
 
         val movieListAdapter = MovieListAdapter(object : MovieClickListener{
-            override fun onFavoriteClicked(movie: Movie) {
+            override fun onFavoriteClick(movie: Movie) {
                searchViewModel.favoriteClicked(movie)
             }
 

@@ -70,7 +70,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         movie.run {
             tvMovieTitle.text = title
-            tvMovieYear.text = releaseDate.take(4)
+            tvMovieYear.text = releaseDate?.take(4) ?: "--"
             tvMovieOverview.text = overview
             tvMovieVoteAverage.text = voteAverage.formatPercentage()
         }
@@ -108,24 +108,44 @@ class MovieDetailsActivity : AppCompatActivity() {
             }
         }
 
+        handleErrorOnLoadingMovieDetails(detailsViewModel)
+
+        setFavoriteBtnInitialState(detailsViewModel, btnLike, movie)
+
+        handleFavoriteBtnClick(btnLike, detailsViewModel, movie)
+
+    }
+
+    private fun handleErrorOnLoadingMovieDetails(detailsViewModel: MovieDetailsViewModel) {
         detailsViewModel.errorLiveData.observe(this, { error ->
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         })
+    }
 
-        // Sets the initial state of the like btn when page is opened
-        detailsViewModel.isFavorited.observe(this) { btnFavoriteState ->
-            btnLike.isLiked = btnFavoriteState
-            movie.isFavorited = btnFavoriteState
-        }
-
-        // Listener to insert or delete movie from DB
+    private fun handleFavoriteBtnClick(
+        btnLike: LikeButton,
+        detailsViewModel: MovieDetailsViewModel,
+        movie: Movie
+    ) {
         btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 detailsViewModel.favoriteClicked(movie)
             }
+
             override fun unLiked(likeButton: LikeButton?) {
                 detailsViewModel.favoriteClicked(movie)
             }
         })
+    }
+
+    private fun setFavoriteBtnInitialState(
+        detailsViewModel: MovieDetailsViewModel,
+        btnLike: LikeButton,
+        movie: Movie
+    ) {
+        detailsViewModel.isFavorited.observe(this) { btnFavoriteState ->
+            btnLike.isLiked = btnFavoriteState
+            movie.isFavorited = btnFavoriteState
+        }
     }
 }

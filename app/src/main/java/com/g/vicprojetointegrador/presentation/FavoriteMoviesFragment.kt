@@ -50,7 +50,7 @@ class FavoriteMoviesFragment : Fragment(), MovieClickListener {
         openMovieDetails(movie)
     }
 
-    override fun onFavoriteClicked(movie: Movie) {
+    override fun onFavoriteClick(movie: Movie) {
         moviesViewModel.favoriteClicked(movie)
     }
 

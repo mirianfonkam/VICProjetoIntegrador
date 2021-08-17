@@ -16,16 +16,16 @@ class GenericErrorActivity : AppCompatActivity() {
         val btnClose = findViewById<ImageButton>(R.id.btnClose)
 
         tvTryAgain.setOnClickListener {
-            buttonClicked()
+            returnHomeActivity()
         }
 
         btnClose.setOnClickListener {
-            buttonClicked()
+            returnHomeActivity()
         }
 
     }
 
-    private fun buttonClicked() {
+    private fun returnHomeActivity() {
         val intent = Intent(this,HomeActivity::class.java)
         startActivity(intent)
     }

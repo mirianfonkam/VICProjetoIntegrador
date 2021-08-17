@@ -3,21 +3,17 @@ package com.g.vicprojetointegrador.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.presentation.adapter.PagerSectionAdapter
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 /*
  * Activity on application launch
@@ -32,47 +28,23 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         val chipGroup = findViewById<ChipGroup>(R.id.cgGenreList)
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val pagerMovieList = findViewById<ViewPager2>(R.id.pagerMovieList)
         val tabPagerSection = findViewById<TabLayout>(R.id.tabPageSection)
         val searchView = findViewById<SearchView>(R.id.svSearchQuery)
 
         moviesViewModel = ViewModelProvider(this).get(MovieSharedViewModel::class.java)
 
-        pagerMovieList.adapter = PagerSectionAdapter(supportFragmentManager,lifecycle)
+        pagerMovieList.adapter = PagerSectionAdapter(supportFragmentManager, lifecycle)
 
-        tabPagerSection.addTab(tabPagerSection.newTab().setText(R.string.all_movies))
-        tabPagerSection.addTab(tabPagerSection.newTab().setText(R.string.favorite))
+        initializeTabPager(tabPagerSection, pagerMovieList)
 
-        tabPagerSection.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                pagerMovieList.currentItem = tab.position
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
-        pagerMovieList.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                tabPagerSection.selectTab(tabPagerSection.getTabAt(position))
-            }
-        })
-
-        moviesViewModel.errorLiveData.observe(this, { error ->
-            val intent = Intent(this, GenericErrorActivity::class.java)
-            startActivity(intent)
-            Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-        })
-
-        moviesViewModel.progressBar.observe(this){ isLoading ->
-                progressBar.isVisible = isLoading
-        }
+        handleGenericError()
 
         // Adds chips to chipGroup dynamically
-        moviesViewModel.genresLiveData.observe(this){ genres ->
+        moviesViewModel.genresLiveData.observe(this) { genres ->
             for (genre in genres) {
-                val chip = layoutInflater.inflate(R.layout.item_genre_home, chipGroup, false) as Chip
+                val chip =
+                    layoutInflater.inflate(R.layout.item_genre_home, chipGroup, false) as Chip
                 chip.id = genre.id
                 chip.text = genre.name
                 chipGroup.addView(chip as View)
@@ -83,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
         chipGroup.setOnCheckedChangeListener { group, checkedId ->
             val chip: Chip? = group.findViewById(checkedId)
             // Responds to child chip checked
-            chip?.let {chipView ->
+            chip?.let { chipView ->
                 if (chipView.isChecked) {
                     moviesViewModel.getMoviesByGenre(checkedId.toString())
                 }
@@ -94,13 +66,51 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        searchView.setOnQueryTextFocusChangeListener { thisView , hasFocus ->
+        searchView.setOnQueryTextFocusChangeListener { thisView, hasFocus ->
             if (hasFocus) {
                 thisView.clearFocus() // onResume the focus will be cleared
-                val intent = Intent(this, SearchMoviesActivity::class.java)
-                startActivity(intent)
+                openSearchActivity()
             }
         }
+    }
+
+    private fun handleGenericError() {
+        moviesViewModel.errorLiveData.observe(this, { error ->
+            openGenericErrorActivity()
+            Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    private fun openGenericErrorActivity() {
+        val intent = Intent(this, GenericErrorActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun openSearchActivity() {
+        val intent = Intent(this, SearchMoviesActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun initializeTabPager(tabPagerSection: TabLayout, pagerMovieList: ViewPager2) {
+        tabPagerSection.addTab(tabPagerSection.newTab().setText(R.string.all_movies))
+        tabPagerSection.addTab(tabPagerSection.newTab().setText(R.string.favorite))
+
+        tabPagerSection.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                pagerMovieList.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
+        pagerMovieList.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                tabPagerSection.selectTab(tabPagerSection.getTabAt(position))
+            }
+        })
+
     }
 
 }

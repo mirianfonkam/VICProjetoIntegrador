@@ -59,11 +59,11 @@ class MovieListAdapter(
         holder.btnFavorite.isLiked = movie.isFavorited //set the initial state (filled/unfilled) of the button
         holder.btnFavorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-               clickListener.onFavoriteClicked(movie)
+               clickListener.onFavoriteClick(movie)
             }
 
             override fun unLiked(likeButton: LikeButton?) {
-                clickListener.onFavoriteClicked(movie)
+                clickListener.onFavoriteClick(movie)
             }
         })
     }
