@@ -1,9 +1,8 @@
 package com.g.vicprojetointegrador.presentation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.domain.*
@@ -11,9 +10,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-
-
-class SearchViewModel(context: Application) : AndroidViewModel(context) {
+class SearchViewModel() : ViewModel() {
 
     // Visible only by the ViewModel
     private val _genresLiveData = MutableLiveData<List<Genre>>()
@@ -34,8 +31,8 @@ class SearchViewModel(context: Application) : AndroidViewModel(context) {
     // UseCase Instances
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val getGenresUseCase = GetGenresUseCase()
-    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
-    private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
+    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase()
+    private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase()
     private val searchMoviesByQueryUseCase = SearchMoviesByQueryUseCase()
 
     init {

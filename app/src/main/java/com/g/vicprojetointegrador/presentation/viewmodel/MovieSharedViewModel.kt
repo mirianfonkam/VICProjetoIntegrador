@@ -1,9 +1,8 @@
 package com.g.vicprojetointegrador.presentation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.domain.*
@@ -16,7 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * ViewModel: responsible for holding and processing data required by the User Interface
  * Used to separate the logic from the Views.
  */
-class MovieSharedViewModel(context: Application) : AndroidViewModel(context) {
+class MovieSharedViewModel() : ViewModel() {
 
     // Visible only by the ViewModel
     private val _popularMoviesLiveData = MutableLiveData<List<Movie>>()
@@ -38,10 +37,10 @@ class MovieSharedViewModel(context: Application) : AndroidViewModel(context) {
     private val getMoviesUseCase = GetPopularMoviesUseCase()
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val getGenresUseCase = GetGenresUseCase()
-    private val getFavoriteMovieUseCase = GetFavoriteMoviesUseCase(context)
-    private val checkFavoriteStatusUseCase = CheckFavoriteStatusUseCase(context)
-    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
-    private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
+    private val getFavoriteMovieUseCase = GetFavoriteMoviesUseCase()
+    private val checkFavoriteStatusUseCase = CheckFavoriteStatusUseCase()
+    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase()
+    private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase()
 
     init {
         getGenres()

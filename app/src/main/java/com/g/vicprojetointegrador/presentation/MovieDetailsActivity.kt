@@ -45,8 +45,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             ViewModelProvider(this, object : ViewModelProvider.Factory {
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                     return MovieDetailsViewModel(
-                        movieId,
-                        this@MovieDetailsActivity.application
+                        movieId
                     ) as T
                 }
             }).get(MovieDetailsViewModel::class.java)

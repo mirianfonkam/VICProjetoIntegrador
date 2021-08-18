@@ -1,9 +1,8 @@
 package com.g.vicprojetointegrador.presentation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.data.model.MovieDetails
 import com.g.vicprojetointegrador.domain.CheckFavoriteStatusUseCase
@@ -15,7 +14,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MovieDetailsViewModel(private val movieId: Int = -1, context: Application) : AndroidViewModel(context) {
+class MovieDetailsViewModel(private val movieId: Int = -1) : ViewModel() {
     private val _extraMovieDetailsLiveData = MutableLiveData<MovieDetails>()
     private val _errorLiveData = MutableLiveData<String>()
     private val _isFavorited = MutableLiveData<Boolean>()
@@ -28,9 +27,9 @@ class MovieDetailsViewModel(private val movieId: Int = -1, context: Application)
     private var disposables = CompositeDisposable()
 
     private val getMovieDetailsUseCase = GetMovieDetailsUseCase()
-    private val getFavoriteStatusUseCase = CheckFavoriteStatusUseCase(context)
-    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase(context)
-    private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase(context)
+    private val getFavoriteStatusUseCase = CheckFavoriteStatusUseCase()
+    private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase()
+    private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase()
 
     init {
         getMovieDetails()
