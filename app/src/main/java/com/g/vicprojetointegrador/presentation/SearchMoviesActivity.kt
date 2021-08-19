@@ -2,7 +2,6 @@ package com.g.vicprojetointegrador.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -85,7 +84,6 @@ class SearchMoviesActivity : AppCompatActivity(){
 
         searchViewModel.movieListingLiveData.observe(this) {
             movieListAdapter.submitList(it)
-            Log.i("debug", "observing list in rvAdapter $it")
         }
 
     }

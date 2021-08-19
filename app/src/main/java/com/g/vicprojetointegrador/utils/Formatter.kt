@@ -13,3 +13,4 @@ fun Int.toBoolean(): Boolean {
 fun Double.formatPercentage() : String {
     return "${(this*10).toInt()}%"
 }
+

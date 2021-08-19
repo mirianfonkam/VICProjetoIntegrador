@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.domain.*
-import com.g.vicprojetointegrador.utils.toBoolean
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -48,18 +47,6 @@ class MovieSharedViewModel() : ViewModel() {
         getPopularMovies()
     }
 
-     fun checkFavoriteStatus(movie: Movie) : Movie {
-        disposables.add(checkFavoriteStatusUseCase.execute(movie.id)
-            .subscribeOn(Schedulers.io())
-            .subscribe ({
-                movie.isFavorited = it.toBoolean()
-            } , { error ->
-                _errorLiveData.postValue("An error on db load: ${error.message}")
-            })
-        )
-         return movie
-    }
-
     fun getPopularMovies(){
         disposables.add(getMoviesUseCase.execute()
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
@@ -70,7 +57,7 @@ class MovieSharedViewModel() : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
             .subscribe({
                 _progressBar.postValue(false)
-                _popularMoviesLiveData.postValue(it)
+                _popularMoviesLiveData.setValue(it)
             }, { error ->
                 _errorLiveData.postValue("An error occurred: ${error.message}")
             })
@@ -89,7 +76,7 @@ class MovieSharedViewModel() : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
             .subscribe({
                 _progressBar.postValue(false)
-                _popularMoviesLiveData.postValue(it.toList())
+                _popularMoviesLiveData.setValue(it)
             }, { error ->
                 _errorLiveData.postValue("An error occurred: ${error.message}")
             })

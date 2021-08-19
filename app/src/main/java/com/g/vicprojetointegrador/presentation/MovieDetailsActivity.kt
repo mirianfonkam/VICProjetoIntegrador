@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -14,6 +13,7 @@ import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.databinding.ActivityMovieDetailsBinding
 import com.g.vicprojetointegrador.presentation.adapter.PersonRVAdapter
+import com.g.vicprojetointegrador.presentation.viewmodel.MovieDetailsVMFactory
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieDetailsViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.g.vicprojetointegrador.utils.formatHourMinutes
@@ -42,12 +42,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
         val movieId: Int = movie?.id!!
         val detailsViewModel: MovieDetailsViewModel =
-            ViewModelProvider(this, object : ViewModelProvider.Factory {
-                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return MovieDetailsViewModel(
-                        movieId
-                    ) as T
-                }
+            ViewModelProvider(this, object : MovieDetailsVMFactory(movieId) {
             }).get(MovieDetailsViewModel::class.java)
 
         // Pre-loaded data from the GetPopularMovies() request made in previous activity
