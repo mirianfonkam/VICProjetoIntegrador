@@ -46,7 +46,11 @@ class DiscoverMoviesFragment : Fragment(), MovieClickListener {
             movieListAdapter.submitList(it)
         }
 
-        moviesViewModel.progressBar.observe(viewLifecycleOwner){ isLoading ->
+        handleProgressBar(progressBar)
+    }
+
+    private fun handleProgressBar(progressBar: ProgressBar) {
+        moviesViewModel.progressBar.observe(viewLifecycleOwner) { isLoading ->
             progressBar.isVisible = isLoading
         }
     }

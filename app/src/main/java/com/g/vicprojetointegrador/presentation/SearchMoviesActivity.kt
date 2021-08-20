@@ -20,6 +20,7 @@ import com.google.android.material.chip.Chip
 class SearchMoviesActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivitySearchMoviesBinding
+    private lateinit var searchViewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +28,7 @@ class SearchMoviesActivity : AppCompatActivity(){
         binding = ActivitySearchMoviesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
         binding.tvBackHome.setOnClickListener {
            this.finish()
@@ -56,16 +57,13 @@ class SearchMoviesActivity : AppCompatActivity(){
             }
         })
 
-        searchViewModel.isSearchResultsEmpty.observe(this){ emptyResult ->
-            binding.grpSearchNotFound.isVisible = emptyResult
-        }
-
         binding.cgGenreList.setOnCheckedChangeListener { group, checkedId ->
             val chip: Chip? = group.findViewById(checkedId)
             chip?.let {chipView ->
                 if (chipView.isChecked) {
-                    searchViewModel.getMoviesByGenre(checkedId.toString())
                     binding.grpSearchNotFound.isVisible = false
+                    binding.svSearchQuery.clearFocus()
+                    searchViewModel.getMoviesByGenre(checkedId.toString())
                 }
             }
         }
@@ -82,10 +80,29 @@ class SearchMoviesActivity : AppCompatActivity(){
 
         binding.rvMovieList.adapter = movieListAdapter
 
+        populateMovieListingRV(movieListAdapter)
+
+        handleSearchNotFound()
+
+        handleProgressBar()
+    }
+
+    private fun populateMovieListingRV(movieListAdapter: MovieListAdapter) {
         searchViewModel.movieListingLiveData.observe(this) {
             movieListAdapter.submitList(it)
         }
+    }
 
+    private fun handleSearchNotFound() {
+        searchViewModel.isSearchResultsEmpty.observe(this) { emptyResult ->
+            binding.grpSearchNotFound.isVisible = emptyResult
+        }
+    }
+
+    private fun handleProgressBar() {
+        searchViewModel.progressBar.observe(this) { isLoading ->
+             binding.progressBar.isVisible = isLoading
+        }
     }
 
     private fun addChipToGenreChipGroup(genre: Genre) {

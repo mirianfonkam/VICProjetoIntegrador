@@ -9,7 +9,6 @@ import com.g.vicprojetointegrador.domain.CheckFavoriteStatusUseCase
 import com.g.vicprojetointegrador.domain.DeleteFavoriteMovieUseCase
 import com.g.vicprojetointegrador.domain.GetMovieDetailsUseCase
 import com.g.vicprojetointegrador.domain.SaveFavoriteMovieUseCase
-import com.g.vicprojetointegrador.utils.toBoolean
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -52,7 +51,7 @@ class MovieDetailsViewModel(private val movieId: Int) : ViewModel() {
         disposables.add(getFavoriteStatusUseCase.execute(movieId)
             .subscribeOn(Schedulers.io())
             .subscribe ({
-                _isFavorited.postValue(it.toBoolean())
+                _isFavorited.postValue(it)
             } , { error ->
                 _errorLiveData.postValue("An error on db load: ${error.message}")
             })

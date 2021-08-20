@@ -7,7 +7,7 @@ import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.domain.*
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class SearchViewModel() : ViewModel() {
@@ -27,6 +27,7 @@ class SearchViewModel() : ViewModel() {
     val movieListingLiveData : LiveData<List<Movie>> = _movieListingLiveData
 
     private var disposables = CompositeDisposable()
+    private var disposable : Disposable? = null
 
     // UseCase Instances
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
@@ -40,7 +41,8 @@ class SearchViewModel() : ViewModel() {
     }
 
     fun searchMoviesByQuery(query : String){
-        disposables.add(searchMoviesByQueryUseCase.execute(query)
+        disposable?.dispose()
+        disposable = searchMoviesByQueryUseCase.execute(query)
             .subscribeOn(Schedulers.io())
             .doOnSubscribe {
                 _progressBar.postValue(true)
@@ -51,11 +53,30 @@ class SearchViewModel() : ViewModel() {
                 _progressBar.postValue(false)
                 _movieListingLiveData.value = it
                 _isSearchResultsEmpty.value = it.isEmpty()
-
             }, { error ->
                 _errorGenericLiveData.postValue("An error occurred: ${error.message}")
-            })
-        )
+            }).apply {
+                disposables.add(this)
+            }
+    }
+
+    fun getMoviesByGenre(genreId : String){
+        disposable?.dispose()
+        disposable = getMoviesByGenreUseCase.execute(genreId)
+            .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
+            .doOnSubscribe {
+                _progressBar.postValue(true)
+            }
+            .map { it.results }
+            .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
+            .subscribe({
+                _progressBar.postValue(false)
+                _movieListingLiveData.setValue(it)
+            }, { error ->
+                _errorGenericLiveData.postValue("An error occurred: ${error.message}")
+            }).apply {
+                disposables.add(this)
+            }
     }
 
     private fun getGenres(){
@@ -67,23 +88,6 @@ class SearchViewModel() : ViewModel() {
                 _genresLiveData.postValue(it)
             }, { error ->
                 _errorGenericLiveData.postValue("${error.message}")
-            })
-        )
-    }
-
-    fun getMoviesByGenre(genreId : String){
-        disposables.add(getMoviesByGenreUseCase.execute(genreId)
-            .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
-            .doOnSubscribe {
-                _progressBar.postValue(true)
-            }  //do something (update the UI) before the task started
-            .map { it.results }
-            .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
-            .subscribe({
-                _progressBar.postValue(false)
-                _movieListingLiveData.setValue(it)
-            }, { error ->
-                _errorGenericLiveData.postValue("An error occurred: ${error.message}")
             })
         )
     }

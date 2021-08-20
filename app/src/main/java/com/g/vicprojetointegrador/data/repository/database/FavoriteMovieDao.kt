@@ -20,6 +20,6 @@ interface FavoriteMovieDao {
 
 
     @Query("SELECT EXISTS(SELECT 1 from movies WHERE id = :movieId)")
-    fun checkFavoriteStatus(movieId : Int) : Single<Int>    //return 1 or 0
+    fun checkFavoriteStatus(movieId : Int) : Single<Boolean>
 
 }

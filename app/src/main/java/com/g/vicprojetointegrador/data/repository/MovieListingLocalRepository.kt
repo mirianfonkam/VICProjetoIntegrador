@@ -14,7 +14,7 @@ class MovieListingLocalRepository() {
         return movieDao.getFavoriteMovies()
     }
 
-    fun checkFavoriteStatus(movieId: Int) : Single<Int> {
+    fun checkFavoriteStatus(movieId: Int) : Single<Boolean> {
         return movieDao.checkFavoriteStatus(movieId)
     }
 

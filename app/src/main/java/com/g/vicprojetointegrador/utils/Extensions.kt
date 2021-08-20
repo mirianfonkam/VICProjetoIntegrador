@@ -6,10 +6,6 @@ fun Int.formatHourMinutes(): String {
     return String.format("%dh %02dmin", hours, minutes)
 }
 
-fun Int.toBoolean(): Boolean {
-    return this == 1
-}
-
 fun Double.formatPercentage() : String {
     return "${(this*10).toInt()}%"
 }

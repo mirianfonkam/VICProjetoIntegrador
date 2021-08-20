@@ -13,6 +13,7 @@ import com.g.vicprojetointegrador.presentation.adapter.PagerSectionAdapter
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 /*
  * Activity on application launch
@@ -33,7 +34,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.pagerMovieList.adapter = PagerSectionAdapter(supportFragmentManager, lifecycle)
 
-        initializeTabPager(binding.tabPageSection,binding.pagerMovieList)
+        configureTabPager(binding.tabPageSection,binding.pagerMovieList)
 
         handleGenericError()
 
@@ -88,26 +89,17 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun initializeTabPager(tabPagerSection: TabLayout, pagerMovieList: ViewPager2) {
-        tabPagerSection.addTab(tabPagerSection.newTab().setText(R.string.all_movies))
-        tabPagerSection.addTab(tabPagerSection.newTab().setText(R.string.favorite))
-
-        tabPagerSection.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                pagerMovieList.currentItem = tab.position
+    private fun configureTabPager(tabPagerSection: TabLayout, pagerMovieList: ViewPager2) {
+        TabLayoutMediator(tabPagerSection, pagerMovieList){ tab, position ->
+            when (position) {
+                0 -> {
+                    tab.setText(R.string.all_movies)
+                }
+                1 -> {
+                    tab.setText(R.string.favorite)
+                }
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
-        pagerMovieList.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                tabPagerSection.selectTab(tabPagerSection.getTabAt(position))
-            }
-        })
-
+        }.attach()
     }
 
 }

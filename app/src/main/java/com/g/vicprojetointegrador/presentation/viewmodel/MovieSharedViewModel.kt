@@ -31,7 +31,7 @@ class MovieSharedViewModel() : ViewModel() {
     val progressBar : LiveData<Boolean> = _progressBar
     val errorLiveData : LiveData<String> = _errorLiveData
 
-    private var disposables = CompositeDisposable()
+    private val disposables = CompositeDisposable()
     private var disposable : Disposable? = null
 
     // UseCase Instances
@@ -39,7 +39,6 @@ class MovieSharedViewModel() : ViewModel() {
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val getGenresUseCase = GetGenresUseCase()
     private val getFavoriteMovieUseCase = GetFavoriteMoviesUseCase()
-    private val getFavoriteStatusUseCase = CheckFavoriteStatusUseCase()
     private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase()
     private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase()
 
@@ -52,12 +51,12 @@ class MovieSharedViewModel() : ViewModel() {
     fun getPopularMovies(){
         disposable?.dispose()
         disposable = getMoviesUseCase.execute()
-            .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
+            .subscribeOn(Schedulers.io())              // Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
                 _progressBar.postValue(true)
             }  //do something (update the UI) before the task started
             .map { it.results }
-            .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
+            .observeOn(AndroidSchedulers.mainThread()) // Specify that the next operations should be called on the main thread.
             .subscribe({
                 _progressBar.postValue(false)
                 _popularMoviesLiveData.setValue(it)
@@ -69,12 +68,12 @@ class MovieSharedViewModel() : ViewModel() {
     //postValue: Asynchronous updating
 
     fun getMoviesByGenre(genreId : String){
-        disposable?.dispose()
+       disposable?.dispose()
        disposable =  getMoviesByGenreUseCase.execute(genreId)
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
                 _progressBar.postValue(true)
-            }  //do something (update the UI) before the task started
+            }
             .map { it.results }
             .observeOn(AndroidSchedulers.mainThread()) //Specify that the next operations should be called on the main thread.
             .subscribe({
@@ -134,6 +133,4 @@ class MovieSharedViewModel() : ViewModel() {
         super.onCleared()
         disposables.dispose()
     }
-
-
 }
