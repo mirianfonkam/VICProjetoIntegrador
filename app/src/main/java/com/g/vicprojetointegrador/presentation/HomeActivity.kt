@@ -90,6 +90,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun configureTabPager(tabPagerSection: TabLayout, pagerMovieList: ViewPager2) {
+        pagerMovieList.isUserInputEnabled = false
         TabLayoutMediator(tabPagerSection, pagerMovieList){ tab, position ->
             when (position) {
                 0 -> {

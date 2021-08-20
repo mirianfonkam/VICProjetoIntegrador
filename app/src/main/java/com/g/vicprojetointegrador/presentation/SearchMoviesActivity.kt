@@ -62,7 +62,9 @@ class SearchMoviesActivity : AppCompatActivity(){
             chip?.let {chipView ->
                 if (chipView.isChecked) {
                     binding.grpSearchNotFound.isVisible = false
+                    binding.svSearchQuery.setQuery(chip.text,false)
                     binding.svSearchQuery.clearFocus()
+                    chipView.isChecked = true
                     searchViewModel.getMoviesByGenre(checkedId.toString())
                 }
             }
