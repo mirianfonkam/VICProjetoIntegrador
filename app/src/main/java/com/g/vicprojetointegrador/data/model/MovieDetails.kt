@@ -14,7 +14,5 @@ class MovieDetails (
     @SerializedName("runtime") val runtime: Int = 0,
     @SerializedName("genres") val genres: List<Genre>,
     @SerializedName("credits") val credits: Credits,
-
-
 )
 

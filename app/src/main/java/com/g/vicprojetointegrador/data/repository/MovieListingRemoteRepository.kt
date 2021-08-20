@@ -7,7 +7,7 @@ import com.g.vicprojetointegrador.data.repository.network.NetworkInstance
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
-//Repository -> controls remote source                                                   [NetworkInstance]
+//Repository -> controls remote source
 class MovieListingRemoteRepository() {
     private val movieDao by lazy { MovieRoomDatabase.getDatabase().movieDao() }
 

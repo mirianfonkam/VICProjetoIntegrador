@@ -8,6 +8,7 @@ import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.domain.*
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 /*
@@ -31,13 +32,14 @@ class MovieSharedViewModel() : ViewModel() {
     val errorLiveData : LiveData<String> = _errorLiveData
 
     private var disposables = CompositeDisposable()
+    private var disposable : Disposable? = null
 
     // UseCase Instances
     private val getMoviesUseCase = GetPopularMoviesUseCase()
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val getGenresUseCase = GetGenresUseCase()
     private val getFavoriteMovieUseCase = GetFavoriteMoviesUseCase()
-    private val checkFavoriteStatusUseCase = CheckFavoriteStatusUseCase()
+    private val getFavoriteStatusUseCase = CheckFavoriteStatusUseCase()
     private val saveFavoriteMovieUseCase = SaveFavoriteMovieUseCase()
     private val deleteFavoriteMovieUseCase = DeleteFavoriteMovieUseCase()
 
@@ -48,7 +50,8 @@ class MovieSharedViewModel() : ViewModel() {
     }
 
     fun getPopularMovies(){
-        disposables.add(getMoviesUseCase.execute()
+        disposable?.dispose()
+        disposable = getMoviesUseCase.execute()
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
                 _progressBar.postValue(true)
@@ -60,14 +63,14 @@ class MovieSharedViewModel() : ViewModel() {
                 _popularMoviesLiveData.setValue(it)
             }, { error ->
                 _errorLiveData.postValue("An error occurred: ${error.message}")
-            })
-        )
+            }).apply { disposables.add(this) }
     }
     //setValue: sets the value instantly
     //postValue: Asynchronous updating
 
     fun getMoviesByGenre(genreId : String){
-        disposables.add(getMoviesByGenreUseCase.execute(genreId)
+        disposable?.dispose()
+       disposable =  getMoviesByGenreUseCase.execute(genreId)
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
                 _progressBar.postValue(true)
@@ -79,9 +82,11 @@ class MovieSharedViewModel() : ViewModel() {
                 _popularMoviesLiveData.setValue(it)
             }, { error ->
                 _errorLiveData.postValue("An error occurred: ${error.message}")
-            })
-        )
+            }).apply {
+                disposables.add(this)
+            }
     }
+
 
     private fun getFavoriteMovies() {
         disposables.add(getFavoriteMovieUseCase.execute()

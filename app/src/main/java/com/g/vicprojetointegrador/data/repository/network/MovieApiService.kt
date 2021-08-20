@@ -11,7 +11,6 @@ import retrofit2.http.Query
 
 
 /*
- *
  * @Query -> Query Strings
  * @Path  -> Path Parameters
  */

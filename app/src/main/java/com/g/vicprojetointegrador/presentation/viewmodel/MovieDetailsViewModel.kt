@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MovieDetailsViewModel(private val movieId: Int = -1) : ViewModel() {
+class MovieDetailsViewModel(private val movieId: Int) : ViewModel() {
     private val _extraMovieDetailsLiveData = MutableLiveData<MovieDetails>()
     private val _errorLiveData = MutableLiveData<String>()
     private val _isFavorited = MutableLiveData<Boolean>()
@@ -60,6 +60,7 @@ class MovieDetailsViewModel(private val movieId: Int = -1) : ViewModel() {
     }
 
     fun favoriteClicked(movie: Movie) {
+
         movie.isFavorited = !movie.isFavorited //Sets a switch on click
 
         if (movie.isFavorited) {

@@ -32,5 +32,4 @@
         app:layout_constraintTop_toTopOf="@id/rvMovieList"
         tools:visibility="visible" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
