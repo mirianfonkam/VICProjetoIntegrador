@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
-import com.g.vicprojetointegrador.presentation.MovieClickListener
+import com.g.vicprojetointegrador.presentation.clicklistener.MovieClickListener
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.g.vicprojetointegrador.utils.formatPercentage
 import com.google.android.material.card.MaterialCardView

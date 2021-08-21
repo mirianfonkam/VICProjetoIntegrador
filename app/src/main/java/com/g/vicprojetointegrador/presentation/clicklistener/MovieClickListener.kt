@@ -1,4 +1,4 @@
-package com.g.vicprojetointegrador.presentation
+package com.g.vicprojetointegrador.presentation.clicklistener
 
 import com.g.vicprojetointegrador.data.model.Movie
 

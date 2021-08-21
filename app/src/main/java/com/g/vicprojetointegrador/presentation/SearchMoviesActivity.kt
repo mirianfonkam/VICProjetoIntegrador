@@ -12,6 +12,7 @@ import com.g.vicprojetointegrador.data.model.Genre
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.databinding.ActivitySearchMoviesBinding
 import com.g.vicprojetointegrador.presentation.adapter.MovieListAdapter
+import com.g.vicprojetointegrador.presentation.clicklistener.MovieClickListener
 import com.g.vicprojetointegrador.presentation.viewmodel.SearchViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 import com.google.android.material.chip.Chip
@@ -70,7 +71,7 @@ class SearchMoviesActivity : AppCompatActivity(){
             }
         }
 
-        val movieListAdapter = MovieListAdapter(object : MovieClickListener{
+        val movieListAdapter = MovieListAdapter(object : MovieClickListener {
             override fun onFavoriteClick(movie: Movie) {
                searchViewModel.favoriteClicked(movie)
             }

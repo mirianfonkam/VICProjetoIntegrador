@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.g.vicprojetointegrador.R
 import com.g.vicprojetointegrador.data.model.Movie
 import com.g.vicprojetointegrador.presentation.adapter.MovieListAdapter
+import com.g.vicprojetointegrador.presentation.clicklistener.MovieClickListener
 import com.g.vicprojetointegrador.presentation.viewmodel.MovieSharedViewModel
 import com.g.vicprojetointegrador.utils.TMDBConstants
 

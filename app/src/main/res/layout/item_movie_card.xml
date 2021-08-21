@@ -79,12 +79,13 @@
         android:id="@+id/ivStarIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/tvVoteAverage"
+        android:contentDescription="@string/star_icon_desc"
         app:layout_constraintBottom_toBottomOf="@id/tvVoteAverage"
         app:layout_constraintEnd_toStartOf="@+id/tvVoteAverage"
-        app:layout_constraintStart_toStartOf="@+id/tvTitle"
-        app:srcCompat="@drawable/ic_round_star"
         app:layout_constraintHorizontal_chainStyle="packed"
-        android:contentDescription="@string/star_icon_desc"/>
+        app:layout_constraintStart_toStartOf="@+id/tvTitle"
+        app:layout_constraintTop_toTopOf="@id/tvVoteAverage"
+        app:srcCompat="@drawable/ic_round_star"
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
