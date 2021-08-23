@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/mirianfonkam/testegif/blob/main/InShot_20210820_160040381.gif" height="400" alt="Movie App Demo Gif" />
+  <img src="https://github.com/mirianfonkam/VICProjetoIntegrador/blob/develop/docs/Movie%20App%20Demo.gif" height="400" alt="Movie App Demo Gif" />
 </p>
 
 ## ☑ Lista de Tarefas
