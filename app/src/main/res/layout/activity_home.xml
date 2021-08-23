@@ -9,7 +9,7 @@
     android:id="@+id/homeView">
 
     <SearchView
-        android:id="@+id/svSearchQuery"
+        android:id="@+id/svSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -32,7 +32,7 @@
         app:layout_constraintBottom_toTopOf="@id/hsvGenreList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/svSearchQuery"
+        app:layout_constraintTop_toBottomOf="@id/svSearch"
         app:tabIndicator="@drawable/ic_tab_indicator"
         app:tabIndicatorColor="@color/green"
         app:tabIndicatorFullWidth="false"

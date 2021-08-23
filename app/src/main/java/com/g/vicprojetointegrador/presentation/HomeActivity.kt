@@ -64,7 +64,7 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        binding.svSearchQuery.setOnQueryTextFocusChangeListener { thisView, hasFocus ->
+        binding.svSearch.setOnQueryTextFocusChangeListener { thisView, hasFocus ->
             if (hasFocus) {
                 thisView.clearFocus() // onResume the focus will be cleared
                 openSearchActivity()

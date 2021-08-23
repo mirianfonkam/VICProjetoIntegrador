@@ -36,8 +36,6 @@ class MovieDetailsActivity : AppCompatActivity() {
         binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.fabBack.setOnClickListener { this.finish() }
-
         // Gets parsed movie object properties
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
         val movieId: Int = movie?.id!!
@@ -77,7 +75,8 @@ class MovieDetailsActivity : AppCompatActivity() {
             }
 
             val data =
-                movieDetails.releaseInfoResponse.results.mapNotNull { releaseInfo -> releaseInfo.takeIf { it.countryCode == "US" }?.releaseDates?.mapNotNull { it.maturityRating } }
+                movieDetails.releaseInfoResponse.results.mapNotNull { releaseInfo ->
+                    releaseInfo.takeIf { it.countryCode == "US" }?.releaseDates?.mapNotNull { it.maturityRating } }
                     .firstOrNull()
             binding.tvMovieMaturityRating.text =
                 data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }?.toString()
@@ -91,12 +90,18 @@ class MovieDetailsActivity : AppCompatActivity() {
             }
         }
 
+        handleBackButtonPressed()
+
         handleErrorOnLoadingMovieDetails(detailsViewModel)
 
         setFavoriteBtnInitialState(detailsViewModel, movie)
 
         handleFavoriteBtnClick(detailsViewModel, movie)
 
+    }
+
+    private fun handleBackButtonPressed() {
+        binding.fabBack.setOnClickListener { this.finish() }
     }
 
     private fun addChipsToGenreChipGroup(genre: Genre) {

@@ -18,8 +18,6 @@ interface FavoriteMovieDao {
     @Query("SELECT * from movies")
     fun getFavoriteMovies() : Observable<List<Movie>>
 
-
     @Query("SELECT EXISTS(SELECT 1 from movies WHERE id = :movieId)")
     fun checkFavoriteStatus(movieId : Int) : Single<Boolean>
-
 }
