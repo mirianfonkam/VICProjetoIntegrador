@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "824451786703",
+    "project_id": "pickplay-1",
+    "storage_bucket": "pickplay-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824451786703:android:cd461665fc8bc97774d4ba",
+        "android_client_info": {
+          "package_name": "com.g.vicprojetointegrador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824451786703-vbf8p1j2hsi5ht795h25hhd8078fgbqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdn0U5zhmj9oH8svKUaXN7dDIoY3-_zpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824451786703-vbf8p1j2hsi5ht795h25hhd8078fgbqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,91 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMovie"
+        android:layout_width="250dp"
+        android:layout_height="370dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="40dp"
+        android:clickable="true"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/itemMoviePoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/green_placeholder"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            tools:ignore="ImageContrastCheck"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/TextAppearance.MovieApp.Headline1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/cardMovie"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@+id/cardMovie"
+        app:layout_constraintTop_toBottomOf="@id/cardMovie"
+        tools:text="Movie Title Very Long" />
+
+    <com.like.LikeButton
+        android:id="@+id/btnLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:circle_end_color="@color/green"
+        app:circle_start_color="@color/yellow"
+        app:dots_primary_color="@color/green"
+        app:dots_secondary_color="@color/yellow"
+        android:clickable="true"
+        app:icon_size="24dp"
+        app:layout_constraintStart_toEndOf="@id/tvTitle"
+        app:layout_constraintTop_toTopOf="@id/tvTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+        app:layout_constraintEnd_toEndOf="@id/cardMovie"
+        app:like_drawable="@drawable/ic_favorite_filled"
+        app:unlike_drawable="@drawable/ic_favorite_unfilled"
+        app:layout_constraintHorizontal_chainStyle="spread_inside" />
+
+    <TextView
+        android:id="@+id/tvVoteAverage"
+        style="TextAppearance.MovieApp.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintEnd_toEndOf="@id/tvTitle"
+        tools:text="100%"
+        app:layout_constraintStart_toEndOf="@+id/ivStarIcon" />
+
+    <ImageView
+        android:id="@+id/ivStarIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/star_icon_desc"
+        app:layout_constraintBottom_toBottomOf="@id/tvVoteAverage"
+        app:layout_constraintEnd_toStartOf="@+id/tvVoteAverage"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
+        app:layout_constraintTop_toTopOf="@id/tvVoteAverage"
+        app:srcCompat="@drawable/ic_round_star"
+        tools:ignore="ImageContrastCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,13 +8,14 @@
     android:padding="30dp">
 
     <ImageButton
-        android:id="@+id/ibClose"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:id="@+id/btnClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_close"
-        android:backgroundTint="@color/white"/>
+        android:contentDescription="@string/btnClose_content_desc"/>
 
     <ImageView
         android:id="@+id/ivGenericError"
@@ -22,9 +23,10 @@
         android:layout_height="160dp"
         android:layout_marginBottom="36dp"
         android:background="@drawable/ic_generic_error"
-        app:layout_constraintBottom_toTopOf="@+id/tvSystemFailed"
+        app:layout_constraintBottom_toTopOf="@id/tvSystemFailed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/ivGenericError_content_desc"/>
 
     <TextView
         android:id="@+id/tvSystemFailed"
@@ -40,30 +42,31 @@
 
     <TextView
         android:id="@+id/tvSystemFailedLongText"
+        style="@style/TextAppearance.MovieApp.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:layout_marginTop="8dp"
         android:lineSpacingExtra="4sp"
         android:text="@string/system_failed_long_desc"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSystemFailed"
-        style="@style/TextAppearance.MovieApp.Body1">
-    </TextView>
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/tvTryAgain"
+        style="@style/TextAppearance.MovieApp.Headline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="@string/try_again"
         android:layout_marginBottom="40dp"
+        android:clickable="true"
+        android:text="@string/try_again"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/TextAppearance.MovieApp.Headline2">
-    </TextView>
+        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/ivLine"
