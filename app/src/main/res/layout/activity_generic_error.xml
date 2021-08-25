@@ -23,7 +23,7 @@
         android:layout_height="160dp"
         android:layout_marginBottom="36dp"
         android:background="@drawable/ic_generic_error"
-        app:layout_constraintBottom_toTopOf="@+id/tvSystemFailed"
+        app:layout_constraintBottom_toTopOf="@id/tvSystemFailed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="@string/ivGenericError_content_desc"/>
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSystemFailed"
-        tools:ignore="TextContrastCheck"></TextView>
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/tvTryAgain"

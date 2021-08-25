@@ -11,12 +11,14 @@
         android:id="@+id/ivPersonProfile"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginHorizontal="10dp"
         android:scaleType="centerCrop"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ImageContrastCheck"
+        tools:src="@tools:sample/backgrounds/scenic"
+        android:contentDescription="@string/ivPerson_Actor_desc" />
 
     <TextView
         android:id="@+id/tvPersonName"
@@ -44,5 +46,6 @@
         app:layout_constraintEnd_toEndOf="@+id/ivPersonProfile"
         app:layout_constraintStart_toStartOf="@+id/ivPersonProfile"
         app:layout_constraintTop_toBottomOf="@id/tvPersonName"
+        tools:ignore="TextContrastCheck"
         tools:text="Ken Miles" />
 </androidx.constraintlayout.widget.ConstraintLayout>

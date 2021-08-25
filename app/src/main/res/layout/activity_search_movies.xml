@@ -48,7 +48,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="28dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/svSearchQuery" />
+        app:layout_constraintTop_toBottomOf="@id/svSearchQuery" />
 
     <TextView
         android:id="@+id/tvBackHome"
@@ -108,7 +108,7 @@
         android:layout_height="180dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/ic_search_not_found"
-        app:layout_constraintBottom_toTopOf="@+id/tvSearchFailed"
+        app:layout_constraintBottom_toTopOf="@id/tvSearchFailed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="@string/not_found_icon_desc" />

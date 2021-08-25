@@ -26,4 +26,6 @@
     <string name="not_found_icon_desc">Lupa de pesquisa não encontrada</string>
     <string name="btnClose_content_desc">Fechar Tela</string>
     <string name="ivGenericError_content_desc">Erro na Genérico</string>
+    <string name="ivPerson_Director_desc">Perfil do Diretor</string>
+    <string name="ivPerson_Actor_desc">Perfil do Ator</string>
 </resources>

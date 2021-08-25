@@ -45,7 +45,7 @@
             android:layout_height="70dp"
             android:background="@color/white"
             android:elevation="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivMovieBackdrop"
+            app:layout_constraintBottom_toBottomOf="@id/ivMovieBackdrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivMovieBackdrop"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.MediumComponent" />
@@ -58,10 +58,10 @@
             android:layout_marginStart="4dp"
             android:layout_marginBottom="22dp"
             android:translationZ="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardRating"
-            app:layout_constraintEnd_toEndOf="@+id/cardRating"
+            app:layout_constraintBottom_toBottomOf="@id/cardRating"
+            app:layout_constraintEnd_toEndOf="@id/cardRating"
             app:layout_constraintStart_toStartOf="@id/cardRating"
-            app:layout_constraintTop_toTopOf="@+id/cardRating"
+            app:layout_constraintTop_toTopOf="@id/cardRating"
             tools:text="81%" />
 
         <TextView
@@ -74,9 +74,9 @@
             android:elevation="2dp"
             android:text="@string/user_rating"
             android:translationZ="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardRating"
+            app:layout_constraintBottom_toBottomOf="@id/cardRating"
             app:layout_constraintStart_toStartOf="@id/tvMovieVoteAverage"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovieVoteAverage" />
+            app:layout_constraintTop_toBottomOf="@id/tvMovieVoteAverage" />
 
         <ImageView
             android:id="@+id/ivStarIcon"
@@ -87,7 +87,7 @@
             android:translationZ="10dp"
             app:layout_constraintBottom_toBottomOf="@id/cardRating"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/cardRating"
+            app:layout_constraintStart_toStartOf="@id/cardRating"
             app:layout_constraintTop_toTopOf="@id/cardRating"
             app:srcCompat="@drawable/ic_round_star" />
 
@@ -100,7 +100,7 @@
             android:layout_marginTop="50dp"
             app:layout_constraintEnd_toStartOf="@id/btnLike"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivMovieBackdrop"
+            app:layout_constraintTop_toBottomOf="@id/ivMovieBackdrop"
             tools:text="Movie Title" />
 
         <com.like.LikeButton
@@ -115,7 +115,7 @@
             app:dots_secondary_color="@color/yellow"
             app:icon_size="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivMovieBackdrop"
+            app:layout_constraintTop_toBottomOf="@id/ivMovieBackdrop"
             app:like_drawable="@drawable/ic_favorite_filled"
             app:unlike_drawable="@drawable/ic_favorite_unfilled" />
 
@@ -126,8 +126,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tvMovieTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle"
+            app:layout_constraintStart_toStartOf="@id/tvMovieTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"
             tools:text="2022" />
 
         <TextView
@@ -136,8 +136,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/tvMovieYear"
-            app:layout_constraintTop_toTopOf="@+id/tvMovieYear"
+            app:layout_constraintStart_toEndOf="@id/tvMovieYear"
+            app:layout_constraintTop_toTopOf="@id/tvMovieYear"
             tools:text="PG-13" />
 
         <TextView
@@ -146,8 +146,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/tvMovieMaturityRating"
-            app:layout_constraintTop_toTopOf="@+id/tvMovieYear"
+            app:layout_constraintStart_toEndOf="@id/tvMovieMaturityRating"
+            app:layout_constraintTop_toTopOf="@id/tvMovieYear"
             tools:text="2h 32min" />
 
         <HorizontalScrollView
@@ -179,7 +179,7 @@
             android:layout_marginEnd="30dp"
             android:text="@string/synopsis"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hsvGenreList" />
+            app:layout_constraintTop_toBottomOf="@id/hsvGenreList" />
 
         <TextView
             android:id="@+id/tvMovieOverview"
@@ -190,7 +190,7 @@
             android:layout_marginEnd="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tvSynopsis"
-            app:layout_constraintTop_toBottomOf="@+id/tvSynopsis"
+            app:layout_constraintTop_toBottomOf="@id/tvSynopsis"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit " />
 
         <TextView
@@ -201,7 +201,7 @@
             android:layout_marginTop="30dp"
             android:text="@string/cast"
             app:layout_constraintStart_toStartOf="@id/tvSynopsis"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovieOverview" />
+            app:layout_constraintTop_toBottomOf="@id/tvMovieOverview" />
 
         <ImageView
             android:id="@+id/ivPersonProfile"
@@ -210,10 +210,11 @@
             android:layout_marginStart="100dp"
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="@+id/tvSynopsis"
-            app:layout_constraintTop_toTopOf="@+id/rvMovieActors"
-            app:layout_constraintEnd_toStartOf="@+id/rvMovieActors"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            app:layout_constraintStart_toStartOf="@id/tvSynopsis"
+            app:layout_constraintTop_toTopOf="@id/rvMovieActors"
+            app:layout_constraintEnd_toStartOf="@id/rvMovieActors"
+            tools:src="@tools:sample/backgrounds/scenic"
+            android:contentDescription="@string/ivPerson_Director_desc"/>
 
         <TextView
             android:id="@+id/tvPersonName"
@@ -224,8 +225,8 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="@+id/ivPersonProfile"
-            app:layout_constraintStart_toStartOf="@+id/ivPersonProfile"
+            app:layout_constraintEnd_toEndOf="@id/ivPersonProfile"
+            app:layout_constraintStart_toStartOf="@id/ivPersonProfile"
             app:layout_constraintTop_toBottomOf="@id/ivPersonProfile"
             tools:text="Cristian Bale"/>
 
@@ -238,8 +239,8 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="@+id/ivPersonProfile"
-            app:layout_constraintStart_toStartOf="@+id/ivPersonProfile"
+            app:layout_constraintEnd_toEndOf="@id/ivPersonProfile"
+            app:layout_constraintStart_toStartOf="@id/ivPersonProfile"
             app:layout_constraintTop_toBottomOf="@id/tvPersonName"
             tools:text="Ken Miles" />
 

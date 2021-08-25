@@ -21,7 +21,7 @@ class MovieDetailsViewModel(private val movieId: Int) : ViewModel() {
 
     val extraMovieDetailsLiveData : LiveData<MovieDetails> = _extraMovieDetailsLiveData
     val errorLiveData : LiveData<String> = _errorLiveData
-    val isFavorited : MutableLiveData<Boolean> = _isFavorited
+    val isFavorited : LiveData<Boolean> = _isFavorited
 
     private var disposables = CompositeDisposable()
 

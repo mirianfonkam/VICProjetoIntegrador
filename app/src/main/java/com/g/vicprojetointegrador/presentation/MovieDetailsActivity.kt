@@ -39,9 +39,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         // Gets parsed movie object properties
         val movie = intent.getParcelableExtra<Movie>(TMDBConstants.EXTRA_MOVIE)
         val movieId: Int = movie?.id!!
+
         val detailsViewModel: MovieDetailsViewModel =
-            ViewModelProvider(this, object : MovieDetailsVMFactory(movieId) {
-            }).get(MovieDetailsViewModel::class.java)
+            ViewModelProvider(this, MovieDetailsVMFactory(movieId))
+                .get(MovieDetailsViewModel::class.java)
 
         // Pre-loaded data from the GetPopularMovies() request made in previous activity
         movie.backdropPath?.let {
@@ -50,7 +51,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         movie.run {
             binding.tvMovieTitle.text = title
-            binding.tvMovieYear.text = releaseDate?.take(4) ?: "--"
+            binding.tvMovieYear.text = releaseDate?.take(4)
             binding.tvMovieOverview.text = overview
             binding.tvMovieVoteAverage.text = voteAverage.formatPercentage()
         }
@@ -58,29 +59,18 @@ class MovieDetailsActivity : AppCompatActivity() {
         // New network request for additional movie data
         detailsViewModel.extraMovieDetailsLiveData.observe(this) { movieDetails ->
             movieDetails.run {
-                binding.tvMovieRuntime.text = runtime.formatHourMinutes()
+                binding.tvMovieRuntime.text = duration
+                binding.tvMovieMaturityRating.text = certification
+                binding.tvPersonName.text = director?.name
+                binding.tvPersonRole.text = director?.job
             }
 
-            binding.rvMovieActors.adapter = PersonRVAdapter(movieDetails.credits.cast)
+            binding.rvMovieActors.adapter = PersonRVAdapter(movieDetails.actors)
 
-            val director: Crew? =
-                movieDetails.credits.crew.firstOrNull { crew -> crew.job == "Director" }
-
-            binding.tvPersonName.text = director?.name ?: "--"
-            binding.tvPersonRole.text = director?.job
-
-            binding.ivPersonProfile.load("${TMDBConstants.IMAGE_URL}${director?.profilePath}") {
+            binding.ivPersonProfile.load("${TMDBConstants.IMAGE_URL}${movieDetails.director?.profilePath}") {
                 crossfade(true)
                 transformations(CircleCropTransformation())
             }
-
-            val data =
-                movieDetails.releaseInfoResponse.results.mapNotNull { releaseInfo ->
-                    releaseInfo.takeIf { it.countryCode == "US" }?.releaseDates?.mapNotNull { it.maturityRating } }
-                    .firstOrNull()
-            binding.tvMovieMaturityRating.text =
-                data?.filter { it.isNotEmpty() }?.firstNotNullOfOrNull { it }?.toString()
-
 
             // Adds chips of movie genre to chipGroup dynamically
             movieDetails.genres.let { genres ->
