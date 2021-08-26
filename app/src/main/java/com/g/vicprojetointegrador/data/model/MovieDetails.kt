@@ -10,7 +10,7 @@ class MovieDetails (
     @SerializedName("genres") val genres: List<Genre>,
     @SerializedName("credits") val credits: Credits,
 ) {
-    val duration : String?
+    val duration : String
         get() {
             return runtime.formatHourMinutes()
         }
@@ -19,8 +19,8 @@ class MovieDetails (
         get(){
             return releaseInfoResponse.results.filter { releaseInfo ->
                 releaseInfo.countryCode == "US"}.flatMap { it.releaseDates }.filter { releaseDate ->
-                releaseDate.maturityRating.isNotEmpty()}
-                .firstNotNullOfOrNull { it.maturityRating }
+                    releaseDate.maturityRating.isNotEmpty()
+                }.firstNotNullOfOrNull { it.maturityRating }
         }
 
     val director : Crew?

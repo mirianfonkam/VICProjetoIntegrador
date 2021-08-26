@@ -1,5 +1,6 @@
 package com.g.vicprojetointegrador.data.repository
 
+import com.g.vicprojetointegrador.data.model.GenresResponse
 import com.g.vicprojetointegrador.data.model.MovieDetails
 import com.g.vicprojetointegrador.data.model.MoviesResponse
 import com.g.vicprojetointegrador.data.repository.database.MovieRoomDatabase
@@ -26,6 +27,10 @@ class MovieListingRemoteRepository(private val network: MovieApiService = Networ
 
     fun getMovie(movieId: Int): Single<MovieDetails> {
         return network.getMovieDetails(movieId)
+    }
+
+    fun getGenres() : Single<GenresResponse> {
+        return network.getGenres()
     }
 
     private fun Observable<MoviesResponse>.compareWithLocalMovies() : Observable<MoviesResponse> {
