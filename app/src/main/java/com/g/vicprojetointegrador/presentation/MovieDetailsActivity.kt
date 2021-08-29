@@ -67,9 +67,10 @@ class MovieDetailsActivity : AppCompatActivity() {
 
             binding.rvMovieActors.adapter = PersonRVAdapter(movieDetails.actors)
 
-            binding.ivPersonProfile.load("${TMDBConstants.IMAGE_URL}${movieDetails.director?.profilePath}") {
+            binding.ivPersonProfile.load(movieDetails.director?.profileImageUrl) {
                 crossfade(true)
                 transformations(CircleCropTransformation())
+                fallback(R.drawable.ic_profile_no_image)
             }
 
             // Adds chips of movie genre to chipGroup dynamically

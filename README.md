@@ -32,7 +32,7 @@
 | Recurso | Função|
 | ------ | ------ |
 | [Material Design Android](https://material.io/components?platform=android) | Implementação da UI|
-| [Figma](figma.com) | Acesso à recursos do protótipo |
+| [Figma](https://figma.com) | Acesso aos recursos do protótipo |
 | [Postman](https://www.postman.com/) | API Client para teste de requisições |
 | [The Movie Database](https://developers.themoviedb.org/3/)| Documentação da API de Filmes |
 | [Trello](https://trello.com/)| Fluxo de trabalho/Kanban |
@@ -40,7 +40,7 @@
 | [Firebase](https://firebase.google.com/) | Console para liberar e monitorar app (Crashlytics)|
 | [OkHttp Logging Inteceptor](https://github.com/square/okhttp) | Cliente HTTP  |
 | [Gson](https://github.com/google/gson) | Converte Java para Gson e vice-versa  |
-| [github.com/jd-alexander/LikeButton](github.com/jd-alexander/LikeButton) | Animação do butão de curtir |
+| [LikeButton Animation by jd-alexander](https://github.com/jd-alexander/LikeButton) | Animação do butão de curtir |
 
 ## 📚 Referências
 
