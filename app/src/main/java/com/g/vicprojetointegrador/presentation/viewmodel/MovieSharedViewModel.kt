@@ -50,7 +50,7 @@ class MovieSharedViewModel() : ViewModel() {
 
     fun getPopularMovies(){
         disposable?.dispose()
-        disposable = getMoviesUseCase.execute()
+        disposable = getMoviesUseCase()
             .subscribeOn(Schedulers.io())              // Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
                 _progressBar.postValue(true)
@@ -69,7 +69,7 @@ class MovieSharedViewModel() : ViewModel() {
 
     fun getMoviesByGenre(genreId : String){
        disposable?.dispose()
-       disposable =  getMoviesByGenreUseCase.execute(genreId)
+       disposable =  getMoviesByGenreUseCase(genreId)
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
                 _progressBar.postValue(true)
@@ -88,7 +88,7 @@ class MovieSharedViewModel() : ViewModel() {
 
 
     private fun getFavoriteMovies() {
-        disposables.add(getFavoriteMovieUseCase.execute()
+        disposables.add(getFavoriteMovieUseCase()
             .subscribeOn(Schedulers.io())
             .subscribe ({
                 _favoriteMoviesLiveData.postValue(it)
@@ -102,13 +102,12 @@ class MovieSharedViewModel() : ViewModel() {
         movie.isFavorited = !movie.isFavorited //Sets a switch on click
 
         if (movie.isFavorited) {
-            disposables.add(saveFavoriteMovieUseCase.execute(movie)
+            disposables.add(saveFavoriteMovieUseCase(movie)
                 .subscribeOn(Schedulers.io())
                 .subscribe()
             )
-
         } else {
-            disposables.add(deleteFavoriteMovieUseCase.execute(movie)
+            disposables.add(deleteFavoriteMovieUseCase(movie)
                 .subscribeOn(Schedulers.io())
                 .subscribe()
             )
@@ -116,7 +115,7 @@ class MovieSharedViewModel() : ViewModel() {
     }
 
     private fun getGenres(){
-        disposables.add(getGenresUseCase.execute()
+        disposables.add(getGenresUseCase()
             .subscribeOn(Schedulers.io())
             .map { it.genres }
             .observeOn(AndroidSchedulers.mainThread())

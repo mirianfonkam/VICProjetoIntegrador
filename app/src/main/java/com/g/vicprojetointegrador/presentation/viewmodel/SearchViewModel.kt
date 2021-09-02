@@ -42,7 +42,7 @@ class SearchViewModel() : ViewModel() {
 
     fun searchMoviesByQuery(query : String){
         disposable?.dispose()
-        disposable = searchMoviesByQueryUseCase.execute(query)
+        disposable = searchMoviesByQueryUseCase(query)
             .subscribeOn(Schedulers.io())
             .doOnSubscribe {
                 _progressBar.postValue(true)
@@ -62,7 +62,7 @@ class SearchViewModel() : ViewModel() {
 
     fun getMoviesByGenre(genreId : String){
         disposable?.dispose()
-        disposable = getMoviesByGenreUseCase.execute(genreId)
+        disposable = getMoviesByGenreUseCase(genreId)
             .subscribeOn(Schedulers.io())              //Schedulers.io(): Suitable for network requests (I/O bounds)
             .doOnSubscribe {
                 _progressBar.postValue(true)
@@ -80,7 +80,7 @@ class SearchViewModel() : ViewModel() {
     }
 
     private fun getGenres(){
-        disposables.add(getGenresUseCase.execute()
+        disposables.add(getGenresUseCase()
             .subscribeOn(Schedulers.io())
             .map { it.genres }
             .observeOn(AndroidSchedulers.mainThread())
@@ -96,13 +96,13 @@ class SearchViewModel() : ViewModel() {
         movie.isFavorited = !movie.isFavorited //Sets a switch on click
 
         if (movie.isFavorited) {
-            disposables.add(saveFavoriteMovieUseCase.execute(movie)
+            disposables.add(saveFavoriteMovieUseCase(movie)
                 .subscribeOn(Schedulers.io())
                 .subscribe()
             )
 
         } else {
-            disposables.add(deleteFavoriteMovieUseCase.execute(movie)
+            disposables.add(deleteFavoriteMovieUseCase(movie)
                 .subscribeOn(Schedulers.io())
                 .subscribe()
             )

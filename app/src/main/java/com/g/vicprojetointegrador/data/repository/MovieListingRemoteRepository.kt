@@ -17,7 +17,7 @@ class MovieListingRemoteRepository(private val network: MovieApiService = Networ
         return network.getSearchResults(query).compareWithLocalMovies()
     }
 
-    fun getMovies(): Observable<MoviesResponse> {
+    fun getPopularMovies(): Observable<MoviesResponse> {
         return network.getPopularMovies().compareWithLocalMovies()
     }
 

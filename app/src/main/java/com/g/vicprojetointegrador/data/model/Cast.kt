@@ -10,6 +10,7 @@ data class Cast(
     @SerializedName("name") val actorName: String,
     @SerializedName("profile_path") val profilePath: String? = null,
 ) {
+
     val profileImageUrl : String?
         get() {
             profilePath?.let {return "${TMDBConstants.IMAGE_URL}${it}"}
